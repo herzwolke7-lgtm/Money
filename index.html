@@ -52,12 +52,14 @@
     .icon-btn:active { transform: scale(0.95); }
 
     .seg-nav {
-      display: grid; grid-template-columns: 1fr 1fr 1fr;
+      display: flex; flex-wrap: nowrap; overflow-x: auto; gap: 2px;
       padding: 3px; background: var(--surface-2);
       border: 1px solid var(--hairline); border-radius: 10px;
-      margin-bottom: 14px; max-width: 520px;
+      margin-bottom: 14px; max-width: 100%; scrollbar-width: none;
     }
+    .seg-nav::-webkit-scrollbar { display: none; }
     .seg-btn {
+      flex: 1 0 auto; padding: 0 12px; white-space: nowrap;
       height: 36px; border: none; border-radius: 7px;
       background: transparent; color: var(--ink-2);
       font-family: inherit; font-size: 13px; font-weight: 600; cursor: pointer;
@@ -251,6 +253,8 @@
     <button class="seg-btn active" onclick="setMode('portfolio', this)">자산 현황</button>
     <button class="seg-btn" onclick="setMode('journal', this)">매매일지</button>
     <button class="seg-btn" onclick="setMode('lottery', this)">로또·연금</button>
+    <button class="seg-btn" onclick="setMode('notes', this)">알림 메모장</button>
+    <button class="seg-btn" onclick="setMode('seo', this)">스테이앤플랜</button>
   </nav>
 
   <!-- PORTFOLIO VIEW -->
@@ -467,6 +471,74 @@
     </section>
   </main>
 
+  <!-- NOTES VIEW -->
+  <main id="notesView" style="display:none;">
+    <div class="pill-row">
+      <button class="pill-btn active" onclick="setNoteCat('all', this)">전체</button>
+      <button class="pill-btn" onclick="setNoteCat('morning', this)">아침브리핑</button>
+      <button class="pill-btn" onclick="setNoteCat('stock', this)">주식</button>
+      <button class="pill-btn" onclick="setNoteCat('crypto', this)">코인</button>
+      <button class="pill-btn" onclick="setNoteCat('seo', this)">SEO·블로그</button>
+      <button class="pill-btn" onclick="setNoteCat('lottery', this)">로또·연금</button>
+    </div>
+    <section class="panel">
+      <div class="sec-head">
+        <span class="sec-title">루틴별 알림 메모장</span>
+        <span class="meta-time" id="notesUpdated">-</span>
+      </div>
+      <div style="font-size:12px;color:var(--ink-3);margin-bottom:10px;">채팅방에서 놓치기 쉬운 정기 브리핑과 중요 알림이 루틴별로 자동 기록됩니다.</div>
+      <div id="notesList"></div>
+    </section>
+  </main>
+
+  <!-- SEO VIEW -->
+  <main id="seoView" style="display:none;">
+    <section class="panel">
+      <div class="sec-head">
+        <span class="sec-title">스테이앤플랜 3포털 성장 요약</span>
+        <span class="meta-time" id="seoUpdated">-</span>
+      </div>
+      <div class="stat-grid" id="seoKpiGrid" style="margin-top:0;padding-top:0;border-top:none;"></div>
+    </section>
+
+    <div class="bento">
+      <div>
+        <section class="panel">
+          <div class="sec-head">
+            <span class="sec-title">구글 색인율 · 미색인 원인 분석</span>
+            <span class="meta-time" id="seoGoogleIndexRate">-</span>
+          </div>
+          <div id="seoGoogleReasons"></div>
+        </section>
+
+        <section class="panel">
+          <div class="sec-head">
+            <span class="sec-title">왜 1페이지 진입이 막혀 있을까?</span>
+            <span class="meta-time">일 $100 애드센스 진단</span>
+          </div>
+          <div id="seoPage1Blockers"></div>
+        </section>
+      </div>
+
+      <div>
+        <section class="panel">
+          <div class="sec-head">
+            <span class="sec-title">네이버 고노출 · 저클릭 제목 수술</span>
+            <span class="meta-time">CTR 0.7% → 3% 목표</span>
+          </div>
+          <div id="seoNaverOpps"></div>
+        </section>
+
+        <section class="panel">
+          <div class="sec-head">
+            <span class="sec-title">포털별 효자 키워드 / 인기 문서</span>
+          </div>
+          <div id="seoTopKeywords"></div>
+        </section>
+      </div>
+    </div>
+  </main>
+
   <script>
     let payload = null;
     let currentAcct = "all";
@@ -596,8 +668,110 @@
       document.getElementById("portfolioView").style.display = mode === "portfolio" ? "block" : "none";
       document.getElementById("journalView").style.display = mode === "journal" ? "block" : "none";
       document.getElementById("lotteryView").style.display = mode === "lottery" ? "block" : "none";
+      document.getElementById("notesView").style.display = mode === "notes" ? "block" : "none";
+      document.getElementById("seoView").style.display = mode === "seo" ? "block" : "none";
       if (mode === "journal") renderJournal();
       if (mode === "lottery") loadLottery();
+      if (mode === "notes") loadNotes();
+      if (mode === "seo") loadSeo();
+    }
+
+    let notesData = null, noteCat = "all", seoData = null;
+    const catLabel = { morning: "아침브리핑", stock: "주식", crypto: "코인", seo: "SEO·블로그", lottery: "로또·연금" };
+
+    function setNoteCat(cat, btn) {
+      noteCat = cat;
+      btn.parentElement.querySelectorAll(".pill-btn").forEach(b => b.classList.remove("active"));
+      btn.classList.add("active");
+      renderNotes();
+    }
+
+    async function loadNotes() {
+      if (notesData) { renderNotes(); return; }
+      try {
+        const res = await fetch("./notes.json?t=" + Date.now());
+        notesData = await res.json();
+        renderNotes();
+      } catch (e) {
+        document.getElementById("notesList").innerHTML = `<div style="color:var(--ink-3);font-size:13px;">메모장을 불러오지 못했습니다.</div>`;
+      }
+    }
+
+    function renderNotes() {
+      if (!notesData) return;
+      document.getElementById("notesUpdated").textContent = notesData.updated_at || "-";
+      const list = (notesData.notes || []).filter(n => noteCat === "all" || n.category === noteCat);
+      if (!list.length) {
+        document.getElementById("notesList").innerHTML = `<div style="padding:12px 0;color:var(--ink-3);font-size:13px;">해당 루틴의 알림 메모가 아직 없습니다.</div>`;
+        return;
+      }
+      document.getElementById("notesList").innerHTML = list.map(n => `
+        <div class="holding-row" style="flex-direction:column;align-items:stretch;gap:6px;">
+          <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;">
+            <strong style="font-size:14px;color:var(--ink);">${n.title}</strong>
+            <span class="badge ${n.priority === 'high' ? 'c-up' : 'c-flat'}" style="background:var(--surface-2);">${catLabel[n.category] || n.category}</span>
+          </div>
+          <div style="font-size:13px;color:var(--ink-2);line-height:1.5;">${n.summary}</div>
+          <div style="font-size:11px;color:var(--ink-3);font-variant-numeric:tabular-nums;">${n.time}</div>
+        </div>
+      `).join("");
+    }
+
+    async function loadSeo() {
+      if (seoData) { renderSeo(); return; }
+      try {
+        const res = await fetch("./seo.json?t=" + Date.now());
+        seoData = await res.json();
+        renderSeo();
+      } catch (e) {
+        document.getElementById("seoKpiGrid").innerHTML = `<div style="color:var(--ink-3);font-size:13px;">SEO 데이터를 불러오지 못했습니다.</div>`;
+      }
+    }
+
+    function renderSeo() {
+      if (!seoData) return;
+      document.getElementById("seoUpdated").textContent = seoData.updated_at || "-";
+      const g = seoData.portals.google, n = seoData.portals.naver, d = seoData.portals.daum;
+      document.getElementById("seoKpiGrid").innerHTML = `
+        <div class="stat-item"><div class="stat-k">구글 (3개월)</div><div class="stat-v">${g.clicks}클릭</div><div class="stat-s">노출 ${g.impressions.toLocaleString()} · CTR ${g.ctr}% · 순위 ${g.avg_pos}</div></div>
+        <div class="stat-item"><div class="stat-k">네이버 (30일)</div><div class="stat-v c-up">${n.clicks}클릭 (${n.clicks_mom})</div><div class="stat-s">노출 ${(n.impressions/10000).toFixed(1)}만 (${n.impressions_mom}) · CTR ${n.ctr}%</div></div>
+        <div class="stat-item"><div class="stat-k">다음 (Daum)</div><div class="stat-v">오늘 ${d.today_impressions}노출</div><div class="stat-s">일평균 수집 ${d.daily_crawl_10d} · 주평균 노출 ${d.weekly_impressions_10w}</div></div>
+        <div class="stat-item"><div class="stat-k">목표 진행</div><div class="stat-v">일 $${seoData.goal.daily_adsense_usd}</div><div class="stat-s">목표 일 PV ${seoData.goal.target_daily_pv.toLocaleString()}</div></div>
+      `;
+      document.getElementById("seoGoogleIndexRate").textContent = `색인율 ${g.index_rate}% (${g.indexed}/${g.indexed + g.not_indexed})`;
+      document.getElementById("seoGoogleReasons").innerHTML = g.reasons.map(r => `
+        <div class="holding-row" style="flex-direction:column;align-items:stretch;gap:4px;">
+          <div style="display:flex;justify-content:space-between;align-items:center;">
+            <span style="font-size:13px;font-weight:600;color:var(--ink);">${r.reason}</span>
+            <span class="badge ${r.status.includes('복구') || r.status.includes('수리') ? 'c-down' : 'c-flat'}" style="background:var(--surface-2);">${r.count}개 · ${r.status}</span>
+          </div>
+          <div style="font-size:12px;color:var(--ink-3);">대응: ${r.action}</div>
+        </div>
+      `).join("");
+
+      document.getElementById("seoPage1Blockers").innerHTML = (seoData.why_not_page1 || []).map(b => `
+        <div class="holding-row" style="flex-direction:column;align-items:stretch;gap:4px;">
+          <strong style="font-size:13px;color:var(--ink);">${b.factor}</strong>
+          <div style="font-size:12px;color:var(--ink-2);line-height:1.45;">${b.detail}</div>
+        </div>
+      `).join("");
+
+      document.getElementById("seoNaverOpps").innerHTML = (n.ctr_opportunities || []).map(o => `
+        <div class="holding-row" style="flex-direction:column;align-items:stretch;gap:4px;">
+          <div style="display:flex;justify-content:space-between;align-items:center;">
+            <strong style="font-size:13px;color:var(--ink);">${o.kw}</strong>
+            <span class="badge c-down" style="background:var(--surface-2);">노출 ${o.impressions.toLocaleString()} · CTR ${o.ctr}%</span>
+          </div>
+          <div style="font-size:12px;color:var(--ink-2);">${o.tip}</div>
+        </div>
+      `).join("");
+
+      document.getElementById("seoTopKeywords").innerHTML = `
+        <div style="font-size:12px;font-weight:700;color:var(--ink-2);margin-bottom:6px;">구글 효자 키워드</div>
+        ${g.top_keywords.map(k => `<div class="holding-row"><span style="font-size:13px;">${k.kw}</span><span class="t-num" style="font-size:12px;color:var(--ink-2);">${k.clicks}클릭 / ${k.impressions}노출 (${k.ctr}%)</span></div>`).join("")}
+        <div style="font-size:12px;font-weight:700;color:var(--ink-2);margin:12px 0 6px;">네이버 효자 문서</div>
+        ${n.top_pages.map(p => `<div class="holding-row"><span style="font-size:13px;">${p.title}</span><span class="t-num" style="font-size:12px;color:var(--ink-2);">${p.clicks}클릭 / ${p.impressions.toLocaleString()}노출 (${p.ctr}%)</span></div>`).join("")}
+      `;
     }
 
     async function loadData() {

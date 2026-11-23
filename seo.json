@@ -1,0 +1,75 @@
+{
+  "updated_at": "2026-11-23 19:35",
+  "site": "https://staynplan.com",
+  "goal": {
+    "daily_adsense_usd": 100,
+    "target_daily_pv": 12000
+  },
+  "portals": {
+    "google": {
+      "period": "최근 3개월",
+      "clicks": 95,
+      "impressions": 3534,
+      "ctr": 2.7,
+      "avg_pos": 10.8,
+      "indexed": 200,
+      "not_indexed": 268,
+      "index_rate": 42.7,
+      "reasons": [
+        { "reason": "NOINDEX 태그 제외 (태그/아카이브 등)", "count": 94, "status": "정상/점검", "action": "유지 (필요 페이지만 해제)" },
+        { "reason": "찾을 수 없음 (404)", "count": 67, "status": "수리 필요", "action": "301 리디렉션 정리" },
+        { "reason": "크롤링됨 - 현재 색인이 생성되지 않음", "count": 50, "status": "핵심 복구", "action": "매일 URL 검사 색인 요청 + 도입부 보강" },
+        { "reason": "리디렉션 포함 페이지", "count": 31, "status": "참고", "action": "슬래시/구주소 정리" },
+        { "reason": "표준 태그 포함 대체 페이지", "count": 17, "status": "정상", "action": "유지" },
+        { "reason": "표준 없는 중복 / 발견됨-미색인", "count": 9, "status": "점검", "action": "신규 글 순차 색인 요청" }
+      ],
+      "top_keywords": [
+        { "kw": "모두의그린카드", "clicks": 18, "impressions": 198, "ctr": 9.1 },
+        { "kw": "공공조달관리사 연봉/채용", "clicks": 11, "impressions": 141, "ctr": 7.8 },
+        { "kw": "남대문 꽃시장 영업시간/토·일", "clicks": 9, "impressions": 252, "ctr": 3.6 },
+        { "kw": "침대 난간 설치", "clicks": 1, "impressions": 13, "ctr": 7.7 }
+      ]
+    },
+    "naver": {
+      "period": "최근 30일 (11/22 기준)",
+      "clicks": 790,
+      "clicks_mom": "+2,530%",
+      "impressions": 118000,
+      "impressions_mom": "+4,784.7%",
+      "ctr": 0.7,
+      "ssl_ok": true,
+      "sitemap_ok": true,
+      "top_pages": [
+        { "title": "요양보호사 월급", "clicks": 78, "impressions": 6795, "ctr": 1.1 },
+        { "title": "문턱 제거 기준", "clicks": 37, "impressions": 1388, "ctr": 2.7 },
+        { "title": "건설근로자공제회 퇴직공제금", "clicks": 28, "impressions": 2284, "ctr": 1.2 },
+        { "title": "요양보호사 자격증", "clicks": 26, "impressions": 2208, "ctr": 1.2 },
+        { "title": "현관 센서등", "clicks": 22, "impressions": 2441, "ctr": 0.9 }
+      ],
+      "ctr_opportunities": [
+        { "kw": "요양기관정보마당", "impressions": 15404, "clicks": 2, "ctr": 0.0, "tip": "검색자 의도(기관 찾기·수가 조회)에 맞게 제목 전면 교체" },
+        { "kw": "방문요양보호사 월급", "impressions": 331, "clicks": 2, "ctr": 0.6, "tip": "2026 시급·실수령액 숫자를 제목 앞단에 배치" },
+        { "kw": "요양보호사 월급", "impressions": 6795, "clicks": 78, "ctr": 1.1, "tip": "주휴수당·4대보험 포함 실수령 표 강조로 CTR 3% 목표" }
+      ]
+    },
+    "daum": {
+      "status": "200 정상",
+      "daily_crawl_10d": 42,
+      "weekly_crawl_10w": 177,
+      "daily_index_10d": 20,
+      "weekly_index_10w": 22,
+      "today_impressions": 29,
+      "daily_impressions_10d": 40,
+      "weekly_impressions_10w": 295
+    }
+  },
+  "history": [
+    { "date": "2026-11-23", "g_clicks": 95, "g_impr": 3534, "g_indexed": 200, "g_unindexed": 268, "n_clicks": 790, "n_impr": 118000, "d_impr": 29 }
+  ],
+  "why_not_page1": [
+    { "factor": "도메인 나이 (1개월 차)", "detail": "구글 평균 순위 10.8위로 1페이지 끝자락에 걸려 있음. 누적 신뢰도만 붙으면 5위권 진입 가능." },
+    { "factor": "404 오류 67개 · 미색인 50개", "detail": "크롤러가 깨진 URL에 시간을 낭비해 새 글 색인 속도와 사이트 점수가 깎이고 있음." },
+    { "factor": "주제 권위 분산", "detail": "부모님 안심홈·요양 주제와 일반 계산기·자격증이 섞여 있어 핵심 클러스터 집중 필요." },
+    { "factor": "낮은 제목 CTR (네이버 0.7%)", "detail": "노출은 11.8만 회나 되지만 제목이 백과사전식이라 클릭으로 전환되지 않고 있음." }
+  ]
+}
