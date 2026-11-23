@@ -1,13 +1,13 @@
 {
-  "updated_at": "2026-11-23 17:47",
+  "updated_at": "2026-11-23 17:57",
   "history": [
     {
-      "ts": "2026-11-23T17:47:57+09:00",
+      "ts": "2026-11-23T17:57:30+09:00",
       "date": "2026-11-23",
-      "label": "11/23 17:47",
-      "total_krw": 7058647,
+      "label": "11/23 17:57",
+      "total_krw": 7058643,
       "kiwoom_krw": 6630545,
-      "okx_krw": 428102,
+      "okx_krw": 428098,
       "okx_usd": 318.19,
       "kiwoom_pnl_krw": -218886,
       "kiwoom_pnl_pct": -3.88,
@@ -67,9 +67,9 @@
     },
     "okx": {
       "total_usd": 318.19,
-      "total_krw": 428102,
+      "total_krw": 428098,
       "trading_usd": 317.68,
-      "trading_krw": 427416,
+      "trading_krw": 427412,
       "funding_usd": 0.51,
       "funding_krw": 686,
       "earn_usd": 0.0,
@@ -80,7 +80,7 @@
           "name": "USDT (Trading)",
           "sub": "318.10 USDT · 포지션 없음",
           "usd": 317.69,
-          "krw": 427431,
+          "krw": 427419,
           "pl_usd": 0.0,
           "rt": 0.0
         },
@@ -390,7 +390,7 @@
       "amount": 318.4171,
       "fee": 0.318417,
       "tax": 0,
-      "pnl": -121.18,
+      "pnl": 0,
       "currency": "USD"
     },
     {
@@ -1942,7 +1942,7 @@
       "amount": 65.8395,
       "fee": 0.065839,
       "tax": 0,
-      "pnl": -70.23,
+      "pnl": 0,
       "currency": "USD"
     },
     {
@@ -1958,7 +1958,7 @@
       "amount": 1.1991,
       "fee": 0.001199,
       "tax": 0,
-      "pnl": -1.2,
+      "pnl": -0.4,
       "currency": "USD"
     },
     {
@@ -6228,8 +6228,8 @@
       "sell_amt": 725.73,
       "avg_sell": 1.348625,
       "fee_tax": 0.8818,
-      "realized_pl": -192.6,
-      "realized_rt": -55.54,
+      "realized_pl": -0.4,
+      "realized_rt": -50.04,
       "holding_qty": 0,
       "unrealized_pl": 0,
       "unrealized_rt": 0.0,
@@ -7584,6 +7584,107 @@
       "unrealized_rt": 0.0,
       "last_date": "2025-11-03",
       "trade_count": 5
+    }
+  ],
+  "okx_transfers": [
+    {
+      "id": "okx_dep_447423378",
+      "source": "OKX",
+      "symbol": "XRP-USDT",
+      "date": "2026-11-22",
+      "time": "08:56:59",
+      "kind": "입금",
+      "qty": 342.089697
+    },
+    {
+      "id": "okx_dep_419198583",
+      "source": "OKX",
+      "symbol": "XRP-USDT",
+      "date": "2026-07-28",
+      "time": "11:33:52",
+      "kind": "입금",
+      "qty": 61.211875
+    },
+    {
+      "id": "okx_dep_418997660",
+      "source": "OKX",
+      "symbol": "TRX-USDT",
+      "date": "2026-07-27",
+      "time": "15:19:08",
+      "kind": "입금",
+      "qty": 12.268307
+    },
+    {
+      "id": "okx_dep_353294989",
+      "source": "OKX",
+      "symbol": "XRP-USDT",
+      "date": "2025-11-02",
+      "time": "20:47:03",
+      "kind": "입금",
+      "qty": 133.745271
+    },
+    {
+      "id": "okx_dep_334414867",
+      "source": "OKX",
+      "symbol": "XRP-USDT",
+      "date": "2025-08-31",
+      "time": "11:32:39",
+      "kind": "입금",
+      "qty": 16.867848
+    },
+    {
+      "id": "okx_dep_332447083",
+      "source": "OKX",
+      "symbol": "XRP-USDT",
+      "date": "2025-08-24",
+      "time": "01:05:16",
+      "kind": "입금",
+      "qty": 74.426424
+    },
+    {
+      "id": "okx_dep_324292824",
+      "source": "OKX",
+      "symbol": "XRP-USDT",
+      "date": "2025-07-25",
+      "time": "10:21:56",
+      "kind": "입금",
+      "qty": 40.387891
+    },
+    {
+      "id": "okx_dep_260702767",
+      "source": "OKX",
+      "symbol": "ETH-USDT",
+      "date": "2024-12-15",
+      "time": "19:57:41",
+      "kind": "입금",
+      "qty": 0.00843842
+    },
+    {
+      "id": "okx_wd_425126594",
+      "source": "OKX",
+      "symbol": "TRX-USDT",
+      "date": "2026-08-25",
+      "time": "08:45:08",
+      "kind": "출금",
+      "qty": 188.507905
+    },
+    {
+      "id": "okx_wd_354204915",
+      "source": "OKX",
+      "symbol": "XRP-USDT",
+      "date": "2025-11-07",
+      "time": "07:12:12",
+      "kind": "출금",
+      "qty": 155.730871
+    },
+    {
+      "id": "okx_wd_338422413",
+      "source": "OKX",
+      "symbol": "XRP-USDT",
+      "date": "2025-09-12",
+      "time": "11:17:13",
+      "kind": "출금",
+      "qty": 561.84266
     }
   ]
 }
