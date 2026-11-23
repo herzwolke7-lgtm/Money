@@ -344,11 +344,11 @@
         <button class="pill-btn" onclick="setJTab('daily', this)">일별 손익</button>
         <button class="pill-btn" onclick="setJTab('fills', this)">전체 체결</button>
       </div>
-      <div class="period-row" style="margin-top:8px;">
+      <div class="period-row" id="outcomeRow" style="margin-top:8px;">
         <button class="p-btn active" onclick="setJOutcome('all', this)">전체</button>
         <button class="p-btn" onclick="setJOutcome('win', this)">수익만</button>
         <button class="p-btn" onclick="setJOutcome('loss', this)">손실만</button>
-        <button class="p-btn" onclick="setJOutcome('hold', this)">보유중</button>
+        <button class="p-btn" id="holdFilterBtn" onclick="setJOutcome('hold', this)">보유중</button>
       </div>
     </section>
 
@@ -401,6 +401,34 @@
       return o.total_usd ? (o.total_krw / o.total_usd) : 1347;
     }
 
+    // Build chronological (oldest -> newest) realized PnL daily series for chart & period filters
+    function buildRealizedSeries(acct) {
+      if (!payload) return [];
+      const rate = usdKrwRate();
+      const map = {};
+
+      if (acct === "all" || acct === "kiwoom") {
+        (payload.daily_pnl || []).forEach(d => {
+          if (!map[d.date]) map[d.date] = 0;
+          map[d.date] += d.realized_pl;
+        });
+      }
+      if (acct === "all" || acct === "okx") {
+        (payload.trades || []).filter(t => t.source === "OKX" && t.side === "매도").forEach(t => {
+          if (!map[t.date]) map[t.date] = 0;
+          const v = acct === "okx" ? (t.pnl || 0) : Math.round((t.pnl || 0) * rate);
+          map[t.date] += v;
+        });
+      }
+
+      const dates = Object.keys(map).sort((a, b) => a.localeCompare(b)); // ALWAYS ASCENDING
+      let cum = 0;
+      return dates.map(date => {
+        cum += map[date];
+        return { date, daily: map[date], cum };
+      });
+    }
+
     function setMode(mode, btn) {
       document.querySelectorAll(".seg-btn").forEach(b => b.classList.remove("active"));
       if (btn) btn.classList.add("active");
@@ -415,16 +443,15 @@
         payload = await res.json();
         document.getElementById("asOf").textContent = payload.updated_at;
 
+        const series = buildRealizedSeries("all");
         const hist = payload.history || [];
-        if (hist.length) {
-          const minD = hist[0].date;
-          const maxD = hist[hist.length - 1].date;
-          ["singleDate", "startDate", "endDate"].forEach(id => {
-            const el = document.getElementById(id);
-            el.min = minD; el.max = maxD;
-            el.value = id === "startDate" ? minD : maxD;
-          });
-        }
+        const minD = series.length ? series[0].date : (hist[0]?.date || "2026-01-01");
+        const maxD = hist.length ? hist[hist.length - 1].date : (series[series.length - 1]?.date || "2026-11-23");
+        ["singleDate", "startDate", "endDate"].forEach(id => {
+          const el = document.getElementById(id);
+          el.min = minD; el.max = maxD;
+          el.value = id === "startDate" ? minD : maxD;
+        });
         renderAll();
         renderJournal();
       } catch (e) {
@@ -532,6 +559,13 @@
       document.getElementById("jSymbolsPane").style.display = tab === "symbols" ? "grid" : "none";
       document.getElementById("jDailyPane").style.display = tab === "daily" ? "block" : "none";
       document.getElementById("jFillsPane").style.display = tab === "fills" ? "block" : "none";
+      document.getElementById("outcomeRow").style.display = tab === "fills" ? "none" : "flex";
+      document.getElementById("holdFilterBtn").style.display = tab === "symbols" ? "inline-block" : "none";
+      if (tab === "daily" && jOutcome === "hold") {
+        jOutcome = "all";
+        document.querySelectorAll("#outcomeRow .p-btn").forEach((b, i) => b.classList.toggle("active", i === 0));
+      }
+      renderJournal();
     }
 
     function setJSource(src, btn) {
@@ -555,7 +589,6 @@
       const kwDaily = payload.daily_pnl || [];
       const rate = usdKrwRate();
 
-      // Calculate OKX 3-month realized PnL & daily PnL from OKX trades
       const okxSyms = summaries.filter(s => s.source === "OKX");
       const okxRealizedUsd = okxSyms.reduce((a, b) => a + (b.realized_pl || 0), 0);
       const okxRealizedKrw = Math.round(okxRealizedUsd * rate);
@@ -632,8 +665,8 @@
           pnlText = isKrw ? fmtKrw(s.realized_pl) : `${fmtUsd(s.realized_pl)} (${fmtKrw(s.realized_pl * rate)})`;
           rtText = "매도 실현 " + fmtPct(s.realized_rt);
         } else if (hasSell) {
-          pnlText = "이전 보유분 매도";
-          rtText = "매수기록 기간 외";
+          pnlText = hasBuy ? "이전 보유분 선매도" : "이전 보유분 매도";
+          rtText = hasBuy ? "눌러서 상세 확인" : "매수기록 기간 외";
         }
 
         const buyLine = hasBuy
@@ -710,7 +743,6 @@
           </div>`;
       }).join("");
 
-      // Daily PnL scoped by jSource
       const okxDailyMap = {};
       trades.filter(t => t.source === "OKX").forEach(t => {
         if (!okxDailyMap[t.date]) okxDailyMap[t.date] = { date: t.date, buy: 0, sell: 0, pl: 0 };
@@ -725,23 +757,25 @@
         dailyTitle.textContent = "일별 실현손익 (OKX · 3개월)";
         pnlBadge.textContent = fmtUsd(okxRealizedUsd);
         pnlBadge.className = "sec-meta " + (okxRealizedUsd > 0 ? "up" : okxRealizedUsd < 0 ? "down" : "flat");
-        document.getElementById("dailyPnlRows").innerHTML = okxDaily.map(d => {
+        const rows = okxDaily.filter(d => jOutcome === "all" || (jOutcome === "win" && d.pl > 0) || (jOutcome === "loss" && d.pl < 0));
+        document.getElementById("dailyPnlRows").innerHTML = rows.map(d => {
           const cls = d.pl > 0 ? "c-up" : d.pl < 0 ? "c-down" : "c-flat";
           return `
             <div class="holding-row">
               <div class="h-left"><div class="h-name">${d.date}</div><div class="h-sub">매도 $${d.sell.toFixed(2)} · 매수 $${d.buy.toFixed(2)}</div></div>
               <div class="h-right"><div class="h-val ${cls}">${fmtUsd(d.pl)}</div></div>
             </div>`;
-        }).join("");
+        }).join("") || `<div style="padding:16px 0;text-align:center;color:var(--ink-3);font-size:13px;">해당 조건의 일별 기록이 없습니다</div>`;
       } else {
         dailyTitle.textContent = jSource === "키움" ? "일별 실현손익 (키움)" : "일별 실현손익 (키움 + OKX)";
         const combined = kwRealized + (jSource === "all" ? okxRealizedKrw : 0);
         pnlBadge.textContent = fmtKrw(combined);
         pnlBadge.className = "sec-meta " + (combined > 0 ? "up" : combined < 0 ? "down" : "flat");
-        const merged = kwDaily.map(d => ({ date: d.date, sub: `키움 · 매도 ${d.sell_amt.toLocaleString()} · 매수 ${d.buy_amt.toLocaleString()}`, pl: d.realized_pl }));
+        let merged = kwDaily.map(d => ({ date: d.date, sub: `키움 · 매도 ${d.sell_amt.toLocaleString()} · 매수 ${d.buy_amt.toLocaleString()}`, pl: d.realized_pl }));
         if (jSource === "all") {
           okxDaily.forEach(d => merged.push({ date: d.date, sub: `OKX · 매도 $${d.sell.toFixed(2)} · 매수 $${d.buy.toFixed(2)}`, pl: Math.round(d.pl * rate), usd: d.pl }));
         }
+        merged = merged.filter(d => jOutcome === "all" || (jOutcome === "win" && d.pl > 0) || (jOutcome === "loss" && d.pl < 0));
         merged.sort((a, b) => b.date.localeCompare(a.date));
         document.getElementById("dailyPnlRows").innerHTML = merged.map(d => {
           const cls = d.pl > 0 ? "c-up" : d.pl < 0 ? "c-down" : "c-flat";
@@ -750,7 +784,7 @@
               <div class="h-left"><div class="h-name">${d.date}</div><div class="h-sub">${d.sub}</div></div>
               <div class="h-right"><div class="h-val ${cls}">${d.usd !== undefined ? fmtUsd(d.usd) + " (" + fmtKrw(d.pl) + ")" : fmtKrw(d.pl)}</div></div>
             </div>`;
-        }).join("");
+        }).join("") || `<div style="padding:16px 0;text-align:center;color:var(--ink-3);font-size:13px;">해당 조건의 일별 기록이 없습니다</div>`;
       }
     }
 
@@ -780,7 +814,7 @@
       applyPeriod(period);
     }
 
-    function filterByPeriod(period) {
+    function filterHistByPeriod(period) {
       const hist = payload.history;
       if (!hist.length) return [];
       const latestDate = new Date(hist[hist.length - 1].date + "T00:00:00");
@@ -790,105 +824,172 @@
       return hist.filter(d => new Date(d.date + "T00:00:00") >= cutoff);
     }
 
-    function updatePnlPill(points, label) {
-      const pill = document.getElementById("periodPnl");
-      const kw = payload.latest.kiwoom;
-      const okx = payload.latest.okx;
-      if (points.length >= 2) {
-        const start = getVal(points[0]);
-        const end = getVal(points[points.length - 1]);
-        const diff = end - start;
-        const pct = start ? (diff / start) * 100 : 0;
-        pill.className = "delta-tag " + (diff > 0 ? "up" : diff < 0 ? "down" : "flat");
-        pill.textContent = `${label} ${fmtKrw(diff)} (${fmtPct(pct)})`;
-      } else if (currentAcct === "okx") {
-        pill.className = "delta-tag flat";
-        pill.textContent = `평가손익 $${okx.pnl_usd.toFixed(2)} (${fmtPct(okx.pnl_pct)})`;
-      } else {
-        const pnl = kw.tot_pl_krw;
-        const base = currentAcct === "kiwoom" ? kw.tot_pur_krw : (payload.history[0].total_krw - pnl);
-        const pct = base ? (pnl / base) * 100 : 0;
-        pill.className = "delta-tag " + (pnl > 0 ? "up" : pnl < 0 ? "down" : "flat");
-        pill.textContent = `${label} 평가손익 ${fmtKrw(pnl)} (${fmtPct(pct)})`;
-      }
+    function filterSeriesByPeriod(series, period) {
+      if (!series.length) return [];
+      const latestStr = payload.history[payload.history.length - 1]?.date || series[series.length - 1].date;
+      const latestDate = new Date(latestStr + "T00:00:00");
+      const daysMap = { today: 0, "1w": 7, "1m": 30, "2m": 60, "3m": 90, "6m": 180, "1y": 365, all: 99999 };
+      const days = daysMap[period] ?? 0;
+      const cutoff = new Date(latestDate.getTime() - days * 86400000);
+      const filtered = series.filter(s => new Date(s.date + "T00:00:00") >= cutoff);
+      let cum = 0;
+      return filtered.map(s => { cum += s.daily; return { date: s.date, daily: s.daily, cum }; });
     }
 
     function applyPeriod(period) {
       if (!payload) return;
       const labels = { today: "오늘", "1w": "1주", "1m": "1달", "2m": "2달", "3m": "3달", "6m": "6달", "1y": "1년", all: "전체" };
-      const pts = filterByPeriod(period);
-      updatePnlPill(pts, labels[period]);
-      renderChart(pts, labels[period]);
+      const label = labels[period];
+      const histPts = filterHistByPeriod(period);
+
+      if (histPts.length >= 2) {
+        const start = getVal(histPts[0]);
+        const end = getVal(histPts[histPts.length - 1]);
+        const diff = end - start;
+        const pct = start ? (diff / start) * 100 : 0;
+        const pill = document.getElementById("periodPnl");
+        pill.className = "delta-tag " + (diff > 0 ? "up" : diff < 0 ? "down" : "flat");
+        pill.textContent = `${label} ${fmtKrw(diff)} (${fmtPct(pct)})`;
+        renderAssetChart(histPts, label);
+        return;
+      }
+
+      const fullSeries = buildRealizedSeries(currentAcct);
+      const scoped = period === "today" ? fullSeries : filterSeriesByPeriod(fullSeries, period);
+      const pill = document.getElementById("periodPnl");
+      const kw = payload.latest.kiwoom;
+      const okx = payload.latest.okx;
+
+      if (period === "today") {
+        if (currentAcct === "okx") {
+          pill.className = "delta-tag flat";
+          pill.textContent = `오늘 평가손익 $${okx.pnl_usd.toFixed(2)} (${fmtPct(okx.pnl_pct)})`;
+        } else {
+          const pnl = kw.tot_pl_krw;
+          const base = currentAcct === "kiwoom" ? kw.tot_pur_krw : (payload.history[0].total_krw - pnl);
+          const pct = base ? (pnl / base) * 100 : 0;
+          pill.className = "delta-tag " + (pnl > 0 ? "up" : pnl < 0 ? "down" : "flat");
+          pill.textContent = `오늘 평가손익 ${fmtKrw(pnl)} (${fmtPct(pct)})`;
+        }
+        renderRealizedChart(fullSeries, currentAcct === "okx" ? "OKX 최근 3개월 누적 실현손익" : (currentAcct === "kiwoom" ? "키움 올해 누적 실현손익" : "전체 누적 실현손익"));
+      } else {
+        const periodSum = scoped.length ? scoped[scoped.length - 1].cum : 0;
+        pill.className = "delta-tag " + (periodSum > 0 ? "up" : periodSum < 0 ? "down" : "flat");
+        pill.textContent = currentAcct === "okx"
+          ? `${label} 실현손익 ${fmtUsd(periodSum)}`
+          : `${label} 실현손익 ${fmtKrw(periodSum)}`;
+        renderRealizedChart(scoped.length ? scoped : fullSeries, `${label} 실현손익 추이`);
+      }
     }
 
     function pickSingleDate(val) {
-      if (!payload) return;
-      const found = payload.history.filter(d => d.date === val);
-      if (found.length) { updatePnlPill(found, val); renderChart(found, val); }
-      else { document.getElementById("chartNote").textContent = `${val} 기록 없음`; }
+      if (!payload || !val) return;
+      const full = buildRealizedSeries(currentAcct);
+      const found = full.filter(s => s.date === val);
+      const pill = document.getElementById("periodPnl");
+      if (found.length) {
+        const v = found[0].daily;
+        pill.className = "delta-tag " + (v > 0 ? "up" : v < 0 ? "down" : "flat");
+        pill.textContent = currentAcct === "okx" ? `${val} 실현 ${fmtUsd(v)}` : `${val} 실현 ${fmtKrw(v)}`;
+        renderRealizedChart(found, val);
+      } else {
+        pill.className = "delta-tag flat";
+        pill.textContent = `${val} 매도 기록 없음`;
+        document.getElementById("chartNote").textContent = `${val}에는 체결된 매도 기록이 없습니다`;
+      }
     }
 
     function pickRange() {
       if (!payload) return;
       const s = document.getElementById("startDate").value;
       const e = document.getElementById("endDate").value;
-      const found = payload.history.filter(d => (!s || d.date >= s) && (!e || d.date <= e));
-      if (found.length) { updatePnlPill(found, `${s}~${e}`); renderChart(found, `${s}~${e}`); }
-      else { document.getElementById("chartNote").textContent = "선택한 기간의 기록 없음"; }
+      const full = buildRealizedSeries(currentAcct);
+      const filtered = full.filter(x => (!s || x.date >= s) && (!e || x.date <= e));
+      let cum = 0;
+      const scoped = filtered.map(x => { cum += x.daily; return { date: x.date, daily: x.daily, cum }; });
+      const pill = document.getElementById("periodPnl");
+      if (scoped.length) {
+        pill.className = "delta-tag " + (cum > 0 ? "up" : cum < 0 ? "down" : "flat");
+        pill.textContent = currentAcct === "okx" ? `${s}~${e} ${fmtUsd(cum)}` : `${s}~${e} ${fmtKrw(cum)}`;
+        renderRealizedChart(scoped, `${s} ~ ${e}`);
+      } else {
+        pill.className = "delta-tag flat";
+        pill.textContent = `${s}~${e} 기록 없음`;
+        document.getElementById("chartNote").textContent = "선택한 기간의 체결 기록이 없습니다";
+      }
     }
 
-    function renderChart(points, label) {
+    function renderRealizedChart(series, titleLabel) {
       const svg = document.getElementById("chartSvg");
       const w = 320, h = 110, padX = 10, padTop = 12, padBot = 14;
       svg.innerHTML = "";
       const hoverDate = document.getElementById("hoverDate");
       const hoverVal = document.getElementById("hoverVal");
       const noteEl = document.getElementById("chartNote");
+      const fmt = v => currentAcct === "okx" ? fmtUsd(v) : fmtKrw(v);
 
-      if (points.length <= 1 && payload.daily_pnl && payload.daily_pnl.length > 1) {
-        let cum = 0;
-        const series = payload.daily_pnl.map(d => { cum += d.realized_pl; return { date: d.date, val: cum }; });
-        const vals = series.map(s => s.val);
-        const min = Math.min(...vals, 0), max = Math.max(...vals, 1);
-        const span = (max - min) || 1;
-        const coords = series.map((s, i) => ({
-          x: padX + (i / (series.length - 1)) * (w - padX * 2),
-          y: h - padBot - ((s.val - min) / span) * (h - padTop - padBot),
-          item: s
-        }));
-        const linePts = coords.map(c => `${c.x.toFixed(1)},${c.y.toFixed(1)}`).join(" ");
-        const areaPts = `${coords[0].x.toFixed(1)},${h - padBot} ${linePts} ${coords[coords.length - 1].x.toFixed(1)},${h - padBot}`;
-        const defs = document.createElementNS("http://www.w3.org/2000/svg", "defs");
-        defs.innerHTML = `<linearGradient id="cumG" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#161615" stop-opacity="0.12"/><stop offset="100%" stop-color="#161615" stop-opacity="0"/></linearGradient>`;
-        svg.appendChild(defs);
-        const polyArea = document.createElementNS("http://www.w3.org/2000/svg", "polygon");
-        polyArea.setAttribute("fill", "url(#cumG)"); polyArea.setAttribute("points", areaPts);
-        svg.appendChild(polyArea);
-        const poly = document.createElementNS("http://www.w3.org/2000/svg", "polyline");
-        poly.setAttribute("fill", "none"); poly.setAttribute("stroke", "#161615");
-        poly.setAttribute("stroke-width", "1.8"); poly.setAttribute("points", linePts);
-        svg.appendChild(poly);
-        hoverDate.textContent = `키움 누적 실현손익 (${series[0].date} ~ ${series[series.length - 1].date})`;
-        hoverVal.textContent = fmtKrw(cum);
-        noteEl.textContent = "총 자산 스냅샷은 오늘부터 매일 자동 누적됩니다 (현재는 올해 누적 실현손익 추이 표시)";
-        const onP = (cx) => {
-          const rect = svg.getBoundingClientRect();
-          const sx = ((cx - rect.left) / rect.width) * w;
-          let near = coords[0], best = Math.abs(sx - near.x);
-          for (const c of coords) { const d = Math.abs(sx - c.x); if (d < best) { best = d; near = c; } }
-          hoverDate.textContent = near.item.date;
-          hoverVal.textContent = fmtKrw(near.item.val);
-        };
-        svg.onpointermove = (e) => onP(e.clientX);
-        svg.onpointerdown = (e) => onP(e.clientX);
+      if (!series.length) {
+        hoverDate.textContent = titleLabel;
+        hoverVal.textContent = "-";
+        noteEl.textContent = "표시할 체결 기록이 없습니다";
         return;
       }
 
-      if (!points.length) return;
+      if (series.length === 1) {
+        hoverDate.textContent = series[0].date;
+        hoverVal.textContent = fmt(series[0].cum);
+        noteEl.textContent = `${titleLabel} (1건)`;
+        const c = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+        c.setAttribute("cx", w / 2); c.setAttribute("cy", h / 2); c.setAttribute("r", 4); c.setAttribute("fill", "#161615");
+        svg.appendChild(c);
+        return;
+      }
+
+      const vals = series.map(s => s.cum);
+      const min = Math.min(...vals, 0), max = Math.max(...vals, 1);
+      const span = (max - min) || 1;
+      const coords = series.map((s, i) => ({
+        x: padX + (i / (series.length - 1)) * (w - padX * 2),
+        y: h - padBot - ((s.cum - min) / span) * (h - padTop - padBot),
+        item: s
+      }));
+      const linePts = coords.map(c => `${c.x.toFixed(1)},${c.y.toFixed(1)}`).join(" ");
+      const areaPts = `${coords[0].x.toFixed(1)},${h - padBot} ${linePts} ${coords[coords.length - 1].x.toFixed(1)},${h - padBot}`;
+      const defs = document.createElementNS("http://www.w3.org/2000/svg", "defs");
+      defs.innerHTML = `<linearGradient id="cumG" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#161615" stop-opacity="0.12"/><stop offset="100%" stop-color="#161615" stop-opacity="0"/></linearGradient>`;
+      svg.appendChild(defs);
+      const polyArea = document.createElementNS("http://www.w3.org/2000/svg", "polygon");
+      polyArea.setAttribute("fill", "url(#cumG)"); polyArea.setAttribute("points", areaPts);
+      svg.appendChild(polyArea);
+      const poly = document.createElementNS("http://www.w3.org/2000/svg", "polyline");
+      poly.setAttribute("fill", "none"); poly.setAttribute("stroke", "#161615");
+      poly.setAttribute("stroke-width", "1.8"); poly.setAttribute("points", linePts);
+      svg.appendChild(poly);
+
+      hoverDate.textContent = `${titleLabel} (${series[0].date} → ${series[series.length - 1].date})`;
+      hoverVal.textContent = fmt(series[series.length - 1].cum);
+      noteEl.textContent = "왼쪽(과거) → 오른쪽(최신) · 차트를 터치하면 날짜별 누적 손익이 보입니다";
+
+      const onP = (cx) => {
+        const rect = svg.getBoundingClientRect();
+        const sx = ((cx - rect.left) / rect.width) * w;
+        let near = coords[0], best = Math.abs(sx - near.x);
+        for (const c of coords) { const d = Math.abs(sx - c.x); if (d < best) { best = d; near = c; } }
+        hoverDate.textContent = near.item.date;
+        hoverVal.textContent = fmt(near.item.cum) + ` (당일 ${fmt(near.item.daily)})`;
+      };
+      svg.onpointermove = (e) => onP(e.clientX);
+      svg.onpointerdown = (e) => onP(e.clientX);
+    }
+
+    function renderAssetChart(points, label) {
+      const svg = document.getElementById("chartSvg");
+      const w = 320, h = 110, padX = 10, padTop = 12, padBot = 14;
+      svg.innerHTML = "";
       const last = points[points.length - 1];
-      hoverDate.textContent = last.date;
-      hoverVal.textContent = getVal(last).toLocaleString() + "원";
-      noteEl.textContent = `${label} · ${points[0].date} ~ ${last.date} (${points.length}건)`;
+      document.getElementById("hoverDate").textContent = last.date;
+      document.getElementById("hoverVal").textContent = getVal(last).toLocaleString() + "원";
+      document.getElementById("chartNote").textContent = `${label} · ${points[0].date} → ${last.date} (${points.length}건)`;
       const vals = points.map(getVal);
       const min = Math.min(...vals), max = Math.max(...vals);
       const span = (max - min) || 1;
