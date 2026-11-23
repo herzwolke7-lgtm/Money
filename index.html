@@ -258,6 +258,47 @@
       .portal-table td.p-stat { display: inline-block; margin-right: 10px; font-size: 12px; color: var(--ink-2); }
       .portal-table td.p-note { font-size: 12px; color:var(--ink-3); margin-top: 4px; }
     }
+
+    /* Notes Timeline Redesign */
+    .routine-strip {
+      display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px; margin-bottom: 12px;
+    }
+    @media (max-width: 640px) { .routine-strip { grid-template-columns: repeat(2, 1fr); } }
+    .routine-chip {
+      background: var(--surface); border: 1px solid var(--hairline); border-radius: 10px;
+      padding: 8px 10px; display: flex; flex-direction: column; gap: 2px;
+    }
+    .routine-chip .rc-time { font-size: 11px; font-weight: 700; color: var(--ink); font-variant-numeric: tabular-nums; }
+    .routine-chip .rc-name { font-size: 11px; color: var(--ink-3); }
+    .note-date-group { margin-top: 14px; }
+    .note-date-group:first-child { margin-top: 0; }
+    .note-date-label {
+      font-size: 11px; font-weight: 700; color: var(--ink-3); letter-spacing: 0.02em;
+      padding: 4px 0 8px; border-bottom: 1px solid var(--hairline); margin-bottom: 8px;
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    .note-card {
+      position: relative; background: var(--surface-2); border: 1px solid var(--hairline);
+      border-left: 3px solid var(--ink-3); border-radius: 10px;
+      padding: 12px 14px; margin-bottom: 8px;
+    }
+    .note-card:last-child { margin-bottom: 0; }
+    .note-card.cat-morning { border-left-color: #d97706; }
+    .note-card.cat-stock { border-left-color: #2563eb; }
+    .note-card.cat-crypto { border-left-color: #7c3aed; }
+    .note-card.cat-seo { border-left-color: #059669; }
+    .note-card.cat-lottery { border-left-color: #e11d48; }
+    .note-card.is-high { background: #fffbf7; border-color: #fed7aa; border-left-color: #ea580c; }
+    .note-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 8px; margin-bottom: 6px; }
+    .note-title { font-size: 14px; font-weight: 700; color: var(--ink); line-height: 1.35; }
+    .note-meta { display: flex; align-items: center; gap: 6px; flex-shrink: 0; }
+    .note-cat-pill {
+      font-size: 10px; font-weight: 700; padding: 2px 7px; border-radius: 999px;
+      background: var(--surface); border: 1px solid var(--hairline-2); color: var(--ink-2); white-space: nowrap;
+    }
+    .note-time { font-size: 11px; color: var(--ink-3); font-variant-numeric: tabular-nums; margin-top: 6px; }
+    .note-summary { font-size: 13px; color: var(--ink-2); line-height: 1.55; }
+    .panel { box-shadow: 0 1px 2px rgba(24,24,22,0.03); }
   </style>
 </head>
 <body>
@@ -506,6 +547,13 @@
 
   <!-- NOTES VIEW -->
   <main id="notesView" style="display:none;">
+    <div class="routine-strip">
+      <div class="routine-chip"><span class="rc-time">☀️ 06:20 매일</span><span class="rc-name">아침 · 종목뉴스</span></div>
+      <div class="routine-chip"><span class="rc-time">🔍 09:00 매일</span><span class="rc-name">3포털 SEO 색인</span></div>
+      <div class="routine-chip"><span class="rc-time">📈 평일 10·12·14·16</span><span class="rc-name">키움 5280-4774</span></div>
+      <div class="routine-chip"><span class="rc-time">🪙 매일 6회</span><span class="rc-name">OKX 잔고·수익</span></div>
+      <div class="routine-chip"><span class="rc-time">🎱 월 · 🎟️ 금 10:30</span><span class="rc-name">로또 · 연금 구매</span></div>
+    </div>
     <div class="pill-row">
       <button class="pill-btn active" onclick="setNoteCat('all', this)">전체</button>
       <button class="pill-btn" onclick="setNoteCat('morning', this)">아침브리핑</button>
@@ -515,11 +563,14 @@
       <button class="pill-btn" onclick="setNoteCat('lottery', this)">로또·연금</button>
     </div>
     <section class="panel">
-      <div class="sec-head">
+      <div class="sec-head" style="margin-bottom:8px;">
         <span class="sec-title">루틴별 알림 메모장</span>
         <span class="meta-time" id="notesUpdated">-</span>
       </div>
-      <div style="font-size:12px;color:var(--ink-3);margin-bottom:10px;">채팅방에서 놓치기 쉬운 정기 브리핑과 중요 알림이 루틴별로 자동 기록됩니다.</div>
+      <div style="display:flex;gap:8px;margin-bottom:12px;align-items:center;">
+        <input id="noteSearch" type="text" placeholder="알림 제목 · 내용 검색..." oninput="renderNotes()" style="flex:1;height:34px;border:1px solid var(--hairline-2);border-radius:8px;padding:0 10px;font-size:13px;font-family:inherit;background:var(--surface);color:var(--ink);">
+        <span id="notesCount" style="font-size:12px;color:var(--ink-3);white-space:nowrap;">-</span>
+      </div>
       <div id="notesList"></div>
     </section>
   </main>
@@ -808,19 +859,37 @@
     function renderNotes() {
       if (!notesData) return;
       document.getElementById("notesUpdated").textContent = notesData.updated_at || "-";
-      const list = (notesData.notes || []).filter(n => noteCat === "all" || n.category === noteCat);
+      const q = (document.getElementById("noteSearch")?.value || "").trim().toLowerCase();
+      const list = (notesData.notes || [])
+        .filter(n => (noteCat === "all" || n.category === noteCat) && (!q || (n.title + " " + n.summary).toLowerCase().includes(q)))
+        .slice()
+        .sort((a, b) => (b.time || "").localeCompare(a.time || ""));
+      if (document.getElementById("notesCount")) document.getElementById("notesCount").textContent = `${list.length}건`;
       if (!list.length) {
-        document.getElementById("notesList").innerHTML = `<div style="padding:12px 0;color:var(--ink-3);font-size:13px;">해당 루틴의 알림 메모가 아직 없습니다.</div>`;
+        document.getElementById("notesList").innerHTML = `<div style="padding:18px 0;text-align:center;color:var(--ink-3);font-size:13px;">조건에 맞는 알림 메모가 없습니다.</div>`;
         return;
       }
-      document.getElementById("notesList").innerHTML = list.map(n => `
-        <div class="holding-row" style="flex-direction:column;align-items:stretch;gap:6px;">
-          <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;">
-            <strong style="font-size:14px;color:var(--ink);">${n.title}</strong>
-            <span class="badge ${n.priority === 'high' ? 'c-up' : 'c-flat'}" style="background:var(--surface-2);">${catLabel[n.category] || n.category}</span>
-          </div>
-          <div style="font-size:13px;color:var(--ink-2);line-height:1.5;">${n.summary}</div>
-          <div style="font-size:11px;color:var(--ink-3);font-variant-numeric:tabular-nums;">${n.time}</div>
+      const groups = {};
+      list.forEach(n => {
+        const d = (n.time || "").slice(0, 10) || "기타";
+        (groups[d] = groups[d] || []).push(n);
+      });
+      document.getElementById("notesList").innerHTML = Object.keys(groups).sort((a, b) => b.localeCompare(a)).map(d => `
+        <div class="note-date-group">
+          <div class="note-date-label"><span>${d}</span><span>${groups[d].length}건</span></div>
+          ${groups[d].map(n => `
+            <div class="note-card cat-${n.category || 'seo'} ${n.priority === 'high' ? 'is-high' : ''}">
+              <div class="note-top">
+                <div class="note-title">${n.title}</div>
+                <div class="note-meta">
+                  ${n.priority === 'high' ? '<span class="note-cat-pill" style="color:#ea580c;border-color:#fdba74;background:#fff7ed;">중요</span>' : ''}
+                  <span class="note-cat-pill">${catLabel[n.category] || n.category}</span>
+                </div>
+              </div>
+              <div class="note-summary">${n.summary}</div>
+              <div class="note-time">${(n.time || "").slice(11) || n.time}</div>
+            </div>
+          `).join("")}
         </div>
       `).join("");
     }
