@@ -1,6 +1,14 @@
 {
-  "updated_at": "2026-11-23 19:35",
+  "updated_at": "2026-11-23 20:26",
   "notes": [
+    {
+      "id": "note_okx_test_20261123_2026",
+      "time": "2026-11-23 20:26",
+      "category": "crypto",
+      "title": "OKX 정기 브리핑 (테스트 실측)",
+      "summary": "총 평가자산 $0.00 (약 0원). Trading / Funding 실시간 조회 및 대시보드·메모장 자동 기록 테스트 완료.",
+      "priority": "normal"
+    },
     {
       "id": "note_20261123_seo_init",
       "time": "2026-11-23 19:25",
