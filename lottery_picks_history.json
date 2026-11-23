@@ -90,32 +90,42 @@
     {
       "round": 343,
       "group": "4",
-      "num": "901256",
-      "idx": 0
+      "num": "168258",
+      "idx": 0,
+      "purchased": true,
+      "purchased_at": "2026-11-23 21:54:49"
     },
     {
       "round": 343,
       "group": "3",
       "num": "499559",
-      "idx": 1
+      "idx": 1,
+      "purchased": true,
+      "purchased_at": "2026-11-23 21:54:49"
     },
     {
       "round": 343,
       "group": "1",
-      "num": "846313",
-      "idx": 2
+      "num": "096930",
+      "idx": 2,
+      "purchased": true,
+      "purchased_at": "2026-11-23 21:54:49"
     },
     {
       "round": 343,
       "group": "5",
       "num": "901216",
-      "idx": 3
+      "idx": 3,
+      "purchased": true,
+      "purchased_at": "2026-11-23 21:54:49"
     },
     {
       "round": 343,
       "group": "2",
       "num": "499539",
-      "idx": 4
+      "idx": 4,
+      "purchased": true,
+      "purchased_at": "2026-11-23 21:54:49"
     }
   ]
 }
