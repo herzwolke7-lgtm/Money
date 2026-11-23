@@ -1085,7 +1085,7 @@
         <div style="margin:10px 0 6px;font-size:12px;font-weight:500;color:var(--ink);">유입 소스 비중</div>
         ${srcs.map(s => `<div class="nf-kv"><span class="nf-k">${s.source}</span><span class="nf-v">${s.sessions}세션 (${s.change})</span></div>`).join("")}
         <div style="margin:12px 0 6px;font-size:12px;font-weight:500;color:var(--ink);">7일 급상승 인기 글</div>
-        ${pages.map(p => `<div class="nf-kv"><span class="nf-k" style="white-space:normal;line-height:1.4;">${p.title}</span><span class="nf-v c-up">${p.views}뷰 (${p.change})</span></div>`).join("")}
+        ${pages.map(p => `<div class="nf-kv"><span class="nf-k" style="flex:1;min-width:0;white-space:normal;line-height:1.4;">${p.title}</span><span class="nf-v c-up" style="flex-shrink:0;white-space:nowrap;">${p.views}뷰 (${p.change})</span></div>`).join("")}
       `;
     }
 
@@ -1116,13 +1116,11 @@
         const pCls = c.priority === '긴급' ? 'c-down' : c.priority === '높음' ? '' : 'c-up';
         return `
           <div class="holding-row" style="flex-direction:column;align-items:stretch;gap:6px;">
-            <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;">
+            <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;">
               <span style="font-size:14px;font-weight:500;color:var(--ink);">${idx + 1}. ${c.keyword}</span>
-              <div style="display:flex;gap:6px;align-items:center;flex-shrink:0;">
-                <span style="font-size:11px;color:var(--ink-3);">${c.competitors}</span>
-                <span class="note-cat-tag ${pCls}">${c.priority}</span>
-              </div>
+              <span class="note-cat-tag ${pCls}" style="flex-shrink:0;">${c.priority}</span>
             </div>
+            <div style="font-size:11px;color:var(--ink-3);">경쟁: ${c.competitors}</div>
             <div style="font-size:12px;color:var(--ink-2);">현재: ${c.our_status}</div>
             <div style="font-size:12px;color:var(--ink-2);line-height:1.5;">1~3위 분석: ${c.gap}</div>
             <div style="font-size:12px;color:var(--ink);font-weight:500;line-height:1.5;">승리 처방: ${c.action}</div>
