@@ -8,18 +8,18 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
   <style>
     :root {
-      --bg: #f5f5f3;
+      --bg: #f4f4f1;
       --surface: #ffffff;
-      --surface-2: #eeeeec;
-      --ink: #161615;
-      --ink-2: #5a5a56;
-      --ink-3: #8e8e88;
-      --hairline: rgba(22, 22, 21, 0.08);
-      --hairline-2: rgba(22, 22, 21, 0.14);
+      --surface-2: #ecece8;
+      --ink: #141413;
+      --ink-2: #575752;
+      --ink-3: #8c8c85;
+      --hairline: rgba(20, 20, 19, 0.08);
+      --hairline-2: rgba(20, 20, 19, 0.14);
       --up: #d92d20;
-      --up-bg: rgba(217, 45, 32, 0.08);
+      --up-bg: rgba(217, 45, 32, 0.09);
       --down: #1570ef;
-      --down-bg: rgba(21, 112, 239, 0.08);
+      --down-bg: rgba(21, 112, 239, 0.09);
       --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
     }
 
@@ -30,24 +30,24 @@
       background: var(--bg);
       color: var(--ink);
       line-height: 1.45;
-      padding: 20px 16px 72px;
-      max-width: 920px;
+      padding: 18px 14px 72px;
+      max-width: 960px;
       margin: 0 auto;
       font-variant-numeric: tabular-nums;
       -webkit-font-smoothing: antialiased;
     }
 
-    .topbar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
+    .topbar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; }
     .brand { display: flex; align-items: center; gap: 8px; }
-    .live-dot { width: 7px; height: 7px; border-radius: 50%; background: #12b76a; }
-    .brand-title { font-size: 16px; font-weight: 600; }
+    .live-dot { width: 7px; height: 7px; border-radius: 50%; background: #12b76a; box-shadow: 0 0 0 3px rgba(18,183,106,0.16); }
+    .brand-title { font-size: 16px; font-weight: 700; letter-spacing: -0.01em; }
     .topbar-right { display: flex; align-items: center; gap: 8px; }
     .meta-time { font-size: 12px; color: var(--ink-3); font-weight: 500; }
     .icon-btn {
       display: inline-flex; align-items: center; justify-content: center;
       width: 32px; height: 32px; border-radius: 8px;
       border: 1px solid var(--hairline-2); background: var(--surface); color: var(--ink-2);
-      cursor: pointer; transition: transform 150ms var(--ease-out), background-color 140ms ease;
+      cursor: pointer; transition: transform 150ms var(--ease-out);
     }
     .icon-btn:active { transform: scale(0.95); }
 
@@ -55,16 +55,16 @@
       display: grid; grid-template-columns: 1fr 1fr;
       padding: 3px; background: var(--surface-2);
       border: 1px solid var(--hairline); border-radius: 10px;
-      margin-bottom: 16px; max-width: 420px;
+      margin-bottom: 14px; max-width: 420px;
     }
     .seg-btn {
       height: 36px; border: none; border-radius: 7px;
       background: transparent; color: var(--ink-2);
-      font-family: inherit; font-size: 13px; font-weight: 500; cursor: pointer;
+      font-family: inherit; font-size: 13px; font-weight: 600; cursor: pointer;
       transition: transform 150ms var(--ease-out), background-color 140ms ease, color 140ms ease;
     }
     .seg-btn:active { transform: scale(0.97); }
-    .seg-btn.active { background: var(--surface); color: var(--ink); font-weight: 600; border: 1px solid var(--hairline); }
+    .seg-btn.active { background: var(--surface); color: var(--ink); border: 1px solid var(--hairline); }
 
     .bento { display: grid; grid-template-columns: 1fr; gap: 12px; align-items: start; }
     @media (min-width: 760px) { .bento { grid-template-columns: 1.15fr 0.85fr; } }
@@ -73,7 +73,7 @@
     .pill-btn {
       height: 30px; padding: 0 12px; border-radius: 8px;
       border: 1px solid var(--hairline); background: var(--surface); color: var(--ink-2);
-      font-family: inherit; font-size: 12px; font-weight: 500; cursor: pointer;
+      font-family: inherit; font-size: 12px; font-weight: 600; cursor: pointer;
       transition: transform 140ms var(--ease-out), background-color 140ms ease, color 140ms ease;
     }
     .pill-btn:active { transform: scale(0.97); }
@@ -81,11 +81,11 @@
 
     .panel {
       background: var(--surface); border: 1px solid var(--hairline);
-      border-radius: 14px; padding: 20px; margin-bottom: 12px;
+      border-radius: 14px; padding: 18px; margin-bottom: 12px;
     }
     .panel-label { font-size: 12px; color: var(--ink-2); font-weight: 500; }
-    .hero-figure { font-size: 30px; font-weight: 600; letter-spacing: -0.02em; margin: 4px 0 8px; }
-    .delta-tag { display: inline-flex; align-items: center; font-size: 12px; font-weight: 600; padding: 4px 8px; border-radius: 6px; }
+    .hero-figure { font-size: 32px; font-weight: 700; letter-spacing: -0.025em; margin: 4px 0 8px; }
+    .delta-tag { display: inline-flex; align-items: center; font-size: 12px; font-weight: 600; padding: 4px 9px; border-radius: 6px; }
 
     .up { color: var(--up); background: var(--up-bg); }
     .down { color: var(--down); background: var(--down-bg); }
@@ -95,42 +95,48 @@
     .c-flat { color: var(--ink-2); }
 
     .alloc-block { margin-top: 16px; }
-    .alloc-track { height: 6px; border-radius: 999px; background: var(--surface-2); overflow: hidden; display: flex; gap: 2px; }
+    .alloc-track { height: 7px; border-radius: 999px; background: var(--surface-2); overflow: hidden; display: flex; gap: 2px; }
     .alloc-a { background: var(--ink); }
     .alloc-b { background: #9ca3af; }
-    .alloc-meta { display: flex; justify-content: space-between; font-size: 12px; color: var(--ink-2); margin-top: 8px; }
+    .alloc-meta { display: flex; justify-content: space-between; font-size: 12px; color: var(--ink-2); margin-top: 7px; font-weight: 500; }
 
     .stat-grid {
       display: grid; grid-template-columns: 1fr 1fr; gap: 8px;
-      margin-top: 16px; padding-top: 16px; border-top: 1px solid var(--hairline);
+      margin-top: 14px; padding-top: 14px; border-top: 1px solid var(--hairline);
     }
-    .stat-item { padding: 10px 12px; border-radius: 8px; background: var(--bg); }
+    .stat-grid-3 {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px;
+      margin-top: 10px;
+    }
+    .stat-item { padding: 10px 11px; border-radius: 9px; background: var(--bg); }
     .stat-k { font-size: 11px; color: var(--ink-3); font-weight: 500; }
-    .stat-v { font-size: 14px; font-weight: 600; margin-top: 2px; }
+    .stat-v { font-size: 14px; font-weight: 700; margin-top: 2px; }
+    .stat-s { font-size: 10px; color: var(--ink-3); margin-top: 2px; }
 
-    .period-row { display: flex; gap: 4px; margin-top: 16px; overflow-x: auto; }
+    .period-row { display: flex; gap: 4px; margin-top: 14px; overflow-x: auto; }
     .period-row::-webkit-scrollbar { display: none; }
     .p-btn {
       flex: 0 0 auto; height: 28px; padding: 0 10px; border-radius: 6px; border: none;
-      background: transparent; color: var(--ink-3); font-family: inherit; font-size: 12px; font-weight: 500;
+      background: transparent; color: var(--ink-3); font-family: inherit; font-size: 12px; font-weight: 600;
       cursor: pointer; transition: transform 140ms var(--ease-out), background-color 140ms ease, color 140ms ease;
     }
     .p-btn:active { transform: scale(0.96); }
-    .p-btn.active { background: var(--surface-2); color: var(--ink); font-weight: 600; }
+    .p-btn.active { background: var(--surface-2); color: var(--ink); }
 
     .chart-stage {
       margin-top: 12px; border: 1px solid var(--hairline); border-radius: 10px;
-      padding: 12px; background: #fcfcfa;
+      padding: 12px; background: #fbfbfa;
     }
-    .chart-readout { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 6px; }
-    .chart-date { font-size: 11px; color: var(--ink-3); font-weight: 500; }
-    .chart-val { font-size: 13px; color: var(--ink); font-weight: 600; }
+    .chart-readout { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 6px; gap: 8px; }
+    .chart-date { font-size: 11px; color: var(--ink-3); font-weight: 600; }
+    .chart-val { font-size: 13px; color: var(--ink); font-weight: 700; }
+    .chart-axis { display: flex; justify-content: space-between; font-size: 10px; color: var(--ink-3); margin-top: 4px; font-weight: 500; }
     .chart-note { font-size: 11px; color: var(--ink-3); margin-top: 6px; }
 
     .date-toggle {
       margin-top: 12px; font-size: 12px; color: var(--ink-2); cursor: pointer;
       display: inline-flex; align-items: center; gap: 4px; border: none; background: none;
-      font-family: inherit; font-weight: 500;
+      font-family: inherit; font-weight: 600;
     }
     .date-controls {
       display: none; margin-top: 10px; padding-top: 10px; border-top: 1px solid var(--hairline);
@@ -146,20 +152,20 @@
     }
 
     .sec-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; gap: 8px; }
-    .sec-title { font-size: 14px; font-weight: 600; }
+    .sec-title { font-size: 14px; font-weight: 700; }
     .sec-meta { font-size: 12px; font-weight: 600; padding: 3px 8px; border-radius: 6px; white-space: nowrap; }
 
     .holding-row {
       display: flex; justify-content: space-between; align-items: center; gap: 12px;
-      padding: 12px 0; border-bottom: 1px solid var(--hairline);
+      padding: 11px 0; border-bottom: 1px solid var(--hairline);
     }
     .holding-row:last-child { border-bottom: none; padding-bottom: 0; }
     .h-left { min-width: 0; }
     .h-name { font-size: 14px; font-weight: 600; color: var(--ink); }
     .h-sub { font-size: 12px; color: var(--ink-3); margin-top: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
     .h-right { text-align: right; flex-shrink: 0; }
-    .h-val { font-size: 14px; font-weight: 600; color: var(--ink); }
-    .h-pnl { font-size: 12px; font-weight: 500; margin-top: 2px; }
+    .h-val { font-size: 14px; font-weight: 700; color: var(--ink); }
+    .h-pnl { font-size: 12px; font-weight: 600; margin-top: 2px; }
 
     .search-box {
       width: 100%; height: 40px; border: 1px solid var(--hairline-2); border-radius: 8px;
@@ -171,32 +177,30 @@
     .btn-ghost {
       height: 28px; padding: 0 10px; border-radius: 6px;
       border: 1px solid var(--hairline-2); background: var(--surface); color: var(--ink-2);
-      font-family: inherit; font-size: 11px; font-weight: 500; cursor: pointer;
-      transition: transform 140ms var(--ease-out), background-color 140ms ease;
+      font-family: inherit; font-size: 11px; font-weight: 600; cursor: pointer;
     }
-    .btn-ghost:active { transform: scale(0.96); }
 
     .sym-grid { display: grid; grid-template-columns: 1fr; gap: 8px; }
     @media (min-width: 760px) { .sym-grid { grid-template-columns: 1fr 1fr; } }
 
     .sym-card {
-      border: 1px solid var(--hairline); border-radius: 12px; padding: 16px;
+      border: 1px solid var(--hairline); border-radius: 12px; padding: 15px;
       background: var(--surface); cursor: pointer;
-      transition: transform 150ms var(--ease-out), border-color 140ms ease;
+      transition: transform 150ms var(--ease-out);
     }
     .sym-card:active { transform: scale(0.985); }
     .sym-card-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 8px; }
-    .sym-name { font-size: 15px; font-weight: 600; color: var(--ink); }
+    .sym-name { font-size: 15px; font-weight: 700; color: var(--ink); }
     .sym-sub { font-size: 12px; color: var(--ink-3); margin-top: 2px; }
     .sym-pnl-box { text-align: right; flex-shrink: 0; }
-    .sym-pnl-val { font-size: 15px; font-weight: 600; }
-    .sym-pnl-rt { font-size: 12px; font-weight: 500; }
+    .sym-pnl-val { font-size: 15px; font-weight: 700; }
+    .sym-pnl-rt { font-size: 12px; font-weight: 600; }
     .sym-flow {
       display: grid; grid-template-columns: 1fr 1fr; gap: 10px;
       margin-top: 12px; padding-top: 10px; border-top: 1px solid var(--hairline); font-size: 12px;
     }
     .sym-flow-col span { display: block; color: var(--ink-3); font-size: 11px; margin-bottom: 2px; }
-    .sym-flow-col strong { font-weight: 500; color: var(--ink); }
+    .sym-flow-col strong { font-weight: 600; color: var(--ink); }
     .sym-detail { display: none; margin-top: 12px; padding-top: 10px; border-top: 1px dashed var(--hairline-2); }
     .sym-card.open .sym-detail { display: block; }
     .fill-line {
@@ -257,6 +261,7 @@
           </div>
 
           <div class="stat-grid" id="kpiGrid"></div>
+          <div class="stat-grid-3" id="riskGrid"></div>
 
           <div class="period-row">
             <button class="p-btn active" onclick="setPeriod('today', this)">오늘</button>
@@ -274,7 +279,12 @@
               <span class="chart-date" id="hoverDate">-</span>
               <span class="chart-val" id="hoverVal">-</span>
             </div>
-            <svg id="chartSvg" viewBox="0 0 320 110" width="100%" height="110" style="touch-action:none;"></svg>
+            <svg id="chartSvg" viewBox="0 0 320 120" width="100%" height="120" style="touch-action:none;"></svg>
+            <div class="chart-axis">
+              <span id="axisStart">-</span>
+              <span id="axisMid">-</span>
+              <span id="axisEnd">-</span>
+            </div>
             <div class="chart-note" id="chartNote">불러오는 중</div>
           </div>
 
@@ -330,6 +340,7 @@
         <button class="btn-ghost" onclick="exportCsv()">CSV 저장</button>
       </div>
       <div class="stat-grid" id="journalKpi" style="margin-top:0;padding-top:0;border-top:none;"></div>
+      <div class="stat-grid-3" id="journalRiskGrid"></div>
       <div class="meta-time" id="journalNote" style="margin-top:10px;"></div>
     </section>
 
@@ -401,32 +412,77 @@
       return o.total_usd ? (o.total_krw / o.total_usd) : 1347;
     }
 
-    // Build chronological (oldest -> newest) realized PnL daily series for chart & period filters
     function buildRealizedSeries(acct) {
       if (!payload) return [];
       const rate = usdKrwRate();
       const map = {};
-
       if (acct === "all" || acct === "kiwoom") {
-        (payload.daily_pnl || []).forEach(d => {
-          if (!map[d.date]) map[d.date] = 0;
-          map[d.date] += d.realized_pl;
-        });
+        (payload.daily_pnl || []).forEach(d => { map[d.date] = (map[d.date] || 0) + d.realized_pl; });
       }
       if (acct === "all" || acct === "okx") {
         (payload.trades || []).filter(t => t.source === "OKX" && t.side === "매도").forEach(t => {
-          if (!map[t.date]) map[t.date] = 0;
           const v = acct === "okx" ? (t.pnl || 0) : Math.round((t.pnl || 0) * rate);
-          map[t.date] += v;
+          map[t.date] = (map[t.date] || 0) + v;
         });
       }
-
-      const dates = Object.keys(map).sort((a, b) => a.localeCompare(b)); // ALWAYS ASCENDING
+      const dates = Object.keys(map).sort((a, b) => a.localeCompare(b));
       let cum = 0;
-      return dates.map(date => {
-        cum += map[date];
-        return { date, daily: map[date], cum };
+      return dates.map(date => { cum += map[date]; return { date, daily: map[date], cum }; });
+    }
+
+    // Compute CAGR, MDD (max drawdown on equity curve), and Profit Factor
+    function computeMetrics(acct) {
+      if (!payload) return { cagrStr: "-", mddStr: "-", pfStr: "-", mddSub: "", cagrSub: "" };
+      const kw = payload.latest.kiwoom;
+      const okx = payload.latest.okx;
+      const rate = usdKrwRate();
+      const baseCapital = acct === "kiwoom"
+        ? kw.total_est_krw
+        : (acct === "okx" ? okx.total_usd : (kw.total_est_krw + okx.total_krw));
+
+      const series = buildRealizedSeries(acct);
+      const fmt = v => acct === "okx" ? fmtUsd(v) : fmtKrw(v);
+
+      let mddAmt = 0;
+      let peak = 0;
+      if (series.length) {
+        series.forEach(pt => {
+          if (pt.cum > peak) peak = pt.cum;
+          const dd = pt.cum - peak;
+          if (dd < mddAmt) mddAmt = dd;
+        });
+      }
+      const mddPct = baseCapital > 0 ? (mddAmt / baseCapital) * 100 : 0;
+
+      let cagr = 0;
+      let days = 1;
+      if (series.length >= 2) {
+        const d0 = new Date(series[0].date + "T00:00:00");
+        const d1 = new Date(series[series.length - 1].date + "T00:00:00");
+        days = Math.max(1, Math.round((d1 - d0) / 86400000));
+        const totalRet = baseCapital > 0 ? (series[series.length - 1].cum / baseCapital) : 0;
+        if (1 + totalRet > 0) {
+          cagr = (Math.pow(1 + totalRet, 365 / days) - 1) * 100;
+        }
+      }
+
+      const syms = (payload.symbol_summaries || []).filter(s => acct === "all" || (acct === "kiwoom" ? s.source === "키움" : s.source === "OKX"));
+      let grossWin = 0, grossLoss = 0;
+      syms.forEach(s => {
+        const pl = (acct === "all" && s.currency === "USD") ? s.realized_pl * rate : s.realized_pl;
+        if (pl > 0) grossWin += pl;
+        else if (pl < 0) grossLoss += Math.abs(pl);
       });
+      const pf = grossLoss > 0 ? (grossWin / grossLoss).toFixed(2) : (grossWin > 0 ? "∞" : "-");
+
+      return {
+        cagrStr: fmtPct(cagr),
+        cagrSub: `${days}일 연환산`,
+        mddStr: `${mddPct.toFixed(2)}%`,
+        mddSub: `고점 대비 ${fmt(mddAmt)}`,
+        pfStr: pf === "∞" ? "∞" : `${pf}배`,
+        pfSub: "총이익 / 총손실"
+      };
     }
 
     function setMode(mode, btn) {
@@ -511,6 +567,25 @@
         `;
         kwCard.style.display = "none"; okxCard.style.display = "block";
       }
+
+      const m = computeMetrics(currentAcct);
+      document.getElementById("riskGrid").innerHTML = `
+        <div class="stat-item">
+          <div class="stat-k">CAGR (연환산)</div>
+          <div class="stat-v ${m.cagrStr.startsWith('+') ? 'c-up' : m.cagrStr.startsWith('-') ? 'c-down' : ''}">${m.cagrStr}</div>
+          <div class="stat-s">${m.cagrSub}</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-k">MDD (최대낙폭)</div>
+          <div class="stat-v c-down">${m.mddStr}</div>
+          <div class="stat-s">${m.mddSub}</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-k">손익비 (PF)</div>
+          <div class="stat-v">${m.pfStr}</div>
+          <div class="stat-s">${m.pfSub}</div>
+        </div>
+      `;
 
       const kwSub = document.getElementById("kwCardSub");
       kwSub.textContent = fmtKrw(kw.tot_pl_krw) + " (" + fmtPct(kw.tot_prft_rt) + ")";
@@ -637,6 +712,14 @@
         `;
         noteEl.textContent = "OKX API 보관 정책상 최근 3개월(8~11월) 체결분 기준이며, 오늘부터 이후 내역은 계속 누적됩니다";
       }
+
+      const acctKey = jSource === "키움" ? "kiwoom" : (jSource === "OKX" ? "okx" : "all");
+      const m = computeMetrics(acctKey);
+      document.getElementById("journalRiskGrid").innerHTML = `
+        <div class="stat-item"><div class="stat-k">CAGR (연환산)</div><div class="stat-v ${m.cagrStr.startsWith('+') ? 'c-up' : m.cagrStr.startsWith('-') ? 'c-down' : ''}">${m.cagrStr}</div><div class="stat-s">${m.cagrSub}</div></div>
+        <div class="stat-item"><div class="stat-k">MDD (최대낙폭)</div><div class="stat-v c-down">${m.mddStr}</div><div class="stat-s">${m.mddSub}</div></div>
+        <div class="stat-item"><div class="stat-k">손익비 (PF)</div><div class="stat-v">${m.pfStr}</div><div class="stat-s">${m.pfSub}</div></div>
+      `;
 
       const q = (document.getElementById("searchInput").value || "").trim().toLowerCase();
       const filteredSyms = scopedSyms.filter(s => {
@@ -921,7 +1004,7 @@
 
     function renderRealizedChart(series, titleLabel) {
       const svg = document.getElementById("chartSvg");
-      const w = 320, h = 110, padX = 10, padTop = 12, padBot = 14;
+      const w = 320, h = 120, padX = 10, padTop = 14, padBot = 14;
       svg.innerHTML = "";
       const hoverDate = document.getElementById("hoverDate");
       const hoverVal = document.getElementById("hoverVal");
@@ -931,6 +1014,9 @@
       if (!series.length) {
         hoverDate.textContent = titleLabel;
         hoverVal.textContent = "-";
+        document.getElementById("axisStart").textContent = "-";
+        document.getElementById("axisMid").textContent = "";
+        document.getElementById("axisEnd").textContent = "-";
         noteEl.textContent = "표시할 체결 기록이 없습니다";
         return;
       }
@@ -938,9 +1024,12 @@
       if (series.length === 1) {
         hoverDate.textContent = series[0].date;
         hoverVal.textContent = fmt(series[0].cum);
+        document.getElementById("axisStart").textContent = series[0].date.slice(5);
+        document.getElementById("axisMid").textContent = "";
+        document.getElementById("axisEnd").textContent = "";
         noteEl.textContent = `${titleLabel} (1건)`;
         const c = document.createElementNS("http://www.w3.org/2000/svg", "circle");
-        c.setAttribute("cx", w / 2); c.setAttribute("cy", h / 2); c.setAttribute("r", 4); c.setAttribute("fill", "#161615");
+        c.setAttribute("cx", w / 2); c.setAttribute("cy", h / 2); c.setAttribute("r", 4); c.setAttribute("fill", "#141413");
         svg.appendChild(c);
         return;
       }
@@ -948,33 +1037,63 @@
       const vals = series.map(s => s.cum);
       const min = Math.min(...vals, 0), max = Math.max(...vals, 1);
       const span = (max - min) || 1;
+      const toY = v => h - padBot - ((v - min) / span) * (h - padTop - padBot);
+
+      // 0-baseline dashed reference line
+      const zeroY = toY(0);
+      const zeroLine = document.createElementNS("http://www.w3.org/2000/svg", "line");
+      zeroLine.setAttribute("x1", padX); zeroLine.setAttribute("x2", w - padX);
+      zeroLine.setAttribute("y1", zeroY.toFixed(1)); zeroLine.setAttribute("y2", zeroY.toFixed(1));
+      zeroLine.setAttribute("stroke", "rgba(20,20,19,0.16)"); zeroLine.setAttribute("stroke-dasharray", "3 3");
+      svg.appendChild(zeroLine);
+
       const coords = series.map((s, i) => ({
         x: padX + (i / (series.length - 1)) * (w - padX * 2),
-        y: h - padBot - ((s.cum - min) / span) * (h - padTop - padBot),
+        y: toY(s.cum),
         item: s
       }));
       const linePts = coords.map(c => `${c.x.toFixed(1)},${c.y.toFixed(1)}`).join(" ");
-      const areaPts = `${coords[0].x.toFixed(1)},${h - padBot} ${linePts} ${coords[coords.length - 1].x.toFixed(1)},${h - padBot}`;
+      const areaPts = `${coords[0].x.toFixed(1)},${zeroY.toFixed(1)} ${linePts} ${coords[coords.length - 1].x.toFixed(1)},${zeroY.toFixed(1)}`;
       const defs = document.createElementNS("http://www.w3.org/2000/svg", "defs");
-      defs.innerHTML = `<linearGradient id="cumG" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#161615" stop-opacity="0.12"/><stop offset="100%" stop-color="#161615" stop-opacity="0"/></linearGradient>`;
+      defs.innerHTML = `<linearGradient id="cumG" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#141413" stop-opacity="0.14"/><stop offset="100%" stop-color="#141413" stop-opacity="0.01"/></linearGradient>`;
       svg.appendChild(defs);
       const polyArea = document.createElementNS("http://www.w3.org/2000/svg", "polygon");
       polyArea.setAttribute("fill", "url(#cumG)"); polyArea.setAttribute("points", areaPts);
       svg.appendChild(polyArea);
       const poly = document.createElementNS("http://www.w3.org/2000/svg", "polyline");
-      poly.setAttribute("fill", "none"); poly.setAttribute("stroke", "#161615");
-      poly.setAttribute("stroke-width", "1.8"); poly.setAttribute("points", linePts);
+      poly.setAttribute("fill", "none"); poly.setAttribute("stroke", "#141413");
+      poly.setAttribute("stroke-width", "1.9"); poly.setAttribute("points", linePts);
       svg.appendChild(poly);
 
-      hoverDate.textContent = `${titleLabel} (${series[0].date} → ${series[series.length - 1].date})`;
+      // Interactive crosshair + dot
+      const xhair = document.createElementNS("http://www.w3.org/2000/svg", "line");
+      xhair.setAttribute("stroke", "rgba(20,20,19,0.28)"); xhair.setAttribute("stroke-width", "1");
+      xhair.style.display = "none";
+      svg.appendChild(xhair);
+
+      const dot = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+      dot.setAttribute("r", "3.5"); dot.setAttribute("fill", "#141413");
+      dot.setAttribute("cx", coords[coords.length - 1].x); dot.setAttribute("cy", coords[coords.length - 1].y);
+      svg.appendChild(dot);
+
+      const midIdx = Math.floor(series.length / 2);
+      document.getElementById("axisStart").textContent = series[0].date.slice(5);
+      document.getElementById("axisMid").textContent = series[midIdx].date.slice(5);
+      document.getElementById("axisEnd").textContent = series[series.length - 1].date.slice(5);
+
+      hoverDate.textContent = `${titleLabel}`;
       hoverVal.textContent = fmt(series[series.length - 1].cum);
-      noteEl.textContent = "왼쪽(과거) → 오른쪽(최신) · 차트를 터치하면 날짜별 누적 손익이 보입니다";
+      noteEl.textContent = `최고 ${fmt(Math.max(...vals))} · 최저 ${fmt(Math.min(...vals))} · 터치하여 날짜별 확인`;
 
       const onP = (cx) => {
         const rect = svg.getBoundingClientRect();
         const sx = ((cx - rect.left) / rect.width) * w;
         let near = coords[0], best = Math.abs(sx - near.x);
         for (const c of coords) { const d = Math.abs(sx - c.x); if (d < best) { best = d; near = c; } }
+        xhair.style.display = "block";
+        xhair.setAttribute("x1", near.x); xhair.setAttribute("x2", near.x);
+        xhair.setAttribute("y1", padTop); xhair.setAttribute("y2", h - padBot);
+        dot.setAttribute("cx", near.x); dot.setAttribute("cy", near.y);
         hoverDate.textContent = near.item.date;
         hoverVal.textContent = fmt(near.item.cum) + ` (당일 ${fmt(near.item.daily)})`;
       };
@@ -984,11 +1103,14 @@
 
     function renderAssetChart(points, label) {
       const svg = document.getElementById("chartSvg");
-      const w = 320, h = 110, padX = 10, padTop = 12, padBot = 14;
+      const w = 320, h = 120, padX = 10, padTop = 14, padBot = 14;
       svg.innerHTML = "";
       const last = points[points.length - 1];
       document.getElementById("hoverDate").textContent = last.date;
       document.getElementById("hoverVal").textContent = getVal(last).toLocaleString() + "원";
+      document.getElementById("axisStart").textContent = points[0].date.slice(5);
+      document.getElementById("axisMid").textContent = points[Math.floor(points.length / 2)].date.slice(5);
+      document.getElementById("axisEnd").textContent = last.date.slice(5);
       document.getElementById("chartNote").textContent = `${label} · ${points[0].date} → ${last.date} (${points.length}건)`;
       const vals = points.map(getVal);
       const min = Math.min(...vals), max = Math.max(...vals);
@@ -1000,8 +1122,8 @@
       }));
       const linePts = coords.map(c => `${c.x.toFixed(1)},${c.y.toFixed(1)}`).join(" ");
       const poly = document.createElementNS("http://www.w3.org/2000/svg", "polyline");
-      poly.setAttribute("fill", "none"); poly.setAttribute("stroke", "#161615");
-      poly.setAttribute("stroke-width", "1.8"); poly.setAttribute("points", linePts);
+      poly.setAttribute("fill", "none"); poly.setAttribute("stroke", "#141413");
+      poly.setAttribute("stroke-width", "1.9"); poly.setAttribute("points", linePts);
       svg.appendChild(poly);
     }
 
