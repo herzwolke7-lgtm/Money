@@ -13,7 +13,9 @@
       "score": 191.57,
       "sum": 163,
       "ac": 10,
-      "idx": 0
+      "idx": 0,
+      "purchased": true,
+      "purchased_at": "2026-11-23 18:39:09"
     },
     {
       "round": 1252,
@@ -28,7 +30,9 @@
       "score": 191.03,
       "sum": 130,
       "ac": 10,
-      "idx": 1
+      "idx": 1,
+      "purchased": true,
+      "purchased_at": "2026-11-23 18:39:09"
     },
     {
       "round": 1252,
@@ -43,7 +47,9 @@
       "score": 187.61,
       "sum": 157,
       "ac": 7,
-      "idx": 2
+      "idx": 2,
+      "purchased": true,
+      "purchased_at": "2026-11-23 18:39:09"
     },
     {
       "round": 1252,
@@ -58,7 +64,9 @@
       "score": 186.47,
       "sum": 162,
       "ac": 10,
-      "idx": 3
+      "idx": 3,
+      "purchased": true,
+      "purchased_at": "2026-11-23 18:39:09"
     },
     {
       "round": 1252,
@@ -73,7 +81,9 @@
       "score": 184.55,
       "sum": 114,
       "ac": 8,
-      "idx": 4
+      "idx": 4,
+      "purchased": true,
+      "purchased_at": "2026-11-23 18:39:09"
     }
   ],
   "pension": [
