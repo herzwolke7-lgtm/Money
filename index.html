@@ -4,412 +4,554 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
-  <title>Ms.옥 포트폴리오 & 매매일지</title>
+  <title>자산 현황 · 매매일지</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
   <style>
     :root {
-      --bg: #f2f4f6;
-      --card: #ffffff;
-      --text: #191f28;
-      --sub: #6b7684;
-      --muted: #8b95a1;
-      --border: #e5e8eb;
-      --up: #f04452;
-      --up-bg: #fff0f1;
-      --down: #3182f6;
-      --down-bg: #eef5ff;
-      --flat: #4e5968;
-      --flat-bg: #f2f4f6;
+      --bg: #f6f6f4;
+      --surface: #ffffff;
+      --surface-muted: #f0f0ed;
+      --ink: #141413;
+      --ink-2: #575753;
+      --ink-3: #8c8c86;
+      --hairline: rgba(20, 20, 19, 0.08);
+      --hairline-strong: rgba(20, 20, 19, 0.14);
+      --accent: #141413;
+      --up: #d92d20;
+      --up-soft: rgba(217, 45, 32, 0.08);
+      --down: #1570ef;
+      --down-soft: rgba(21, 112, 239, 0.08);
+      --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
     }
-    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+
     body {
-      font-family: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Noto Sans KR", sans-serif;
+      font-family: "Pretendard", -apple-system, BlinkMacSystemFont, sans-serif;
       background: var(--bg);
-      color: var(--text);
-      line-height: 1.45;
-      padding: 16px 14px 48px;
+      color: var(--ink);
+      line-height: 1.5;
+      padding: 20px 16px 64px;
       max-width: 480px;
       margin: 0 auto;
       font-variant-numeric: tabular-nums;
+      -webkit-font-smoothing: antialiased;
     }
-    .header {
+
+    /* Top Bar */
+    .topbar {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 12px;
+      margin-bottom: 16px;
     }
-    .header h1 { font-size: 20px; font-weight: 800; letter-spacing: -0.4px; }
-    .header-right { display: flex; align-items: center; gap: 6px; }
-    .badge {
-      font-size: 11px;
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .live-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #12b76a;
+    }
+    .brand-title {
+      font-size: 16px;
       font-weight: 600;
-      color: var(--sub);
-      background: #e5e8eb;
-      padding: 5px 10px;
-      border-radius: 999px;
+      letter-spacing: -0.01em;
     }
-    .refresh-btn {
-      border: none;
-      background: #191f28;
-      color: #fff;
-      font-size: 11px;
-      font-weight: 700;
-      padding: 5px 11px;
-      border-radius: 999px;
+    .topbar-right {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .meta-time {
+      font-size: 12px;
+      color: var(--ink-3);
+      font-weight: 500;
+    }
+    .icon-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      border: 1px solid var(--hairline-strong);
+      background: var(--surface);
+      color: var(--ink-2);
       cursor: pointer;
+      transition: transform 150ms var(--ease-out), background-color 140ms ease;
     }
+    .icon-btn:active { transform: scale(0.95); }
+    .icon-btn:hover { background: var(--surface-muted); }
 
-    /* Main Mode Switcher */
-    .main-nav {
+    /* Segmented Nav */
+    .seg-nav {
       display: grid;
       grid-template-columns: 1fr 1fr;
+      padding: 3px;
+      background: var(--surface-muted);
+      border: 1px solid var(--hairline);
+      border-radius: 10px;
+      margin-bottom: 16px;
+    }
+    .seg-btn {
+      height: 34px;
+      border: none;
+      border-radius: 7px;
+      background: transparent;
+      color: var(--ink-2);
+      font-family: inherit;
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: transform 150ms var(--ease-out), background-color 140ms ease, color 140ms ease;
+    }
+    .seg-btn:active { transform: scale(0.97); }
+    .seg-btn.active {
+      background: var(--surface);
+      color: var(--ink);
+      font-weight: 600;
+      border: 1px solid var(--hairline);
+    }
+
+    /* Account Filter */
+    .acct-row {
+      display: flex;
       gap: 6px;
       margin-bottom: 12px;
     }
-    .nav-btn {
-      border: none;
-      background: #e5e8eb;
-      color: var(--sub);
-      font-size: 14px;
-      font-weight: 800;
-      padding: 11px 8px;
+    .pill-btn {
+      height: 30px;
+      padding: 0 12px;
+      border-radius: 8px;
+      border: 1px solid var(--hairline);
+      background: var(--surface);
+      color: var(--ink-2);
+      font-family: inherit;
+      font-size: 12px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: transform 150ms var(--ease-out), background-color 140ms ease, color 140ms ease, border-color 140ms ease;
+    }
+    .pill-btn:active { transform: scale(0.97); }
+    .pill-btn.active {
+      background: var(--ink);
+      color: #ffffff;
+      border-color: var(--ink);
+    }
+
+    /* Cards: quiet hairlines, 4px rhythm */
+    .panel {
+      background: var(--surface);
+      border: 1px solid var(--hairline);
       border-radius: 14px;
-      cursor: pointer;
-    }
-    .nav-btn.active {
-      background: #191f28;
-      color: #fff;
-    }
-
-    /* Sub Switcher */
-    .acct-tabs {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 4px;
-      background: #e5e8eb;
-      padding: 4px;
-      border-radius: 12px;
+      padding: 20px;
       margin-bottom: 12px;
     }
-    .acct-btn {
-      border: none;
-      background: transparent;
-      color: var(--sub);
-      font-size: 13px;
-      font-weight: 700;
-      padding: 8px 4px;
-      border-radius: 9px;
-      cursor: pointer;
+    .panel-label {
+      font-size: 12px;
+      color: var(--ink-2);
+      font-weight: 500;
     }
-    .acct-btn.active {
-      background: #fff;
-      color: var(--text);
-      box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+    .hero-figure {
+      font-size: 30px;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      margin: 4px 0 8px;
+      color: var(--ink);
     }
-
-    .card {
-      background: var(--card);
-      border-radius: 20px;
-      padding: 20px 18px;
-      margin-bottom: 12px;
-      box-shadow: 0 2px 12px rgba(0, 0, 0, 0.03);
-    }
-    .label { font-size: 13px; color: var(--sub); font-weight: 600; }
-    .big-num { font-size: 29px; font-weight: 800; letter-spacing: -0.8px; margin: 4px 0 8px; }
-    .pnl-pill {
+    .delta-tag {
       display: inline-flex;
       align-items: center;
-      gap: 4px;
-      font-size: 13px;
-      font-weight: 700;
-      padding: 5px 11px;
-      border-radius: 10px;
+      font-size: 12px;
+      font-weight: 600;
+      padding: 4px 8px;
+      border-radius: 6px;
     }
-    .up { color: var(--up); background: var(--up-bg); }
-    .down { color: var(--down); background: var(--down-bg); }
-    .flat { color: var(--flat); background: var(--flat-bg); }
+    .up { color: var(--up); background: var(--up-soft); }
+    .down { color: var(--down); background: var(--down-soft); }
+    .flat { color: var(--ink-2); background: var(--surface-muted); }
 
-    .alloc-wrap { margin-top: 16px; }
-    .alloc-bar {
-      height: 10px;
+    /* Allocation Bar */
+    .alloc-block { margin-top: 16px; }
+    .alloc-track {
+      height: 6px;
       border-radius: 999px;
+      background: var(--surface-muted);
       overflow: hidden;
       display: flex;
-      background: #eef1f4;
       gap: 2px;
     }
-    .alloc-kw { background: #3182f6; border-radius: 999px 0 0 999px; }
-    .alloc-okx { background: #191f28; border-radius: 0 999px 999px 0; }
-    .alloc-legend {
+    .alloc-a { background: #141413; }
+    .alloc-b { background: #9ca3af; }
+    .alloc-meta {
       display: flex;
       justify-content: space-between;
       font-size: 12px;
-      color: var(--sub);
-      font-weight: 600;
-      margin-top: 6px;
+      color: var(--ink-2);
+      margin-top: 8px;
     }
 
-    .kpi-grid {
+    /* Compact Stat Grid */
+    .stat-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 8px;
-      margin-top: 14px;
+      margin-top: 16px;
+      padding-top: 16px;
+      border-top: 1px solid var(--hairline);
     }
-    .kpi-box {
-      background: #f8f9fb;
-      border-radius: 14px;
-      padding: 11px 12px;
+    .stat-item {
+      padding: 8px 10px;
+      border-radius: 8px;
+      background: var(--bg);
     }
-    .kpi-label { font-size: 11px; color: var(--muted); font-weight: 600; }
-    .kpi-val { font-size: 15px; font-weight: 800; margin-top: 3px; color: var(--text); }
+    .stat-k { font-size: 11px; color: var(--ink-3); font-weight: 500; }
+    .stat-v { font-size: 14px; color: var(--ink); font-weight: 600; margin-top: 2px; }
 
-    .tabs {
+    /* Period Tabs */
+    .period-row {
       display: flex;
-      gap: 6px;
-      margin: 16px 0 10px;
+      gap: 4px;
+      margin-top: 16px;
       overflow-x: auto;
       padding-bottom: 2px;
-      -webkit-overflow-scrolling: touch;
     }
-    .tabs::-webkit-scrollbar { display: none; }
-    .tab-btn {
+    .period-row::-webkit-scrollbar { display: none; }
+    .p-btn {
       flex: 0 0 auto;
+      height: 28px;
+      padding: 0 10px;
+      border-radius: 6px;
       border: none;
-      background: #f2f4f6;
-      color: var(--sub);
+      background: transparent;
+      color: var(--ink-3);
+      font-family: inherit;
       font-size: 12px;
-      font-weight: 700;
-      padding: 8px 13px;
-      border-radius: 999px;
+      font-weight: 500;
       cursor: pointer;
+      transition: transform 140ms var(--ease-out), background-color 140ms ease, color 140ms ease;
     }
-    .tab-btn.active { background: #191f28; color: #fff; }
-
-    .chart-box {
-      margin-top: 10px;
-      background: #fafbfd;
-      border: 1px solid #edf0f4;
-      border-radius: 16px;
-      padding: 14px 12px 10px;
+    .p-btn:active { transform: scale(0.96); }
+    .p-btn.active {
+      background: var(--surface-muted);
+      color: var(--ink);
+      font-weight: 600;
     }
-    .chart-note { font-size: 11px; color: var(--sub); margin-top: 6px; text-align: center; font-weight: 500; }
 
-    .date-panel {
+    /* Chart Stage (Hero Visual) */
+    .chart-stage {
+      margin-top: 12px;
+      border: 1px solid var(--hairline);
+      border-radius: 10px;
+      padding: 12px;
+      background: #fcfcfa;
+      position: relative;
+    }
+    .chart-readout {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 6px;
+      min-height: 18px;
+    }
+    .chart-date { font-size: 11px; color: var(--ink-3); font-weight: 500; }
+    .chart-val { font-size: 13px; color: var(--ink); font-weight: 600; }
+    .chart-note {
+      font-size: 11px;
+      color: var(--ink-3);
+      margin-top: 6px;
+    }
+
+    /* Date Controls */
+    .date-controls {
       margin-top: 12px;
       padding-top: 12px;
-      border-top: 1px solid #f0f2f5;
+      border-top: 1px solid var(--hairline);
       display: flex;
       flex-direction: column;
       gap: 8px;
     }
-    .date-row { display: flex; align-items: center; justify-content: space-between; gap: 6px; }
-    .date-row label { font-size: 12px; color: var(--sub); font-weight: 600; white-space: nowrap; }
+    .date-line {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+    }
+    .date-line label { font-size: 12px; color: var(--ink-2); font-weight: 500; white-space: nowrap; }
     .date-inputs { display: flex; align-items: center; gap: 4px; }
-    .date-row input[type="date"] {
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: 5px 8px;
+    input[type="date"] {
+      border: 1px solid var(--hairline-strong);
+      border-radius: 6px;
+      padding: 4px 8px;
+      font-family: inherit;
       font-size: 12px;
-      color: var(--text);
-      background: #fff;
+      color: var(--ink);
+      background: var(--surface);
     }
 
-    .sec-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
-    .sec-title { font-size: 16px; font-weight: 800; }
-    .sec-badge { font-size: 12px; font-weight: 700; padding: 4px 9px; border-radius: 8px; }
-
-    table.holdings { width: 100%; border-collapse: collapse; }
-    table.holdings th {
-      font-size: 11px; font-weight: 600; color: var(--muted);
-      text-align: right; padding: 0 0 8px; border-bottom: 1px solid #f0f2f5;
+    /* Section Header */
+    .sec-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
     }
-    table.holdings th:first-child { text-align: left; }
-    table.holdings td {
-      padding: 11px 0; border-bottom: 1px solid #f2f4f6;
-      vertical-align: middle; text-align: right;
-    }
-    table.holdings tr:last-child td { border-bottom: none; padding-bottom: 2px; }
-    table.holdings td:first-child { text-align: left; }
+    .sec-title { font-size: 14px; font-weight: 600; color: var(--ink); }
+    .sec-meta { font-size: 12px; font-weight: 600; padding: 3px 8px; border-radius: 6px; }
 
-    .t-name { font-size: 14px; font-weight: 700; color: var(--text); }
-    .t-sub { font-size: 11px; color: var(--muted); margin-top: 2px; }
-    .t-val { font-size: 14px; font-weight: 700; color: var(--text); }
-    .rt-tag { display: inline-block; font-size: 12px; font-weight: 700; padding: 3px 7px; border-radius: 6px; }
+    /* Clean List Table */
+    .list-table { width: 100%; border-collapse: collapse; }
+    .list-table th {
+      font-size: 11px;
+      font-weight: 500;
+      color: var(--ink-3);
+      text-align: right;
+      padding-bottom: 8px;
+      border-bottom: 1px solid var(--hairline);
+    }
+    .list-table th:first-child { text-align: left; }
+    .list-table td {
+      padding: 12px 0;
+      border-bottom: 1px solid var(--hairline);
+      vertical-align: middle;
+      text-align: right;
+    }
+    .list-table tr:last-child td { border-bottom: none; padding-bottom: 0; }
+    .list-table td:first-child { text-align: left; }
+
+    .row-main { font-size: 14px; font-weight: 500; color: var(--ink); }
+    .row-sub { font-size: 12px; color: var(--ink-3); margin-top: 2px; }
     .c-up { color: var(--up); }
     .c-down { color: var(--down); }
-    .c-flat { color: var(--sub); }
+    .c-flat { color: var(--ink-2); }
 
-    /* Search & Trade Journal */
-    .search-input {
+    /* Journal Controls */
+    .search-box {
       width: 100%;
-      border: 1.5px solid #e5e8eb;
-      border-radius: 12px;
-      padding: 11px 14px;
-      font-size: 14px;
-      font-weight: 600;
-      color: var(--text);
-      background: #fafbfd;
+      height: 38px;
+      border: 1px solid var(--hairline-strong);
+      border-radius: 8px;
+      padding: 0 12px;
+      font-family: inherit;
+      font-size: 13px;
+      color: var(--ink);
+      background: var(--bg);
       outline: none;
+      transition: border-color 140ms ease, background-color 140ms ease;
     }
-    .search-input:focus { border-color: #3182f6; background: #fff; }
-    .filter-row { display: flex; gap: 6px; margin-top: 10px; flex-wrap: wrap; }
-    .chip-btn {
-      border: none;
-      background: #f2f4f6;
-      color: var(--sub);
-      font-size: 12px;
-      font-weight: 700;
-      padding: 6px 11px;
-      border-radius: 999px;
+    .search-box:focus {
+      border-color: var(--ink);
+      background: var(--surface);
+    }
+    .filter-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 6px;
+      margin-top: 10px;
+      flex-wrap: wrap;
+    }
+    .filter-chips { display: flex; gap: 4px; flex-wrap: wrap; }
+    .btn-ghost {
+      height: 28px;
+      padding: 0 10px;
+      border-radius: 6px;
+      border: 1px solid var(--hairline-strong);
+      background: var(--surface);
+      color: var(--ink-2);
+      font-family: inherit;
+      font-size: 11px;
+      font-weight: 500;
       cursor: pointer;
+      transition: transform 140ms var(--ease-out), background-color 140ms ease;
     }
-    .chip-btn.active { background: #191f28; color: #fff; }
-    .side-buy { color: var(--up); background: var(--up-bg); padding: 2px 7px; border-radius: 6px; font-size: 11px; font-weight: 800; }
-    .side-sell { color: var(--down); background: var(--down-bg); padding: 2px 7px; border-radius: 6px; font-size: 11px; font-weight: 800; }
+    .btn-ghost:active { transform: scale(0.96); }
+    .btn-ghost:hover { background: var(--surface-muted); }
+
+    .side-tag {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 600;
+      padding: 1px 6px;
+      border-radius: 4px;
+      margin-left: 4px;
+    }
+    .side-buy { color: var(--up); background: var(--up-soft); }
+    .side-sell { color: var(--down); background: var(--down-soft); }
+    .search-summary {
+      margin-top: 12px;
+      padding: 10px 12px;
+      border-radius: 8px;
+      background: var(--bg);
+      font-size: 12px;
+      color: var(--ink-2);
+      border: 1px solid var(--hairline);
+    }
   </style>
 </head>
 <body>
-  <div class="header">
-    <h1>📊 내 자산 · 매매일지</h1>
-    <div class="header-right">
-      <span class="badge" id="asOf">로딩 중</span>
-      <button class="refresh-btn" onclick="loadData()">새로고침</button>
+  <header class="topbar">
+    <div class="brand">
+      <span class="live-dot"></span>
+      <span class="brand-title">포트폴리오 · 매매일지</span>
     </div>
-  </div>
+    <div class="topbar-right">
+      <span class="meta-time" id="asOf">-</span>
+      <button class="icon-btn" onclick="loadData()" title="새로고침" aria-label="새로고침">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 12a9 9 0 1 1-2.64-6.36"/><polyline points="21 3 21 9 15 9"/>
+        </svg>
+      </button>
+    </div>
+  </header>
 
-  <div class="main-nav">
-    <button class="nav-btn active" onclick="setMode('portfolio', this)">📊 자산 현황</button>
-    <button class="nav-btn" onclick="setMode('journal', this)">📒 매매일지</button>
-  </div>
+  <nav class="seg-nav">
+    <button class="seg-btn active" onclick="setMode('portfolio', this)">자산 현황</button>
+    <button class="seg-btn" onclick="setMode('journal', this)">매매일지</button>
+  </nav>
 
   <!-- PORTFOLIO VIEW -->
-  <div id="portfolioView">
-    <div class="acct-tabs">
-      <button class="acct-btn active" onclick="setAcct('all', this)">전체 합산</button>
-      <button class="acct-btn" onclick="setAcct('kiwoom', this)">📈 키움</button>
-      <button class="acct-btn" onclick="setAcct('okx', this)">🪙 OKX</button>
+  <main id="portfolioView">
+    <div class="acct-row">
+      <button class="pill-btn active" onclick="setAcct('all', this)">전체</button>
+      <button class="pill-btn" onclick="setAcct('kiwoom', this)">키움 5280-4774</button>
+      <button class="pill-btn" onclick="setAcct('okx', this)">OKX</button>
     </div>
 
-    <div class="card">
-      <div class="label" id="mainLabel">총 합산 자산 (키움 + OKX)</div>
-      <div class="big-num" id="totalVal">-</div>
-      <span class="pnl-pill flat" id="periodPnl">계산 중...</span>
+    <section class="panel">
+      <div class="panel-label" id="mainLabel">총 합산 자산</div>
+      <div class="hero-figure" id="totalVal">-</div>
+      <span class="delta-tag flat" id="periodPnl">-</span>
 
-      <div class="alloc-wrap">
-        <div class="alloc-bar">
-          <div class="alloc-kw" id="allocKwBar" style="width: 50%;"></div>
-          <div class="alloc-okx" id="allocOkxBar" style="width: 50%;"></div>
+      <div class="alloc-block">
+        <div class="alloc-track">
+          <div class="alloc-a" id="allocKwBar" style="width: 50%;"></div>
+          <div class="alloc-b" id="allocOkxBar" style="width: 50%;"></div>
         </div>
-        <div class="alloc-legend">
-          <span id="allocKwLabel">● 키움 -%</span>
-          <span id="allocOkxLabel">● OKX -%</span>
+        <div class="alloc-meta">
+          <span id="allocKwLabel">키움 -%</span>
+          <span id="allocOkxLabel">OKX -%</span>
         </div>
       </div>
 
-      <div class="kpi-grid" id="kpiGrid"></div>
+      <div class="stat-grid" id="kpiGrid"></div>
 
-      <div class="tabs">
-        <button class="tab-btn active" data-period="today" onclick="setPeriod('today', this)">오늘</button>
-        <button class="tab-btn" data-period="1w" onclick="setPeriod('1w', this)">1주</button>
-        <button class="tab-btn" data-period="1m" onclick="setPeriod('1m', this)">1달</button>
-        <button class="tab-btn" data-period="2m" onclick="setPeriod('2m', this)">2달</button>
-        <button class="tab-btn" data-period="3m" onclick="setPeriod('3m', this)">3달</button>
-        <button class="tab-btn" data-period="6m" onclick="setPeriod('6m', this)">6달</button>
-        <button class="tab-btn" data-period="1y" onclick="setPeriod('1y', this)">1년</button>
-        <button class="tab-btn" data-period="all" onclick="setPeriod('all', this)">전체</button>
+      <div class="period-row">
+        <button class="p-btn active" onclick="setPeriod('today', this)">오늘</button>
+        <button class="p-btn" onclick="setPeriod('1w', this)">1주</button>
+        <button class="p-btn" onclick="setPeriod('1m', this)">1달</button>
+        <button class="p-btn" onclick="setPeriod('2m', this)">2달</button>
+        <button class="p-btn" onclick="setPeriod('3m', this)">3달</button>
+        <button class="p-btn" onclick="setPeriod('6m', this)">6달</button>
+        <button class="p-btn" onclick="setPeriod('1y', this)">1년</button>
+        <button class="p-btn" onclick="setPeriod('all', this)">전체</button>
       </div>
 
-      <div class="chart-box">
-        <svg id="chartSvg" viewBox="0 0 320 130" width="100%" height="130"></svg>
-        <div class="chart-note" id="chartNote">데이터를 불러오는 중...</div>
+      <div class="chart-stage">
+        <div class="chart-readout">
+          <span class="chart-date" id="hoverDate">추이</span>
+          <span class="chart-val" id="hoverVal">-</span>
+        </div>
+        <svg id="chartSvg" viewBox="0 0 320 120" width="100%" height="120" style="touch-action:none;"></svg>
+        <div class="chart-note" id="chartNote">데이터를 불러오는 중</div>
       </div>
 
-      <div class="date-panel">
-        <div class="date-row">
-          <label>원하는 날짜</label>
+      <div class="date-controls">
+        <div class="date-line">
+          <label>특정 날짜</label>
           <input type="date" id="singleDate" onchange="pickSingleDate(this.value)" />
         </div>
-        <div class="date-row">
-          <label>기간 지정</label>
+        <div class="date-line">
+          <label>기간 조회</label>
           <div class="date-inputs">
             <input type="date" id="startDate" onchange="pickRange()" />
-            <span style="font-size:12px;color:#8b95a1;">~</span>
+            <span style="font-size:11px;color:var(--ink-3);">~</span>
             <input type="date" id="endDate" onchange="pickRange()" />
           </div>
         </div>
       </div>
-    </div>
+    </section>
 
-    <div class="card" id="kiwoomCard">
+    <section class="panel" id="kiwoomCard">
       <div class="sec-head">
-        <span class="sec-title">📈 키움 5280-4774</span>
-        <span class="sec-badge" id="kwCardSub">-</span>
+        <span class="sec-title">키움 5280-4774 보유 종목</span>
+        <span class="sec-meta" id="kwCardSub">-</span>
       </div>
-      <table class="holdings">
+      <table class="list-table">
         <thead>
-          <tr><th>종목 · 수량</th><th>평가금액</th><th>수익률 · 손익</th></tr>
+          <tr><th>종목 · 비중</th><th>평가금액</th><th>수익률 · 손익</th></tr>
         </thead>
         <tbody id="kwRows"></tbody>
       </table>
-    </div>
+    </section>
 
-    <div class="card" id="okxCard">
+    <section class="panel" id="okxCard">
       <div class="sec-head">
-        <span class="sec-title">🪙 OKX 계좌</span>
-        <span class="sec-badge" id="okxCardSub">-</span>
+        <span class="sec-title">OKX 보유 현황</span>
+        <span class="sec-meta" id="okxCardSub">-</span>
       </div>
-      <table class="holdings">
+      <table class="list-table">
         <thead>
           <tr><th>계정 · 자산</th><th>평가금액</th><th>원화 환산</th></tr>
         </thead>
         <tbody id="okxRows"></tbody>
       </table>
-    </div>
-  </div>
+    </section>
+  </main>
 
   <!-- TRADE JOURNAL VIEW -->
-  <div id="journalView" style="display:none;">
-    <div class="card">
+  <main id="journalView" style="display:none;">
+    <section class="panel">
       <div class="sec-head">
-        <span class="sec-title">💰 누적 수익 요약</span>
-        <span class="badge" id="tradeCountBadge">0건</span>
+        <span class="sec-title">누적 손익 요약</span>
+        <button class="btn-ghost" onclick="exportCsv()">CSV 다운로드</button>
       </div>
-      <div class="kpi-grid" id="journalKpi"></div>
-    </div>
+      <div class="stat-grid" id="journalKpi" style="margin-top:0;padding-top:0;border-top:none;"></div>
+    </section>
 
-    <div class="card">
+    <section class="panel">
       <div class="sec-head">
-        <span class="sec-title">🔍 종목 검색 · 체결 내역</span>
+        <span class="sec-title">종목 검색 · 체결 내역</span>
+        <span class="meta-time" id="tradeCountBadge">0건</span>
       </div>
-      <input type="text" class="search-input" id="searchInput" placeholder="종목명 또는 코인 검색 (예: 파수AI, 노랑풍선, XRP)" oninput="renderJournal()" />
-      <div class="filter-row">
-        <button class="chip-btn active" onclick="setJSource('all', this)">전체 계좌</button>
-        <button class="chip-btn" onclick="setJSource('키움', this)">📈 키움</button>
-        <button class="chip-btn" onclick="setJSource('OKX', this)">🪙 OKX</button>
-        <button class="chip-btn" onclick="setJSide('매수', this)">매수만</button>
-        <button class="chip-btn" onclick="setJSide('매도', this)">매도만</button>
+      <input type="text" class="search-box" id="searchInput" placeholder="종목명 또는 코인명 검색" oninput="renderJournal()" />
+      <div class="filter-bar">
+        <div class="filter-chips">
+          <button class="p-btn active" onclick="setJSource('all', this)">전체</button>
+          <button class="p-btn" onclick="setJSource('키움', this)">키움</button>
+          <button class="p-btn" onclick="setJSource('OKX', this)">OKX</button>
+        </div>
+        <div class="filter-chips">
+          <button class="p-btn" onclick="setJSide('매수', this)">매수</button>
+          <button class="p-btn" onclick="setJSide('매도', this)">매도</button>
+        </div>
       </div>
-      <div id="searchSummary" style="margin-top:12px;"></div>
-      <table class="holdings" style="margin-top:8px;">
+      <div id="searchSummary"></div>
+      <table class="list-table" style="margin-top:12px;">
         <thead>
           <tr><th>일시 · 종목</th><th>수량 · 단가</th><th>거래금액</th></tr>
         </thead>
         <tbody id="tradeRows"></tbody>
       </table>
-    </div>
+    </section>
 
-    <div class="card">
+    <section class="panel">
       <div class="sec-head">
-        <span class="sec-title">📅 키움 일별 실현손익</span>
-        <span class="sec-badge" id="dailyPnlBadge">-</span>
+        <span class="sec-title">일별 실현손익 (키움)</span>
+        <span class="sec-meta" id="dailyPnlBadge">-</span>
       </div>
-      <table class="holdings">
+      <table class="list-table">
         <thead>
-          <tr><th>날짜</th><th>매도 / 매수</th><th>일 실현손익</th></tr>
+          <tr><th>날짜 · 비용</th><th>매도 / 매수</th><th>실현손익</th></tr>
         </thead>
         <tbody id="dailyPnlRows"></tbody>
       </table>
-    </div>
-  </div>
+    </section>
+  </main>
 
   <script>
     let payload = null;
@@ -417,6 +559,7 @@
     let currentPeriod = "today";
     let jSource = "all";
     let jSide = "all";
+    let chartCoords = [];
 
     function fmtKrw(n) {
       const sign = n > 0 ? "+" : "";
@@ -433,7 +576,7 @@
     }
 
     function setMode(mode, btn) {
-      document.querySelectorAll(".nav-btn").forEach(b => b.classList.remove("active"));
+      document.querySelectorAll(".seg-btn").forEach(b => b.classList.remove("active"));
       if (btn) btn.classList.add("active");
       document.getElementById("portfolioView").style.display = mode === "portfolio" ? "block" : "none";
       document.getElementById("journalView").style.display = mode === "journal" ? "block" : "none";
@@ -460,7 +603,7 @@
         renderAll();
         renderJournal();
       } catch (e) {
-        document.getElementById("chartNote").textContent = "데이터를 불러오지 못했습니다.";
+        document.getElementById("chartNote").textContent = "데이터를 불러오지 못했습니다";
       }
     }
 
@@ -475,8 +618,8 @@
       const okxPct = (100 - parseFloat(kwPct)).toFixed(1);
       document.getElementById("allocKwBar").style.width = kwPct + "%";
       document.getElementById("allocOkxBar").style.width = okxPct + "%";
-      document.getElementById("allocKwLabel").textContent = "● 키움 " + kwPct + "%";
-      document.getElementById("allocOkxLabel").textContent = "● OKX " + okxPct + "%";
+      document.getElementById("allocKwLabel").textContent = "키움 " + kwPct + "%";
+      document.getElementById("allocOkxLabel").textContent = "OKX " + okxPct + "%";
 
       const labelEl = document.getElementById("mainLabel");
       const valEl = document.getElementById("totalVal");
@@ -487,33 +630,34 @@
       if (currentAcct === "all") {
         labelEl.textContent = "총 합산 자산 (키움 + OKX)";
         valEl.textContent = latest.total_krw.toLocaleString() + "원";
+        const cashRatio = ((kw.d2_deposit_krw / total) * 100).toFixed(1);
         kpiGrid.innerHTML = `
-          <div class="kpi-box"><div class="kpi-label">📈 키움 추정자산</div><div class="kpi-val">${kw.total_est_krw.toLocaleString()}원</div></div>
-          <div class="kpi-box"><div class="kpi-label">🪙 OKX 자산</div><div class="kpi-val">${okx.total_krw.toLocaleString()}원 ($${okx.total_usd.toFixed(2)})</div></div>
-          <div class="kpi-box"><div class="kpi-label">주식 매입 / 평가</div><div class="kpi-val">${(kw.tot_pur_krw/10000).toFixed(0)}만 / ${(kw.tot_evlt_krw/10000).toFixed(0)}만</div></div>
-          <div class="kpi-box"><div class="kpi-label">예수금 (D+2)</div><div class="kpi-val">${kw.d2_deposit_krw.toLocaleString()}원</div></div>
+          <div class="stat-item"><div class="stat-k">키움 추정자산</div><div class="stat-v">${kw.total_est_krw.toLocaleString()}원</div></div>
+          <div class="stat-item"><div class="stat-k">OKX 자산</div><div class="stat-v">${okx.total_krw.toLocaleString()}원</div></div>
+          <div class="stat-item"><div class="stat-k">주식 평가금액</div><div class="stat-v">${kw.tot_evlt_krw.toLocaleString()}원</div></div>
+          <div class="stat-item"><div class="stat-k">예수금 (비중 ${cashRatio}%)</div><div class="stat-v">${kw.d2_deposit_krw.toLocaleString()}원</div></div>
         `;
         kwCard.style.display = "block";
         okxCard.style.display = "block";
       } else if (currentAcct === "kiwoom") {
-        labelEl.textContent = "키움증권 5280-4774 추정 자산";
+        labelEl.textContent = "키움 5280-4774 추정 자산";
         valEl.textContent = kw.total_est_krw.toLocaleString() + "원";
         kpiGrid.innerHTML = `
-          <div class="kpi-box"><div class="kpi-label">총 매입금액</div><div class="kpi-val">${kw.tot_pur_krw.toLocaleString()}원</div></div>
-          <div class="kpi-box"><div class="kpi-label">총 평가금액</div><div class="kpi-val">${kw.tot_evlt_krw.toLocaleString()}원</div></div>
-          <div class="kpi-box"><div class="kpi-label">예수금</div><div class="kpi-val">${kw.deposit_krw.toLocaleString()}원</div></div>
-          <div class="kpi-box"><div class="kpi-label">D+2 추정예수금</div><div class="kpi-val">${kw.d2_deposit_krw.toLocaleString()}원</div></div>
+          <div class="stat-item"><div class="stat-k">총 매입금액</div><div class="stat-v">${kw.tot_pur_krw.toLocaleString()}원</div></div>
+          <div class="stat-item"><div class="stat-k">총 평가금액</div><div class="stat-v">${kw.tot_evlt_krw.toLocaleString()}원</div></div>
+          <div class="stat-item"><div class="stat-k">예수금</div><div class="stat-v">${kw.deposit_krw.toLocaleString()}원</div></div>
+          <div class="stat-item"><div class="stat-k">D+2 추정예수금</div><div class="stat-v">${kw.d2_deposit_krw.toLocaleString()}원</div></div>
         `;
         kwCard.style.display = "block";
         okxCard.style.display = "none";
       } else {
         labelEl.textContent = "OKX 총 자산";
-        valEl.textContent = "$" + okx.total_usd.toFixed(2) + " (" + okx.total_krw.toLocaleString() + "원)";
+        valEl.textContent = "$" + okx.total_usd.toFixed(2);
         kpiGrid.innerHTML = `
-          <div class="kpi-box"><div class="kpi-label">Trading 계정</div><div class="kpi-val">$${okx.trading_usd.toFixed(2)}</div></div>
-          <div class="kpi-box"><div class="kpi-label">Funding 계정</div><div class="kpi-val">$${okx.funding_usd.toFixed(2)}</div></div>
-          <div class="kpi-box"><div class="kpi-label">Earn / 스테이킹</div><div class="kpi-val">$${okx.earn_usd.toFixed(2)}</div></div>
-          <div class="kpi-box"><div class="kpi-label">열린 포지션</div><div class="kpi-val">${okx.positions.length}건</div></div>
+          <div class="stat-item"><div class="stat-k">원화 환산</div><div class="stat-v">${okx.total_krw.toLocaleString()}원</div></div>
+          <div class="stat-item"><div class="stat-k">Trading</div><div class="stat-v">$${okx.trading_usd.toFixed(2)}</div></div>
+          <div class="stat-item"><div class="stat-k">Funding</div><div class="stat-v">$${okx.funding_usd.toFixed(2)}</div></div>
+          <div class="stat-item"><div class="stat-k">열린 포지션</div><div class="stat-v">${okx.positions.length}건</div></div>
         `;
         kwCard.style.display = "none";
         okxCard.style.display = "block";
@@ -521,28 +665,29 @@
 
       const kwSub = document.getElementById("kwCardSub");
       kwSub.textContent = fmtKrw(kw.tot_pl_krw) + " (" + fmtPct(kw.tot_prft_rt) + ")";
-      kwSub.className = "sec-badge " + (kw.tot_pl_krw > 0 ? "up" : kw.tot_pl_krw < 0 ? "down" : "flat");
+      kwSub.className = "sec-meta " + (kw.tot_pl_krw > 0 ? "up" : kw.tot_pl_krw < 0 ? "down" : "flat");
 
+      const kwTotalEvlt = kw.tot_evlt_krw || 1;
       document.getElementById("kwRows").innerHTML = kw.stocks.map(s => {
-        const pillCls = s.pl > 0 ? "up" : s.pl < 0 ? "down" : "flat";
-        const txtCls = s.pl > 0 ? "c-up" : s.pl < 0 ? "c-down" : "c-flat";
+        const cls = s.pl > 0 ? "c-up" : s.pl < 0 ? "c-down" : "c-flat";
+        const weight = ((s.evlt / kwTotalEvlt) * 100).toFixed(1);
         return `
           <tr>
-            <td><div class="t-name">${s.name}</div><div class="t-sub">${s.qty}주 · ${s.avg.toLocaleString()}→${s.cur.toLocaleString()}</div></td>
-            <td><div class="t-val">${s.evlt.toLocaleString()}원</div></td>
-            <td><span class="rt-tag ${pillCls}">${fmtPct(s.rt)}</span><div class="t-sub ${txtCls}">${fmtKrw(s.pl)}</div></td>
+            <td><div class="row-main">${s.name}</div><div class="row-sub">${s.qty}주 · 비중 ${weight}% · ${s.avg.toLocaleString()}→${s.cur.toLocaleString()}</div></td>
+            <td><div class="row-main">${s.evlt.toLocaleString()}원</div></td>
+            <td><div class="row-main ${cls}">${fmtPct(s.rt)}</div><div class="row-sub ${cls}">${fmtKrw(s.pl)}</div></td>
           </tr>`;
       }).join("");
 
       const okxSub = document.getElementById("okxCardSub");
       okxSub.textContent = (okx.pnl_usd >= 0 ? "+" : "") + "$" + okx.pnl_usd.toFixed(2) + " (" + fmtPct(okx.pnl_pct) + ")";
-      okxSub.className = "sec-badge " + (okx.pnl_usd > 0 ? "up" : okx.pnl_usd < 0 ? "down" : "flat");
+      okxSub.className = "sec-meta " + (okx.pnl_usd > 0 ? "up" : okx.pnl_usd < 0 ? "down" : "flat");
 
       document.getElementById("okxRows").innerHTML = okx.holdings.map(h => `
         <tr>
-          <td><div class="t-name">${h.name}</div><div class="t-sub">${h.sub}</div></td>
-          <td><div class="t-val">$${h.usd.toFixed(2)}</div></td>
-          <td><div class="t-sub" style="font-size:13px;font-weight:700;color:var(--text);">${h.krw.toLocaleString()}원</div></td>
+          <td><div class="row-main">${h.name}</div><div class="row-sub">${h.sub}</div></td>
+          <td><div class="row-main">$${h.usd.toFixed(2)}</div></td>
+          <td><div class="row-main">${h.krw.toLocaleString()}원</div></td>
         </tr>`).join("");
 
       applyPeriod(currentPeriod);
@@ -550,19 +695,16 @@
 
     function setJSource(src, btn) {
       jSource = src;
-      document.querySelectorAll(".filter-row .chip-btn").forEach((b, idx) => {
-        if (idx < 3) b.classList.remove("active");
-      });
-      if (btn) btn.classList.add("active");
+      btn.parentElement.querySelectorAll(".p-btn").forEach(b => b.classList.remove("active"));
+      btn.classList.add("active");
       renderJournal();
     }
 
     function setJSide(side, btn) {
-      jSide = (jSide === side) ? "all" : side;
-      document.querySelectorAll(".filter-row .chip-btn").forEach((b, idx) => {
-        if (idx >= 3) b.classList.remove("active");
-      });
-      if (jSide !== "all" && btn) btn.classList.add("active");
+      const wasActive = btn.classList.contains("active");
+      btn.parentElement.querySelectorAll(".p-btn").forEach(b => b.classList.remove("active"));
+      jSide = wasActive ? "all" : side;
+      if (!wasActive) btn.classList.add("active");
       renderJournal();
     }
 
@@ -575,10 +717,10 @@
 
       document.getElementById("tradeCountBadge").textContent = trades.length + "건";
       document.getElementById("journalKpi").innerHTML = `
-        <div class="kpi-box"><div class="kpi-label">키움 누적 실현손익</div><div class="kpi-val ${kwRealized >= 0 ? 'c-up' : 'c-down'}">${fmtKrw(kwRealized)}</div></div>
-        <div class="kpi-box"><div class="kpi-label">키움 현재 평가손익</div><div class="kpi-val ${kwUnrealized >= 0 ? 'c-up' : 'c-down'}">${fmtKrw(kwUnrealized)}</div></div>
-        <div class="kpi-box"><div class="kpi-label">총 합산 손익 (키움)</div><div class="kpi-val ${(kwRealized+kwUnrealized) >= 0 ? 'c-up' : 'c-down'}">${fmtKrw(kwRealized + kwUnrealized)}</div></div>
-        <div class="kpi-box"><div class="kpi-label">기록된 거래</div><div class="kpi-val">${trades.length}건 (키움+OKX)</div></div>
+        <div class="stat-item"><div class="stat-k">키움 누적 실현손익</div><div class="stat-v ${kwRealized >= 0 ? 'c-up' : 'c-down'}">${fmtKrw(kwRealized)}</div></div>
+        <div class="stat-item"><div class="stat-k">키움 현재 평가손익</div><div class="stat-v ${kwUnrealized >= 0 ? 'c-up' : 'c-down'}">${fmtKrw(kwUnrealized)}</div></div>
+        <div class="stat-item"><div class="stat-k">키움 합산 손익</div><div class="stat-v ${(kwRealized+kwUnrealized) >= 0 ? 'c-up' : 'c-down'}">${fmtKrw(kwRealized + kwUnrealized)}</div></div>
+        <div class="stat-item"><div class="stat-k">저장된 체결</div><div class="stat-v">${trades.length}건</div></div>
       `;
 
       const q = (document.getElementById("searchInput").value || "").trim().toLowerCase();
@@ -593,23 +735,27 @@
       if (q && filtered.length) {
         const krwTrades = filtered.filter(t => t.currency === "KRW");
         const usdTrades = filtered.filter(t => t.currency === "USD");
-        let parts = [];
+        let lines = [];
         if (krwTrades.length) {
-          const buy = krwTrades.filter(t => t.side === "매수").reduce((a, b) => a + b.amount, 0);
-          const sell = krwTrades.filter(t => t.side === "매도").reduce((a, b) => a + b.amount, 0);
-          parts.push(`키움 매수 ${buy.toLocaleString()}원 · 매도 ${sell.toLocaleString()}원`);
+          const buys = krwTrades.filter(t => t.side === "매수");
+          const sells = krwTrades.filter(t => t.side === "매도");
+          const buyAmt = buys.reduce((a, b) => a + b.amount, 0);
+          const sellAmt = sells.reduce((a, b) => a + b.amount, 0);
+          const buyQty = buys.reduce((a, b) => a + b.qty, 0);
+          const sellQty = sells.reduce((a, b) => a + b.qty, 0);
+          lines.push(`키움 ${filtered.length}건 · 매수 ${buyQty.toLocaleString()}주 (${buyAmt.toLocaleString()}원) · 매도 ${sellQty.toLocaleString()}주 (${sellAmt.toLocaleString()}원)`);
         }
         if (usdTrades.length) {
           const buy = usdTrades.filter(t => t.side === "매수").reduce((a, b) => a + b.amount, 0);
           const sell = usdTrades.filter(t => t.side === "매도").reduce((a, b) => a + b.amount, 0);
-          parts.push(`OKX 매수 $${buy.toFixed(2)} · 매도 $${sell.toFixed(2)}`);
+          lines.push(`OKX ${usdTrades.length}건 · 매수 $${buy.toFixed(2)} · 매도 $${sell.toFixed(2)}`);
         }
-        sumEl.innerHTML = `<div class="pnl-pill flat" style="width:100%;justify-content:center;">"${q}" 검색 ${filtered.length}건 · ${parts.join(" / ")}</div>`;
+        sumEl.innerHTML = `<div class="search-summary">${lines.join("<br>")}</div>`;
       } else {
         sumEl.innerHTML = "";
       }
 
-      document.getElementById("tradeRows").innerHTML = filtered.slice(0, 60).map(t => {
+      document.getElementById("tradeRows").innerHTML = filtered.slice(0, 80).map(t => {
         const sideCls = t.side === "매수" ? "side-buy" : "side-sell";
         const amtStr = t.currency === "KRW" ? t.amount.toLocaleString() + "원" : "$" + t.amount.toFixed(2);
         const pxStr = t.currency === "KRW" ? t.price.toLocaleString() + "원" : "$" + (t.price < 1 ? t.price.toFixed(4) : t.price.toFixed(2));
@@ -617,39 +763,51 @@
         return `
           <tr>
             <td>
-              <div class="t-name">${t.symbol} <span class="${sideCls}">${t.side}</span></div>
-              <div class="t-sub">${t.source} · ${t.date} ${t.time}</div>
+              <div class="row-main">${t.symbol}<span class="side-tag ${sideCls}">${t.side}</span></div>
+              <div class="row-sub">${t.source} · ${t.date} ${t.time}</div>
             </td>
-            <td><div class="t-val">${qtyStr}</div><div class="t-sub">${pxStr}</div></td>
-            <td><div class="t-val">${amtStr}</div></td>
+            <td><div class="row-main">${qtyStr}</div><div class="row-sub">${pxStr}</div></td>
+            <td><div class="row-main">${amtStr}</div></td>
           </tr>`;
-      }).join("") || `<tr><td colspan="3" style="text-align:center;color:#8b95a1;padding:20px;">검색 결과가 없습니다.</td></tr>`;
+      }).join("") || `<tr><td colspan="3" style="text-align:center;color:var(--ink-3);padding:24px;">검색 결과가 없습니다</td></tr>`;
 
       const pnlBadge = document.getElementById("dailyPnlBadge");
       pnlBadge.textContent = fmtKrw(kwRealized);
-      pnlBadge.className = "sec-badge " + (kwRealized > 0 ? "up" : kwRealized < 0 ? "down" : "flat");
+      pnlBadge.className = "sec-meta " + (kwRealized > 0 ? "up" : kwRealized < 0 ? "down" : "flat");
 
       document.getElementById("dailyPnlRows").innerHTML = daily.slice().reverse().map(d => {
         const cls = d.realized_pl > 0 ? "c-up" : d.realized_pl < 0 ? "c-down" : "c-flat";
         return `
           <tr>
-            <td><div class="t-name">${d.date}</div><div class="t-sub">수수료·세금 ${(d.fee + d.tax).toLocaleString()}원</div></td>
-            <td><div class="t-sub">매도 ${d.sell_amt.toLocaleString()}원</div><div class="t-sub">매수 ${d.buy_amt.toLocaleString()}원</div></td>
-            <td><div class="t-val ${cls}">${fmtKrw(d.realized_pl)}</div></td>
+            <td><div class="row-main">${d.date}</div><div class="row-sub">비용 ${(d.fee + d.tax).toLocaleString()}원</div></td>
+            <td><div class="row-sub">매도 ${d.sell_amt.toLocaleString()}원</div><div class="row-sub">매수 ${d.buy_amt.toLocaleString()}원</div></td>
+            <td><div class="row-main ${cls}">${fmtKrw(d.realized_pl)}</div></td>
           </tr>`;
-      }).join("") || `<tr><td colspan="3" style="text-align:center;color:#8b95a1;padding:20px;">실현손익 내역이 없습니다.</td></tr>`;
+      }).join("") || `<tr><td colspan="3" style="text-align:center;color:var(--ink-3);padding:24px;">실현손익 내역이 없습니다</td></tr>`;
+    }
+
+    function exportCsv() {
+      if (!payload || !payload.trades) return;
+      const header = ["계좌", "날짜", "시간", "종목", "구분", "수량", "단가", "거래금액", "통화"];
+      const rows = payload.trades.map(t => [t.source, t.date, t.time, t.symbol, t.side, t.qty, t.price, t.amount, t.currency]);
+      const csv = "\uFEFF" + [header, ...rows].map(r => r.join(",")).join("\n");
+      const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+      const a = document.createElement("a");
+      a.href = URL.createObjectURL(blob);
+      a.download = "trade-journal.csv";
+      a.click();
     }
 
     function setAcct(acct, btn) {
       currentAcct = acct;
-      document.querySelectorAll(".acct-btn").forEach(b => b.classList.remove("active"));
+      document.querySelectorAll(".pill-btn").forEach(b => b.classList.remove("active"));
       if (btn) btn.classList.add("active");
       renderAll();
     }
 
     function setPeriod(period, btn) {
       currentPeriod = period;
-      document.querySelectorAll(".tab-btn").forEach(b => b.classList.remove("active"));
+      document.querySelectorAll(".period-row .p-btn").forEach(b => b.classList.remove("active"));
       if (btn) btn.classList.add("active");
       applyPeriod(period);
     }
@@ -673,18 +831,18 @@
         const end = getVal(points[points.length - 1]);
         const diff = end - start;
         const pct = start ? (diff / start) * 100 : 0;
-        pill.className = "pnl-pill " + (diff > 0 ? "up" : diff < 0 ? "down" : "flat");
-        pill.textContent = `${label} 손익: ${fmtKrw(diff)} (${fmtPct(pct)})`;
+        pill.className = "delta-tag " + (diff > 0 ? "up" : diff < 0 ? "down" : "flat");
+        pill.textContent = `${label} ${fmtKrw(diff)} (${fmtPct(pct)})`;
       } else {
         if (currentAcct === "okx") {
-          pill.className = "pnl-pill flat";
-          pill.textContent = `보유 평가손익: $${okx.pnl_usd.toFixed(2)} (${fmtPct(okx.pnl_pct)} · 포지션 없음)`;
+          pill.className = "delta-tag flat";
+          pill.textContent = `평가손익 $${okx.pnl_usd.toFixed(2)} (${fmtPct(okx.pnl_pct)})`;
         } else {
           const pnl = kw.tot_pl_krw;
           const base = currentAcct === "kiwoom" ? kw.tot_pur_krw : (payload.history[0].total_krw - pnl);
           const pct = base ? (pnl / base) * 100 : 0;
-          pill.className = "pnl-pill " + (pnl > 0 ? "up" : pnl < 0 ? "down" : "flat");
-          pill.textContent = `${label} 평가손익: ${fmtKrw(pnl)} (${fmtPct(pct)})`;
+          pill.className = "delta-tag " + (pnl > 0 ? "up" : pnl < 0 ? "down" : "flat");
+          pill.textContent = `${label} 평가손익 ${fmtKrw(pnl)} (${fmtPct(pct)})`;
         }
       }
     }
@@ -696,8 +854,8 @@
       updatePnlPill(pts, labels[period]);
       document.getElementById("chartNote").textContent =
         pts.length <= 1
-          ? `${labels[period]} 추이 · 2026-11-23부터 매일 브리핑마다 자동 누적됩니다.`
-          : `${labels[period]} (${pts[0].date} ~ ${pts[pts.length - 1].date} · ${pts.length}회 기록)`;
+          ? `${labels[period]} 기준 · 매일 브리핑마다 자동 누적`
+          : `${labels[period]} · ${pts[0].date} ~ ${pts[pts.length - 1].date} (${pts.length}건)`;
       renderChart(pts);
     }
 
@@ -706,10 +864,10 @@
       const found = payload.history.filter(d => d.date === val);
       if (found.length) {
         updatePnlPill(found, val);
-        document.getElementById("chartNote").textContent = `${val} 조회: ${getVal(found[0]).toLocaleString()}원`;
+        document.getElementById("chartNote").textContent = `${val} · ${getVal(found[0]).toLocaleString()}원`;
         renderChart(found);
       } else {
-        document.getElementById("chartNote").textContent = `${val} 데이터가 아직 없습니다.`;
+        document.getElementById("chartNote").textContent = `${val} 기록 없음`;
       }
     }
 
@@ -723,74 +881,99 @@
         document.getElementById("chartNote").textContent = `${s || "~"} ~ ${e || "~"} (${found.length}건)`;
         renderChart(found);
       } else {
-        document.getElementById("chartNote").textContent = "선택한 기간의 데이터가 아직 없습니다.";
+        document.getElementById("chartNote").textContent = "선택한 기간의 기록 없음";
       }
     }
 
     function renderChart(points) {
       const svg = document.getElementById("chartSvg");
-      const w = 320, h = 130, padX = 16, padTop = 26, padBot = 22;
+      const w = 320, h = 120, padX = 12, padTop = 14, padBot = 14;
       svg.innerHTML = "";
+      chartCoords = [];
 
-      const defs = document.createElementNS("http://www.w3.org/2000/svg", "defs");
-      defs.innerHTML = `
-        <linearGradient id="areaGrad" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stop-color="#3182f6" stop-opacity="0.22"/>
-          <stop offset="100%" stop-color="#3182f6" stop-opacity="0.0"/>
-        </linearGradient>`;
-      svg.appendChild(defs);
+      const hoverDate = document.getElementById("hoverDate");
+      const hoverVal = document.getElementById("hoverVal");
 
       [padTop, (h - padBot + padTop) / 2, h - padBot].forEach(y => {
         const g = document.createElementNS("http://www.w3.org/2000/svg", "line");
         g.setAttribute("x1", padX); g.setAttribute("x2", w - padX);
         g.setAttribute("y1", y); g.setAttribute("y2", y);
-        g.setAttribute("stroke", "#eceff3"); g.setAttribute("stroke-dasharray", "3 3");
+        g.setAttribute("stroke", "rgba(20,20,19,0.06)");
+        g.setAttribute("stroke-dasharray", "2 3");
         svg.appendChild(g);
       });
 
       if (!points.length) return;
+
       if (points.length === 1) {
         const cx = w / 2, cy = (h - padBot + padTop) / 2;
-        const glow = document.createElementNS("http://www.w3.org/2000/svg", "circle");
-        glow.setAttribute("cx", cx); glow.setAttribute("cy", cy); glow.setAttribute("r", 12);
-        glow.setAttribute("fill", "#3182f6"); glow.setAttribute("opacity", "0.15");
-        svg.appendChild(glow);
+        hoverDate.textContent = points[0].date;
+        hoverVal.textContent = getVal(points[0]).toLocaleString() + "원";
 
         const c = document.createElementNS("http://www.w3.org/2000/svg", "circle");
-        c.setAttribute("cx", cx); c.setAttribute("cy", cy); c.setAttribute("r", 5.5);
-        c.setAttribute("fill", "#3182f6"); c.setAttribute("stroke", "#fff"); c.setAttribute("stroke-width", "2");
+        c.setAttribute("cx", cx); c.setAttribute("cy", cy); c.setAttribute("r", 4.5);
+        c.setAttribute("fill", "#141413");
         svg.appendChild(c);
-
-        const t = document.createElementNS("http://www.w3.org/2000/svg", "text");
-        t.setAttribute("x", cx); t.setAttribute("y", cy - 18);
-        t.setAttribute("text-anchor", "middle");
-        t.setAttribute("font-size", "11"); t.setAttribute("font-weight", "700"); t.setAttribute("fill", "#191f28");
-        t.textContent = points[0].label + " · " + getVal(points[0]).toLocaleString() + "원";
-        svg.appendChild(t);
         return;
       }
+
+      const last = points[points.length - 1];
+      hoverDate.textContent = last.date;
+      hoverVal.textContent = getVal(last).toLocaleString() + "원";
 
       const vals = points.map(getVal);
       const min = Math.min(...vals), max = Math.max(...vals);
       const span = (max - min) || 1;
-      const coords = points.map((p, i) => {
+      chartCoords = points.map((p, i) => {
         const x = padX + (i / (points.length - 1)) * (w - padX * 2);
         const y = h - padBot - ((getVal(p) - min) / span) * (h - padTop - padBot);
-        return [x, y];
+        return { x, y, point: p };
       });
 
-      const linePts = coords.map(c => c[0].toFixed(1) + "," + c[1].toFixed(1)).join(" ");
-      const areaPts = `${coords[0][0].toFixed(1)},${h - padBot} ${linePts} ${coords[coords.length - 1][0].toFixed(1)},${h - padBot}`;
-
-      const area = document.createElementNS("http://www.w3.org/2000/svg", "polygon");
-      area.setAttribute("fill", "url(#areaGrad)"); area.setAttribute("points", areaPts);
-      svg.appendChild(area);
-
+      const linePts = chartCoords.map(c => `${c.x.toFixed(1)},${c.y.toFixed(1)}`).join(" ");
       const poly = document.createElementNS("http://www.w3.org/2000/svg", "polyline");
-      poly.setAttribute("fill", "none"); poly.setAttribute("stroke", "#3182f6");
-      poly.setAttribute("stroke-width", "2.5"); poly.setAttribute("stroke-linejoin", "round");
+      poly.setAttribute("fill", "none");
+      poly.setAttribute("stroke", "#141413");
+      poly.setAttribute("stroke-width", "1.8");
+      poly.setAttribute("stroke-linejoin", "round");
       poly.setAttribute("points", linePts);
       svg.appendChild(poly);
+
+      const guide = document.createElementNS("http://www.w3.org/2000/svg", "line");
+      guide.setAttribute("y1", padTop); guide.setAttribute("y2", h - padBot);
+      guide.setAttribute("stroke", "rgba(20,20,19,0.25)");
+      guide.setAttribute("stroke-width", "1");
+      guide.style.display = "none";
+      svg.appendChild(guide);
+
+      const dot = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+      dot.setAttribute("r", "4");
+      dot.setAttribute("fill", "#141413");
+      dot.setAttribute("stroke", "#ffffff");
+      dot.setAttribute("stroke-width", "1.5");
+      dot.style.display = "none";
+      svg.appendChild(dot);
+
+      const onPointer = (clientX) => {
+        if (!chartCoords.length) return;
+        const rect = svg.getBoundingClientRect();
+        const svgX = ((clientX - rect.left) / rect.width) * w;
+        let nearest = chartCoords[0];
+        let best = Math.abs(svgX - nearest.x);
+        for (const c of chartCoords) {
+          const d = Math.abs(svgX - c.x);
+          if (d < best) { best = d; nearest = c; }
+        }
+        guide.setAttribute("x1", nearest.x); guide.setAttribute("x2", nearest.x);
+        guide.style.display = "block";
+        dot.setAttribute("cx", nearest.x); dot.setAttribute("cy", nearest.y);
+        dot.style.display = "block";
+        hoverDate.textContent = nearest.point.label || nearest.point.date;
+        hoverVal.textContent = getVal(nearest.point).toLocaleString() + "원";
+      };
+
+      svg.onpointermove = (e) => onPointer(e.clientX);
+      svg.onpointerdown = (e) => onPointer(e.clientX);
     }
 
     loadData();
