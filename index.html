@@ -279,7 +279,7 @@
               <span class="chart-date" id="hoverDate">-</span>
               <span class="chart-val" id="hoverVal">-</span>
             </div>
-            <svg id="chartSvg" viewBox="0 0 320 120" width="100%" height="120" style="touch-action:none;"></svg>
+            <svg id="chartSvg" viewBox="0 0 320 110" style="width:100%;height:auto;display:block;touch-action:none;"></svg>
             <div class="chart-axis">
               <span id="axisStart">-</span>
               <span id="axisMid">-</span>
@@ -1004,12 +1004,13 @@
 
     function renderRealizedChart(series, titleLabel) {
       const svg = document.getElementById("chartSvg");
-      const w = 320, h = 120, padX = 10, padTop = 14, padBot = 14;
+      const w = 320, h = 110, padX = 4, padTop = 10, padBot = 10;
       svg.innerHTML = "";
       const hoverDate = document.getElementById("hoverDate");
       const hoverVal = document.getElementById("hoverVal");
       const noteEl = document.getElementById("chartNote");
       const fmt = v => currentAcct === "okx" ? fmtUsd(v) : fmtKrw(v);
+      const fmtAxisDate = d => d.slice(2).replace(/-/g, ".");
 
       if (!series.length) {
         hoverDate.textContent = titleLabel;
@@ -1024,27 +1025,30 @@
       if (series.length === 1) {
         hoverDate.textContent = series[0].date;
         hoverVal.textContent = fmt(series[0].cum);
-        document.getElementById("axisStart").textContent = series[0].date.slice(5);
+        document.getElementById("axisStart").textContent = fmtAxisDate(series[0].date);
         document.getElementById("axisMid").textContent = "";
         document.getElementById("axisEnd").textContent = "";
         noteEl.textContent = `${titleLabel} (1건)`;
         const c = document.createElementNS("http://www.w3.org/2000/svg", "circle");
-        c.setAttribute("cx", w / 2); c.setAttribute("cy", h / 2); c.setAttribute("r", 4); c.setAttribute("fill", "#141413");
+        c.setAttribute("cx", w / 2); c.setAttribute("cy", h / 2); c.setAttribute("r", 3.5); c.setAttribute("fill", "#141413");
         svg.appendChild(c);
         return;
       }
 
       const vals = series.map(s => s.cum);
-      const min = Math.min(...vals, 0), max = Math.max(...vals, 1);
+      const min = Math.min(...vals, 0), max = Math.max(...vals, 0);
       const span = (max - min) || 1;
       const toY = v => h - padBot - ((v - min) / span) * (h - padTop - padBot);
+      const lastCum = series[series.length - 1].cum;
+      const strokeCol = lastCum > 0 ? "#d92d20" : (lastCum < 0 ? "#1570ef" : "#141413");
 
       // 0-baseline dashed reference line
       const zeroY = toY(0);
       const zeroLine = document.createElementNS("http://www.w3.org/2000/svg", "line");
       zeroLine.setAttribute("x1", padX); zeroLine.setAttribute("x2", w - padX);
       zeroLine.setAttribute("y1", zeroY.toFixed(1)); zeroLine.setAttribute("y2", zeroY.toFixed(1));
-      zeroLine.setAttribute("stroke", "rgba(20,20,19,0.16)"); zeroLine.setAttribute("stroke-dasharray", "3 3");
+      zeroLine.setAttribute("stroke", "rgba(20,20,19,0.18)"); zeroLine.setAttribute("stroke-width", "0.8");
+      zeroLine.setAttribute("stroke-dasharray", "3 3");
       svg.appendChild(zeroLine);
 
       const coords = series.map((s, i) => ({
@@ -1055,34 +1059,34 @@
       const linePts = coords.map(c => `${c.x.toFixed(1)},${c.y.toFixed(1)}`).join(" ");
       const areaPts = `${coords[0].x.toFixed(1)},${zeroY.toFixed(1)} ${linePts} ${coords[coords.length - 1].x.toFixed(1)},${zeroY.toFixed(1)}`;
       const defs = document.createElementNS("http://www.w3.org/2000/svg", "defs");
-      defs.innerHTML = `<linearGradient id="cumG" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#141413" stop-opacity="0.14"/><stop offset="100%" stop-color="#141413" stop-opacity="0.01"/></linearGradient>`;
+      defs.innerHTML = `<linearGradient id="cumG" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="${strokeCol}" stop-opacity="0.14"/><stop offset="100%" stop-color="${strokeCol}" stop-opacity="0.02"/></linearGradient>`;
       svg.appendChild(defs);
       const polyArea = document.createElementNS("http://www.w3.org/2000/svg", "polygon");
       polyArea.setAttribute("fill", "url(#cumG)"); polyArea.setAttribute("points", areaPts);
       svg.appendChild(polyArea);
       const poly = document.createElementNS("http://www.w3.org/2000/svg", "polyline");
-      poly.setAttribute("fill", "none"); poly.setAttribute("stroke", "#141413");
-      poly.setAttribute("stroke-width", "1.9"); poly.setAttribute("points", linePts);
+      poly.setAttribute("fill", "none"); poly.setAttribute("stroke", strokeCol);
+      poly.setAttribute("stroke-width", "1.8"); poly.setAttribute("stroke-linejoin", "round"); poly.setAttribute("points", linePts);
       svg.appendChild(poly);
 
       // Interactive crosshair + dot
       const xhair = document.createElementNS("http://www.w3.org/2000/svg", "line");
-      xhair.setAttribute("stroke", "rgba(20,20,19,0.28)"); xhair.setAttribute("stroke-width", "1");
+      xhair.setAttribute("stroke", "rgba(20,20,19,0.28)"); xhair.setAttribute("stroke-width", "0.8");
       xhair.style.display = "none";
       svg.appendChild(xhair);
 
       const dot = document.createElementNS("http://www.w3.org/2000/svg", "circle");
-      dot.setAttribute("r", "3.5"); dot.setAttribute("fill", "#141413");
+      dot.setAttribute("r", "3"); dot.setAttribute("fill", strokeCol);
       dot.setAttribute("cx", coords[coords.length - 1].x); dot.setAttribute("cy", coords[coords.length - 1].y);
       svg.appendChild(dot);
 
       const midIdx = Math.floor(series.length / 2);
-      document.getElementById("axisStart").textContent = series[0].date.slice(5);
-      document.getElementById("axisMid").textContent = series[midIdx].date.slice(5);
-      document.getElementById("axisEnd").textContent = series[series.length - 1].date.slice(5);
+      document.getElementById("axisStart").textContent = fmtAxisDate(series[0].date);
+      document.getElementById("axisMid").textContent = fmtAxisDate(series[midIdx].date);
+      document.getElementById("axisEnd").textContent = fmtAxisDate(series[series.length - 1].date);
 
       hoverDate.textContent = `${titleLabel}`;
-      hoverVal.textContent = fmt(series[series.length - 1].cum);
+      hoverVal.textContent = fmt(lastCum);
       noteEl.textContent = `최고 ${fmt(Math.max(...vals))} · 최저 ${fmt(Math.min(...vals))} · 터치하여 날짜별 확인`;
 
       const onP = (cx) => {
