@@ -162,7 +162,7 @@
     .holding-row:last-child { border-bottom: none; padding-bottom: 0; }
     .h-left { min-width: 0; }
     .h-name { font-size: 14px; font-weight: 600; color: var(--ink); }
-    .h-sub { font-size: 12px; color: var(--ink-3); margin-top: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .h-sub { font-size: 12px; color: var(--ink-3); margin-top: 2px; line-height: 1.35; }
     .h-right { text-align: right; flex-shrink: 0; }
     .h-val { font-size: 14px; font-weight: 700; color: var(--ink); }
     .h-pnl { font-size: 12px; font-weight: 600; margin-top: 2px; }
@@ -355,11 +355,18 @@
         <button class="pill-btn" onclick="setJTab('daily', this)">일별 손익</button>
         <button class="pill-btn" onclick="setJTab('fills', this)">전체 체결</button>
       </div>
-      <div class="period-row" id="outcomeRow" style="margin-top:8px;">
-        <button class="p-btn active" onclick="setJOutcome('all', this)">전체</button>
-        <button class="p-btn" onclick="setJOutcome('win', this)">수익만</button>
-        <button class="p-btn" onclick="setJOutcome('loss', this)">손실만</button>
-        <button class="p-btn" id="holdFilterBtn" onclick="setJOutcome('hold', this)">보유중</button>
+      <div style="display:flex;gap:6px;margin-top:8px;align-items:center;justify-content:space-between;flex-wrap:wrap;">
+        <div class="period-row" id="outcomeRow" style="margin-top:0;">
+          <button class="p-btn active" onclick="setJOutcome('all', this)">전체</button>
+          <button class="p-btn" onclick="setJOutcome('win', this)">수익만</button>
+          <button class="p-btn" onclick="setJOutcome('loss', this)">손실만</button>
+          <button class="p-btn" id="holdFilterBtn" onclick="setJOutcome('hold', this)">보유중</button>
+        </div>
+        <select id="jSortSelect" onchange="renderJournal()" style="height:28px;border:1px solid var(--hairline-2);border-radius:6px;padding:0 8px;font-family:inherit;font-size:12px;color:var(--ink-2);background:var(--surface);">
+          <option value="recent">최신순</option>
+          <option value="high">수익 큰 순</option>
+          <option value="low">손실 큰 순</option>
+        </select>
       </div>
     </section>
 
@@ -430,8 +437,8 @@
       return dates.map(date => { cum += map[date]; return { date, daily: map[date], cum }; });
     }
 
-    // Compute CAGR, MDD (max drawdown on equity curve), and Profit Factor
-    function computeMetrics(acct) {
+    // Compute CAGR, MDD (max drawdown on equity curve), and Profit Factor for any series + date range
+    function computeMetrics(acct, customSeries, customStartDate, customEndDate) {
       if (!payload) return { cagrStr: "-", mddStr: "-", pfStr: "-", mddSub: "", cagrSub: "" };
       const kw = payload.latest.kiwoom;
       const okx = payload.latest.okx;
@@ -440,25 +447,31 @@
         ? kw.total_est_krw
         : (acct === "okx" ? okx.total_usd : (kw.total_est_krw + okx.total_krw));
 
-      const series = buildRealizedSeries(acct);
+      const series = customSeries || buildRealizedSeries(acct);
       const fmt = v => acct === "okx" ? fmtUsd(v) : fmtKrw(v);
 
       let mddAmt = 0;
       let peak = 0;
+      let grossWin = 0;
+      let grossLoss = 0;
       if (series.length) {
         series.forEach(pt => {
           if (pt.cum > peak) peak = pt.cum;
           const dd = pt.cum - peak;
           if (dd < mddAmt) mddAmt = dd;
+          if (pt.daily > 0) grossWin += pt.daily;
+          else if (pt.daily < 0) grossLoss += Math.abs(pt.daily);
         });
       }
       const mddPct = baseCapital > 0 ? (mddAmt / baseCapital) * 100 : 0;
 
       let cagr = 0;
       let days = 1;
-      if (series.length >= 2) {
-        const d0 = new Date(series[0].date + "T00:00:00");
-        const d1 = new Date(series[series.length - 1].date + "T00:00:00");
+      if (series.length >= 1) {
+        const startStr = customStartDate || series[0].date;
+        const endStr = customEndDate || series[series.length - 1].date;
+        const d0 = new Date(startStr + "T00:00:00");
+        const d1 = new Date(endStr + "T00:00:00");
         days = Math.max(1, Math.round((d1 - d0) / 86400000));
         const totalRet = baseCapital > 0 ? (series[series.length - 1].cum / baseCapital) : 0;
         if (1 + totalRet > 0) {
@@ -466,13 +479,6 @@
         }
       }
 
-      const syms = (payload.symbol_summaries || []).filter(s => acct === "all" || (acct === "kiwoom" ? s.source === "키움" : s.source === "OKX"));
-      let grossWin = 0, grossLoss = 0;
-      syms.forEach(s => {
-        const pl = (acct === "all" && s.currency === "USD") ? s.realized_pl * rate : s.realized_pl;
-        if (pl > 0) grossWin += pl;
-        else if (pl < 0) grossLoss += Math.abs(pl);
-      });
       const pf = grossLoss > 0 ? (grossWin / grossLoss).toFixed(2) : (grossWin > 0 ? "∞" : "-");
 
       return {
@@ -481,8 +487,28 @@
         mddStr: `${mddPct.toFixed(2)}%`,
         mddSub: `고점 대비 ${fmt(mddAmt)}`,
         pfStr: pf === "∞" ? "∞" : `${pf}배`,
-        pfSub: "총이익 / 총손실"
+        pfSub: "기간 총이익/총손실"
       };
+    }
+
+    function renderRiskGrid(m) {
+      document.getElementById("riskGrid").innerHTML = `
+        <div class="stat-item">
+          <div class="stat-k">CAGR (연환산)</div>
+          <div class="stat-v ${m.cagrStr.startsWith('+') ? 'c-up' : m.cagrStr.startsWith('-') ? 'c-down' : ''}">${m.cagrStr}</div>
+          <div class="stat-s">${m.cagrSub}</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-k">MDD (최대낙폭)</div>
+          <div class="stat-v c-down">${m.mddStr}</div>
+          <div class="stat-s">${m.mddSub}</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-k">손익비 (PF)</div>
+          <div class="stat-v">${m.pfStr}</div>
+          <div class="stat-s">${m.pfSub}</div>
+        </div>
+      `;
     }
 
     function setMode(mode, btn) {
@@ -568,24 +594,7 @@
         kwCard.style.display = "none"; okxCard.style.display = "block";
       }
 
-      const m = computeMetrics(currentAcct);
-      document.getElementById("riskGrid").innerHTML = `
-        <div class="stat-item">
-          <div class="stat-k">CAGR (연환산)</div>
-          <div class="stat-v ${m.cagrStr.startsWith('+') ? 'c-up' : m.cagrStr.startsWith('-') ? 'c-down' : ''}">${m.cagrStr}</div>
-          <div class="stat-s">${m.cagrSub}</div>
-        </div>
-        <div class="stat-item">
-          <div class="stat-k">MDD (최대낙폭)</div>
-          <div class="stat-v c-down">${m.mddStr}</div>
-          <div class="stat-s">${m.mddSub}</div>
-        </div>
-        <div class="stat-item">
-          <div class="stat-k">손익비 (PF)</div>
-          <div class="stat-v">${m.pfStr}</div>
-          <div class="stat-s">${m.pfSub}</div>
-        </div>
-      `;
+      renderRiskGrid(computeMetrics(currentAcct));
 
       const kwSub = document.getElementById("kwCardSub");
       kwSub.textContent = fmtKrw(kw.tot_pl_krw) + " (" + fmtPct(kw.tot_prft_rt) + ")";
@@ -599,7 +608,7 @@
           <div class="holding-row">
             <div class="h-left">
               <div class="h-name">${s.name}</div>
-              <div class="h-sub">${s.qty}주 · 비중 ${weight}% · 평단 ${s.avg.toLocaleString()}→${s.cur.toLocaleString()}</div>
+              <div class="h-sub">${s.qty}주 · 비중 ${weight}%<br>평단 ${s.avg.toLocaleString()} → 현재 ${s.cur.toLocaleString()}</div>
             </div>
             <div class="h-right">
               <div class="h-val">${s.evlt.toLocaleString()}원</div>
@@ -729,6 +738,20 @@
         if (jOutcome === "hold" && !(s.holding_qty > 0)) return false;
         return true;
       });
+      const sortMode = document.getElementById("jSortSelect")?.value || "recent";
+      if (sortMode === "high") {
+        filteredSyms.sort((a, b) => {
+          const av = a.holding_qty > 0 ? a.unrealized_pl : (a.currency === "USD" ? a.realized_pl * rate : a.realized_pl);
+          const bv = b.holding_qty > 0 ? b.unrealized_pl : (b.currency === "USD" ? b.realized_pl * rate : b.realized_pl);
+          return bv - av;
+        });
+      } else if (sortMode === "low") {
+        filteredSyms.sort((a, b) => {
+          const av = a.holding_qty > 0 ? a.unrealized_pl : (a.currency === "USD" ? a.realized_pl * rate : a.realized_pl);
+          const bv = b.holding_qty > 0 ? b.unrealized_pl : (b.currency === "USD" ? b.realized_pl * rate : b.realized_pl);
+          return av - bv;
+        });
+      }
       document.getElementById("tradeCountBadge").textContent = filteredSyms.length + "종목";
 
       document.getElementById("jSymbolsPane").innerHTML = filteredSyms.map(s => {
@@ -954,6 +977,7 @@
           pill.className = "delta-tag " + (pnl > 0 ? "up" : pnl < 0 ? "down" : "flat");
           pill.textContent = `오늘 평가손익 ${fmtKrw(pnl)} (${fmtPct(pct)})`;
         }
+        renderRiskGrid(computeMetrics(currentAcct, fullSeries));
         renderRealizedChart(fullSeries, currentAcct === "okx" ? "OKX 누적 실현손익" : (currentAcct === "kiwoom" ? "키움 올해 누적 실현손익" : "전체 누적 실현손익"));
       } else {
         const periodSum = scoped.length ? scoped[scoped.length - 1].cum : 0;
@@ -961,7 +985,9 @@
         pill.textContent = currentAcct === "okx"
           ? `${label} 실현손익 ${fmtUsd(periodSum)}`
           : `${label} 실현손익 ${fmtKrw(periodSum)}`;
-        renderRealizedChart(scoped.length ? scoped : fullSeries, `${label} 실현손익 추이`);
+        const activeSeries = scoped.length ? scoped : fullSeries;
+        renderRiskGrid(computeMetrics(currentAcct, activeSeries));
+        renderRealizedChart(activeSeries, `${label} 실현손익 추이`);
       }
     }
 
@@ -994,6 +1020,7 @@
       if (scoped.length) {
         pill.className = "delta-tag " + (cum > 0 ? "up" : cum < 0 ? "down" : "flat");
         pill.textContent = currentAcct === "okx" ? `${s}~${e} ${fmtUsd(cum)}` : `${s}~${e} ${fmtKrw(cum)}`;
+        renderRiskGrid(computeMetrics(currentAcct, scoped, s, e));
         renderRealizedChart(scoped, `${s} ~ ${e}`);
       } else {
         pill.className = "delta-tag flat";
