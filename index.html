@@ -52,10 +52,10 @@
     .icon-btn:active { transform: scale(0.95); }
 
     .seg-nav {
-      display: grid; grid-template-columns: 1fr 1fr;
+      display: grid; grid-template-columns: 1fr 1fr 1fr;
       padding: 3px; background: var(--surface-2);
       border: 1px solid var(--hairline); border-radius: 10px;
-      margin-bottom: 14px; max-width: 420px;
+      margin-bottom: 14px; max-width: 520px;
     }
     .seg-btn {
       height: 36px; border: none; border-radius: 7px;
@@ -211,6 +211,24 @@
     .side-tag { display: inline-block; font-size: 11px; font-weight: 600; padding: 1px 6px; border-radius: 4px; margin-right: 4px; }
     .side-buy { color: var(--up); background: var(--up-bg); }
     .side-sell { color: var(--down); background: var(--down-bg); }
+    .ball-row { display: flex; gap: 6px; flex-wrap: wrap; align-items: center; }
+    .ball {
+      width: 30px; height: 30px; border-radius: 50%;
+      display: inline-flex; align-items: center; justify-content: center;
+      font-size: 12px; font-weight: 700; color: #fff;
+    }
+    .b-y { background: #e5a910; }
+    .b-b { background: #2d7ff9; }
+    .b-r { background: #e5484d; }
+    .b-g { background: #6b7280; }
+    .b-gr { background: #18a957; }
+    .b-pt { background: #141413; border-radius: 7px; width: 28px; height: 28px; }
+    .b-grp { background: var(--surface-2); color: var(--ink); border-radius: 7px; padding: 0 8px; width: auto; height: 28px; font-size: 12px; }
+    .gen-row {
+      display: flex; justify-content: space-between; align-items: center; gap: 8px;
+      padding: 10px 0; border-bottom: 1px solid var(--hairline); flex-wrap: wrap;
+    }
+    .gen-row:last-child { border-bottom: none; padding-bottom: 0; }
   </style>
 </head>
 <body>
@@ -232,6 +250,7 @@
   <nav class="seg-nav">
     <button class="seg-btn active" onclick="setMode('portfolio', this)">자산 현황</button>
     <button class="seg-btn" onclick="setMode('journal', this)">매매일지</button>
+    <button class="seg-btn" onclick="setMode('lottery', this)">로또·연금</button>
   </nav>
 
   <!-- PORTFOLIO VIEW -->
@@ -388,6 +407,73 @@
     </section>
   </main>
 
+  <!-- LOTTERY VIEW -->
+  <main id="lotteryView" style="display:none;">
+    <div class="pill-row">
+      <button class="pill-btn active" onclick="setLotType('lotto', this)">로또 6/45</button>
+      <button class="pill-btn" onclick="setLotType('pension', this)">연금복권 720+</button>
+    </div>
+
+    <section class="panel">
+      <div class="sec-head">
+        <span class="sec-title">내 복권 손익 · 승률 요약</span>
+        <span class="meta-time" id="lotLatestMeta">-</span>
+      </div>
+      <div class="stat-grid" id="lotKpiGrid" style="margin-top:0;padding-top:0;border-top:none;"></div>
+    </section>
+
+    <section class="panel">
+      <div class="sec-head">
+        <span class="sec-title" id="lotPatternTitle">역대 당첨 패턴 분석</span>
+        <span class="meta-time" id="lotTotalDraws">-</span>
+      </div>
+      <div id="lotPatternBody"></div>
+    </section>
+
+    <section class="panel">
+      <div class="sec-head">
+        <span class="sec-title">패턴 기반 추천 번호</span>
+        <div style="display:flex;gap:6px;align-items:center;">
+          <select id="lotStrategy" style="height:28px;border:1px solid var(--hairline-2);border-radius:6px;padding:0 8px;font-family:inherit;font-size:12px;background:var(--surface);color:var(--ink-2);">
+            <option value="balanced">균형 (핫+콜드+밸런스)</option>
+            <option value="hot">최다 출현 위주</option>
+            <option value="cold">미출현 반등</option>
+          </select>
+          <button class="pill-btn active" style="height:28px;padding:0 12px;" onclick="generateLotteryPicks()">5게임 추천</button>
+        </div>
+      </div>
+      <div id="lotGenRows">
+        <div style="padding:12px 0;color:var(--ink-3);font-size:13px;">위 <strong>5게임 추천</strong> 버튼을 누르면 공식 데이터 패턴으로 번호를 뽑아드려요</div>
+      </div>
+    </section>
+
+    <section class="panel">
+      <div class="sec-head">
+        <span class="sec-title">직접 구매 번호 등록</span>
+      </div>
+      <div style="display:flex;gap:6px;flex-wrap:wrap;align-items:center;">
+        <input type="number" id="manualRound" placeholder="회차" style="width:76px;height:36px;border:1px solid var(--hairline-2);border-radius:8px;padding:0 10px;font-family:inherit;font-size:13px;" />
+        <input type="text" id="manualNums" placeholder="로또: 3,12,18,27,34,45 / 연금: 4-051131" style="flex:1;min-width:180px;height:36px;border:1px solid var(--hairline-2);border-radius:8px;padding:0 10px;font-family:inherit;font-size:13px;" />
+        <button class="pill-btn active" style="height:36px;" onclick="saveManualTicket()">저장</button>
+      </div>
+    </section>
+
+    <section class="panel">
+      <div class="sec-head">
+        <span class="sec-title">내 구매 기록 · 자동 채점</span>
+        <span class="meta-time" id="lotTicketCount">0건</span>
+      </div>
+      <div id="lotTicketRows"></div>
+    </section>
+
+    <section class="panel">
+      <div class="sec-head">
+        <span class="sec-title">최근 공식 당첨번호</span>
+      </div>
+      <div id="lotRecentDraws"></div>
+    </section>
+  </main>
+
   <script>
     let payload = null;
     let currentAcct = "all";
@@ -516,7 +602,9 @@
       if (btn) btn.classList.add("active");
       document.getElementById("portfolioView").style.display = mode === "portfolio" ? "block" : "none";
       document.getElementById("journalView").style.display = mode === "journal" ? "block" : "none";
+      document.getElementById("lotteryView").style.display = mode === "lottery" ? "block" : "none";
       if (mode === "journal") renderJournal();
+      if (mode === "lottery") loadLottery();
     }
 
     async function loadData() {
@@ -1156,6 +1244,282 @@
       poly.setAttribute("fill", "none"); poly.setAttribute("stroke", "#141413");
       poly.setAttribute("stroke-width", "1.9"); poly.setAttribute("points", linePts);
       svg.appendChild(poly);
+    }
+
+    // === LOTTERY & PENSION MODULE ===
+    let lotData = null;
+    let lotType = "lotto";
+    let generatedPicks = [];
+    const LOT_STORE_KEY = "money_lottery_tickets_v1";
+
+    function getTickets() {
+      try { return JSON.parse(localStorage.getItem(LOT_STORE_KEY) || "[]"); }
+      catch { return []; }
+    }
+    function setTickets(arr) {
+      localStorage.setItem(LOT_STORE_KEY, JSON.stringify(arr));
+    }
+
+    function ballColor(n) {
+      if (n <= 10) return "b-y";
+      if (n <= 20) return "b-b";
+      if (n <= 30) return "b-r";
+      if (n <= 40) return "b-g";
+      return "b-gr";
+    }
+    function renderLottoBalls(nums, bonus) {
+      let html = nums.map(n => `<span class="ball ${ballColor(n)}">${n}</span>`).join("");
+      if (bonus !== undefined) html += `<span style="font-size:12px;color:var(--ink-3);">+</span><span class="ball ${ballColor(bonus)}">${bonus}</span>`;
+      return `<div class="ball-row">${html}</div>`;
+    }
+    function renderPensionBalls(grp, numStr) {
+      return `<div class="ball-row"><span class="ball b-grp">${grp}조</span>${numStr.split("").map(d => `<span class="ball b-pt">${d}</span>`).join("")}</div>`;
+    }
+
+    async function loadLottery() {
+      if (lotData) { renderLottery(); return; }
+      try {
+        const res = await fetch("./lottery.json?t=" + Date.now());
+        lotData = await res.json();
+        renderLottery();
+      } catch (e) {
+        document.getElementById("lotPatternBody").innerHTML = `<div style="color:var(--ink-3);font-size:13px;">복권 데이터를 불러오지 못했습니다</div>`;
+      }
+    }
+
+    function setLotType(type, btn) {
+      lotType = type;
+      generatedPicks = [];
+      btn.parentElement.querySelectorAll(".pill-btn").forEach(b => b.classList.remove("active"));
+      btn.classList.add("active");
+      renderLottery();
+    }
+
+    function gradeTicket(tk) {
+      if (!lotData) return { status: "대기", prize: 0 };
+      if (tk.type === "lotto") {
+        const draw = lotData.lotto.draws.find(d => d.round === tk.round);
+        if (!draw) return { status: "추첨 대기", prize: 0 };
+        const matched = tk.nums.filter(n => draw.nums.includes(n)).length;
+        const hasBonus = tk.nums.includes(draw.bonus);
+        if (matched === 6) return { status: "1등 당첨!", prize: draw.first_amt || 2000000000 };
+        if (matched === 5 && hasBonus) return { status: "2등 당첨!", prize: 50000000 };
+        if (matched === 5) return { status: "3등 당첨!", prize: 1500000 };
+        if (matched === 4) return { status: "4등 (5만원)", prize: 50000 };
+        if (matched === 3) return { status: "5등 (5천원)", prize: 5000 };
+        return { status: `낙첨 (${matched}개)`, prize: 0 };
+      } else {
+        const draw = lotData.pension.draws.find(d => d.round === tk.round);
+        if (!draw) return { status: "추첨 대기", prize: 0 };
+        const n = tk.num, w = draw.num;
+        if (tk.group === draw.group && n === w) return { status: "1등 (월 700만)", prize: 1680000000 };
+        if (n === w) return { status: "2등 (월 100만)", prize: 120000000 };
+        if (n.slice(1) === w.slice(1)) return { status: "3등 (100만원)", prize: 1000000 };
+        if (n.slice(2) === w.slice(2)) return { status: "4등 (10만원)", prize: 100000 };
+        if (n.slice(3) === w.slice(3)) return { status: "5등 (5만원)", prize: 50000 };
+        if (n.slice(4) === w.slice(4)) return { status: "6등 (5천원)", prize: 5000 };
+        if (n.slice(5) === w.slice(5)) return { status: "7등 (1천원)", prize: 1000 };
+        return { status: "낙첨", prize: 0 };
+      }
+    }
+
+    function renderLottery() {
+      if (!lotData) return;
+      const tickets = getTickets();
+      let spent = 0, won = 0, wins = 0, settled = 0;
+      tickets.forEach(tk => {
+        spent += 1000;
+        const g = gradeTicket(tk);
+        if (g.status !== "추첨 대기") {
+          settled++;
+          if (g.prize > 0) { wins++; won += g.prize; }
+        }
+      });
+      const net = won - spent;
+      const winRate = settled ? ((wins / settled) * 100).toFixed(1) : "0.0";
+      document.getElementById("lotKpiGrid").innerHTML = `
+        <div class="stat-item"><div class="stat-k">총 투자금</div><div class="stat-v">${spent.toLocaleString()}원</div></div>
+        <div class="stat-item"><div class="stat-k">총 당첨금</div><div class="stat-v ${won > 0 ? 'c-up' : ''}">${won.toLocaleString()}원</div></div>
+        <div class="stat-item"><div class="stat-k">순수익</div><div class="stat-v ${net > 0 ? 'c-up' : net < 0 ? 'c-down' : ''}">${fmtKrw(net)}</div></div>
+        <div class="stat-item"><div class="stat-k">당첨률 (승률)</div><div class="stat-v">${winRate}% (${wins}/${settled}건)</div></div>
+      `;
+
+      if (lotType === "lotto") {
+        const st = lotData.lotto.stats;
+        document.getElementById("lotLatestMeta").textContent = `최신 #${st.latest_round} (${st.latest_date})`;
+        document.getElementById("lotTotalDraws").textContent = `총 ${st.total_draws.toLocaleString()}회 분석`;
+        document.getElementById("manualRound").value = st.latest_round + 1;
+        document.getElementById("lotPatternBody").innerHTML = `
+          <div style="margin-bottom:10px;"><div class="panel-label" style="margin-bottom:6px;">역대 최다 출현 TOP 6</div>${renderLottoBalls(st.hot_top10.slice(0, 6))}</div>
+          <div style="margin-bottom:12px;"><div class="panel-label" style="margin-bottom:6px;">최근 장기 미출현 TOP 6 (반등 후보)</div>${renderLottoBalls(st.cold_top10.slice(0, 6))}</div>
+          <div class="stat-grid" style="margin-top:10px;padding-top:10px;">
+            <div class="stat-item"><div class="stat-k">총합 100~175 비중</div><div class="stat-v">${st.sum_zone_pct}%</div></div>
+            <div class="stat-item"><div class="stat-k">홀짝 균형(2:4~4:2)</div><div class="stat-v">${st.odd_33_24_42_pct}%</div></div>
+          </div>
+        `;
+        document.getElementById("lotRecentDraws").innerHTML = lotData.lotto.draws.slice(0, 5).map(d => `
+          <div class="holding-row" style="flex-direction:column;align-items:flex-start;gap:6px;">
+            <div style="display:flex;justify-content:space-between;width:100%;font-size:12px;color:var(--ink-2);">
+              <strong>제 ${d.round}회 (${d.date})</strong>
+              <span>1등 ${d.first_cnt}명 · ${(d.first_amt / 100000000).toFixed(1)}억</span>
+            </div>
+            ${renderLottoBalls(d.nums, d.bonus)}
+          </div>
+        `).join("");
+      } else {
+        const st = lotData.pension.stats;
+        document.getElementById("lotLatestMeta").textContent = `최신 #${st.latest_round} (${st.latest_date})`;
+        document.getElementById("lotTotalDraws").textContent = `총 ${st.total_draws.toLocaleString()}회 분석`;
+        document.getElementById("manualRound").value = st.latest_round + 1;
+        document.getElementById("lotPatternBody").innerHTML = `
+          <div style="margin-bottom:10px;"><div class="panel-label" style="margin-bottom:6px;">역대 최빈 조 · 자리별 최다 숫자</div>${renderPensionBalls(st.best_group, st.best_digits.join(""))}</div>
+          <div class="stat-grid" style="margin-top:10px;padding-top:10px;">
+            <div class="stat-item"><div class="stat-k">최다 당첨 조</div><div class="stat-v">${st.best_group}조 (${st.group_freq[st.best_group]}회)</div></div>
+            <div class="stat-item"><div class="stat-k">끝자리(1의 자리) 최빈</div><div class="stat-v">${st.best_digits[5]}</div></div>
+          </div>
+        `;
+        document.getElementById("lotRecentDraws").innerHTML = lotData.pension.draws.slice(0, 5).map(d => `
+          <div class="holding-row" style="flex-direction:column;align-items:flex-start;gap:6px;">
+            <div style="display:flex;justify-content:space-between;width:100%;font-size:12px;color:var(--ink-2);">
+              <strong>제 ${d.round}회 (${d.date})</strong>
+              <span>보너스 ${d.bonus}</span>
+            </div>
+            ${renderPensionBalls(d.group, d.num)}
+          </div>
+        `).join("");
+      }
+
+      renderGeneratedPicks();
+      renderTickets();
+    }
+
+    function weightedPick(pool, weights) {
+      const total = weights.reduce((a, b) => a + b, 0);
+      let r = Math.random() * total;
+      for (let i = 0; i < pool.length; i++) {
+        r -= weights[i];
+        if (r <= 0) return pool[i];
+      }
+      return pool[pool.length - 1];
+    }
+
+    function generateLotteryPicks() {
+      if (!lotData) return;
+      const mode = document.getElementById("lotStrategy").value;
+      generatedPicks = [];
+      if (lotType === "lotto") {
+        const st = lotData.lotto.stats;
+        const pool = Array.from({ length: 45 }, (_, i) => i + 1);
+        const weights = pool.map(n => {
+          if (mode === "hot") return (st.freq[n] || 1) + (st.recent20[n] || 0) * 15;
+          if (mode === "cold") return ((st.missed[n] || 0) + 1) * 3;
+          return (st.freq[n] || 1) * 0.5 + ((st.missed[n] || 0) + 1) * 4 + (st.recent20[n] || 0) * 8;
+        });
+        for (let g = 0; g < 5; g++) {
+          let best = null;
+          for (let tries = 0; tries < 60; tries++) {
+            const picked = new Set();
+            while (picked.size < 6) picked.add(weightedPick(pool, weights));
+            const arr = Array.from(picked).sort((a, b) => a - b);
+            const sum = arr.reduce((a, b) => a + b, 0);
+            const odd = arr.filter(x => x % 2 === 1).length;
+            if (sum >= 100 && sum <= 175 && odd >= 2 && odd <= 4) { best = arr; break; }
+            best = arr;
+          }
+          generatedPicks.push({ type: "lotto", round: st.latest_round + 1, nums: best });
+        }
+      } else {
+        const st = lotData.pension.stats;
+        const grps = ["1", "2", "3", "4", "5"];
+        const gW = grps.map(g => (st.group_freq[g] || 10));
+        for (let g = 0; g < 5; g++) {
+          const grp = mode === "hot" ? st.best_group : weightedPick(grps, gW);
+          let digits = "";
+          for (let p = 0; p < 6; p++) {
+            const dPool = ["0","1","2","3","4","5","6","7","8","9"];
+            const dW = dPool.map(d => {
+              const f = st.pos_freq[p][d] || 1;
+              return mode === "cold" ? Math.max(1, 50 - f) : f;
+            });
+            digits += weightedPick(dPool, dW);
+          }
+          generatedPicks.push({ type: "pension", round: st.latest_round + 1, group: grp, num: digits });
+        }
+      }
+      renderGeneratedPicks();
+    }
+
+    function renderGeneratedPicks() {
+      const el = document.getElementById("lotGenRows");
+      if (!generatedPicks.length) {
+        el.innerHTML = `<div style="padding:12px 0;color:var(--ink-3);font-size:13px;">위 <strong>5게임 추천</strong> 버튼을 누르면 공식 데이터 패턴으로 번호를 뽑아드려요</div>`;
+        return;
+      }
+      el.innerHTML = generatedPicks.map((p, i) => `
+        <div class="gen-row">
+          ${p.type === "lotto" ? renderLottoBalls(p.nums) : renderPensionBalls(p.group, p.num)}
+          <button class="btn-ghost" onclick="savePick(${i})">구매 저장</button>
+        </div>
+      `).join("");
+    }
+
+    function savePick(idx) {
+      const p = generatedPicks[idx];
+      if (!p) return;
+      const tickets = getTickets();
+      tickets.unshift({ id: Date.now() + "_" + idx, ...p, created: new Date().toISOString().slice(0, 10) });
+      setTickets(tickets);
+      renderLottery();
+    }
+
+    function saveManualTicket() {
+      const round = parseInt(document.getElementById("manualRound").value, 10);
+      const raw = (document.getElementById("manualNums").value || "").trim();
+      if (!round || !raw) return;
+      const tickets = getTickets();
+      if (lotType === "lotto") {
+        const nums = raw.split(/[,\s]+/).map(x => parseInt(x, 10)).filter(x => x >= 1 && x <= 45);
+        const uniq = Array.from(new Set(nums)).sort((a, b) => a - b);
+        if (uniq.length !== 6) { alert("로또 번호 6개(1~45)를 쉼표로 구분해 입력해 주세요."); return; }
+        tickets.unshift({ id: String(Date.now()), type: "lotto", round, nums: uniq, created: new Date().toISOString().slice(0, 10) });
+      } else {
+        const m = raw.match(/^([1-5])\s*[-조]?\s*(\d{6})$/);
+        if (!m) { alert("연금복권 형식 예: 4-051131"); return; }
+        tickets.unshift({ id: String(Date.now()), type: "pension", round, group: m[1], num: m[2], created: new Date().toISOString().slice(0, 10) });
+      }
+      document.getElementById("manualNums").value = "";
+      setTickets(tickets);
+      renderLottery();
+    }
+
+    function deleteTicket(id) {
+      setTickets(getTickets().filter(t => t.id !== id));
+      renderLottery();
+    }
+
+    function renderTickets() {
+      const tickets = getTickets();
+      document.getElementById("lotTicketCount").textContent = tickets.length + "건";
+      if (!tickets.length) {
+        document.getElementById("lotTicketRows").innerHTML = `<div style="padding:12px 0;color:var(--ink-3);font-size:13px;">저장된 구매 내역이 없습니다. 위 추천 번호에서 <strong>구매 저장</strong>을 눌러보세요!</div>`;
+        return;
+      }
+      document.getElementById("lotTicketRows").innerHTML = tickets.map(tk => {
+        const g = gradeTicket(tk);
+        const cls = g.prize > 0 ? "c-up" : (g.status === "추첨 대기" ? "c-flat" : "c-down");
+        return `
+          <div class="holding-row" style="flex-direction:column;align-items:stretch;gap:6px;">
+            <div style="display:flex;justify-content:space-between;align-items:center;">
+              <span style="font-size:12px;color:var(--ink-2);font-weight:600;">${tk.type === "lotto" ? "로또" : "연금"} 제 ${tk.round}회</span>
+              <div style="display:flex;align-items:center;gap:8px;">
+                <span class="${cls}" style="font-size:12px;font-weight:700;">${g.status}</span>
+                <button class="btn-ghost" style="height:22px;padding:0 6px;" onclick="deleteTicket('${tk.id}')">삭제</button>
+              </div>
+            </div>
+            ${tk.type === "lotto" ? renderLottoBalls(tk.nums) : renderPensionBalls(tk.group, tk.num)}
+          </div>
+        `;
+      }).join("");
     }
 
     loadData();
