@@ -2444,5 +2444,76 @@
       "gap": "경사로 1/12 기울기·유효폭 1.2m 기준이 잘 정리됨. 욕실/현관 시공비 범위 추가 시 체류상승",
       "action": "문턱 교체 vs 바닥 깎기 비용 비교표 + 미끄럼방지 총정리 허브 연결"
     }
-  ]
+  ],
+  "internal_links": {
+    "total_posts": 179,
+    "total_calculators": 34,
+    "calc_connected_posts": 128,
+    "calc_connected_pct": 71.5,
+    "orphan_posts_count": 0,
+    "zero_inbound_calculators": 0,
+    "top_calculators": [
+      {
+        "slug": "사대보험계산기",
+        "inbound": 83
+      },
+      {
+        "slug": "퇴직소득세계산기",
+        "inbound": 80
+      },
+      {
+        "slug": "퇴직금계산기",
+        "inbound": 29
+      },
+      {
+        "slug": "예금이자-계산기",
+        "inbound": 29
+      },
+      {
+        "slug": "복지용구-한도-계산기",
+        "inbound": 28
+      }
+    ],
+    "starved_calculators": [],
+    "priority_missing_calc": [
+      "낙상방지-침대가드",
+      "침대-난간-설치-기준",
+      "요양등급-신청",
+      "요양기관정보마당",
+      "요양급여신청서",
+      "화장실-변기-교체",
+      "문턱-제거-기준",
+      "뚫어뻥-없이-변기-뚫는-법",
+      "침대-매트리스-교체-시기",
+      "요양나라-구인구직",
+      "문턱-경사로-설치-기준"
+    ],
+    "sample_orphans": [],
+    "low_calculators": [
+      {
+        "slug": "임금계산기",
+        "inbound": 2
+      },
+      {
+        "slug": "부가세계산기",
+        "inbound": 4
+      },
+      {
+        "slug": "시급계산기",
+        "inbound": 4
+      },
+      {
+        "slug": "주식수익률-계산기",
+        "inbound": 4
+      },
+      {
+        "slug": "스트레스-dsr-계산기",
+        "inbound": 4
+      },
+      {
+        "slug": "청약가점-계산기",
+        "inbound": 4
+      }
+    ]
+  }
 }

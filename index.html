@@ -657,6 +657,14 @@
 
     <section class="panel">
       <div class="sec-head">
+        <span class="sec-title">내부링크 · 계산기 연결 그래프</span>
+        <span class="meta-time" id="seoLinkMeta">-</span>
+      </div>
+      <div id="seoInternalLinksBody"></div>
+    </section>
+
+    <section class="panel">
+      <div class="sec-head">
         <span class="sec-title">기간별 성장 비교표 (어제 ~ 1년 전 대비)</span>
         <span class="meta-time" id="seoHistCount">-</span>
       </div>
@@ -1068,9 +1076,36 @@
       renderSeoGa4();
       renderAdsenseGate();
       renderCompAudit();
+      renderInternalLinks();
       renderSeoPosts();
       renderSeoGrowth();
       initSeoReports();
+    }
+
+    function renderInternalLinks() {
+      const il = seoData?.internal_links;
+      const el = document.getElementById("seoInternalLinksBody");
+      if (!il || !el) return;
+      document.getElementById("seoLinkMeta").textContent = `${il.calc_connected_posts}/${il.total_posts}글 연결 (${il.calc_connected_pct}%)`;
+      const topC = (il.top_calculators || []).map(c => `<div class="nf-kv"><span class="nf-k">${c.slug}</span><span class="nf-v c-up">${c.inbound}개 글 유입</span></div>`).join("");
+      const lowC = (il.low_calculators || []).map(c => `<div class="nf-kv"><span class="nf-k">${c.slug}</span><span class="nf-v c-down">${c.inbound}개 (보강 필요)</span></div>`).join("");
+      const miss = (il.priority_missing_calc || []).map(s => `<a href="https://staynplan.com/${encodeURIComponent(s)}/" target="_blank" class="note-cat-tag" style="text-decoration:none;">${s}</a>`).join("");
+      el.innerHTML = `
+        <div class="nf-kv"><span class="nf-k">계산기 연결 글 비율 (전체 ${il.total_calculators}종)</span><span class="nf-v c-up">${il.calc_connected_posts} / ${il.total_posts}개 (${il.calc_connected_pct}%)</span></div>
+        <div class="nf-kv"><span class="nf-k">고립 글 (타 글에서 내부링크 0개)</span><span class="nf-v">${il.orphan_posts_count}개</span></div>
+        <div class="bento" style="margin-top:12px;">
+          <div>
+            <div style="font-size:12px;font-weight:500;color:var(--ink);margin-bottom:6px;">내부링크 최다 유입 계산기 TOP 5</div>
+            ${topC}
+          </div>
+          <div>
+            <div style="font-size:12px;font-weight:500;color:var(--ink);margin-bottom:6px;">내부링크 부족 계산기 (즉시 연결 대상)</div>
+            ${lowC}
+          </div>
+        </div>
+        <div style="margin-top:12px;font-size:12px;font-weight:500;color:var(--ink);margin-bottom:8px;">계산기 링크 0개인 고단가 핵심 글 (${(il.priority_missing_calc||[]).length}건)</div>
+        <div style="display:flex;flex-wrap:wrap;gap:6px;">${miss}</div>
+      `;
     }
 
     function renderSeoGa4() {
