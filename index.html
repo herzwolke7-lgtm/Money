@@ -229,6 +229,35 @@
       padding: 10px 0; border-bottom: 1px solid var(--hairline); flex-wrap: wrap;
     }
     .gen-row:last-child { border-bottom: none; padding-bottom: 0; }
+
+    .data-table { width: 100%; border-collapse: collapse; font-size: 12px; }
+    .data-table th {
+      text-align: left; padding: 8px 10px; font-weight: 600;
+      color: var(--ink-3); border-bottom: 1px solid var(--hairline-2);
+      white-space: nowrap;
+    }
+    .data-table td {
+      padding: 10px 10px; border-bottom: 1px solid var(--hairline);
+      vertical-align: top; line-height: 1.45;
+    }
+    .data-table tr:last-child td { border-bottom: none; }
+    .data-table th.num, .data-table td.num { text-align: right; white-space: nowrap; }
+    .data-table.scroll-table { min-width: 580px; }
+    .data-table.scroll-table th:first-child,
+    .data-table.scroll-table td:first-child {
+      position: sticky; left: 0; background: var(--surface); z-index: 1;
+      border-right: 1px solid var(--hairline); white-space: nowrap;
+    }
+    @media (max-width: 640px) {
+      .portal-table thead { display: none; }
+      .portal-table, .portal-table tbody, .portal-table tr, .portal-table td { display: block; width: 100%; }
+      .portal-table tr { padding: 10px 0; border-bottom: 1px solid var(--hairline); }
+      .portal-table tr:last-child { border-bottom: none; }
+      .portal-table td { border: none; padding: 2px 0; text-align: left !important; white-space: normal !important; }
+      .portal-table td.p-name { font-size: 14px; font-weight: 700; margin-bottom: 4px; }
+      .portal-table td.p-stat { display: inline-block; margin-right: 10px; font-size: 12px; color: var(--ink-2); }
+      .portal-table td.p-note { font-size: 12px; color:var(--ink-3); margin-top: 4px; }
+    }
   </style>
 </head>
 <body>
@@ -511,8 +540,8 @@
         <span class="meta-time">Google · Naver · Daum</span>
       </div>
       <div style="overflow-x:auto;">
-        <table class="data-table" style="width:100%;font-size:12px;">
-          <thead><tr><th>포털</th><th style="text-align:right;">색인</th><th style="text-align:right;">미색인</th><th style="text-align:right;">색인율/지표</th><th>비고</th></tr></thead>
+        <table class="data-table portal-table">
+          <thead><tr><th>포털</th><th class="num">색인</th><th class="num">미색인</th><th class="num">색인율/지표</th><th>비고</th></tr></thead>
           <tbody id="seoPortalTbody"></tbody>
         </table>
       </div>
@@ -523,9 +552,9 @@
         <span class="sec-title">기간별 성장 비교표 (어제 ~ 1년 전 대비)</span>
         <span class="meta-time" id="seoHistCount">-</span>
       </div>
-      <div style="overflow-x:auto;">
-        <table class="data-table" style="width:100%;font-size:12px;">
-          <thead><tr><th>비교 기준</th><th style="text-align:right;">발행글</th><th style="text-align:right;">구글 클릭</th><th style="text-align:right;">구글 색인</th><th style="text-align:right;">네이버 클릭</th><th style="text-align:right;">네이버 노출</th><th style="text-align:right;">다음 노출</th></tr></thead>
+      <div style="overflow-x:auto;-webkit-overflow-scrolling:touch;">
+        <table class="data-table scroll-table">
+          <thead><tr><th>비교 기준</th><th class="num">발행글</th><th class="num">구글 클릭</th><th class="num">구글 색인</th><th class="num">네이버 클릭</th><th class="num">네이버 노출</th><th class="num">다음 노출</th></tr></thead>
           <tbody id="seoGrowthTbody"></tbody>
         </table>
       </div>
@@ -866,11 +895,11 @@
       `).join("");
       document.getElementById("seoPortalTbody").innerHTML = (seoData.portal_index_table || []).map(row => `
         <tr>
-          <td style="font-weight:700;">${row.portal}</td>
-          <td class="t-num" style="text-align:right;">${row.indexed}</td>
-          <td class="t-num" style="text-align:right;">${row.not_indexed}</td>
-          <td class="t-num" style="text-align:right;">${row.rate}</td>
-          <td style="font-size:11px;color:var(--ink-3);">${row.note}</td>
+          <td class="p-name" style="font-weight:700;white-space:nowrap;">${row.portal}</td>
+          <td class="p-stat num t-num">색인 ${row.indexed}</td>
+          <td class="p-stat num t-num">미색인 ${row.not_indexed}</td>
+          <td class="p-stat num t-num c-up" style="font-weight:700;">${row.rate}</td>
+          <td class="p-note" style="font-size:12px;color:var(--ink-2);">${row.note}</td>
         </tr>
       `).join("");
       renderSeoPosts();
