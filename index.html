@@ -621,6 +621,40 @@
       </div>
     </section>
 
+    <div class="bento">
+      <div>
+        <section class="panel">
+          <div class="sec-head">
+            <span class="sec-title">GA4 7일 유입 · 급상승 페이지</span>
+            <span class="meta-time" id="seoGa4Period">-</span>
+          </div>
+          <div id="seoGa4Body"></div>
+        </section>
+      </div>
+      <div>
+        <section class="panel">
+          <div class="sec-head">
+            <span class="sec-title">애드센스 승인 · 일 $100 게이트</span>
+            <span class="meta-time">5대 필수 점검</span>
+          </div>
+          <div id="seoAdsenseBody"></div>
+        </section>
+      </div>
+    </div>
+
+    <section class="panel">
+      <div class="sec-head">
+        <span class="sec-title">핵심 10개 키워드 1~3위 경쟁 글 전수 해부</span>
+        <select id="compFilter" onchange="renderCompAudit()" style="height:28px;border:1px solid var(--hairline-2);border-radius:6px;padding:0 8px;font-size:12px;font-family:inherit;background:var(--surface);color:var(--ink);">
+          <option value="all">전체 10개</option>
+          <option value="긴급">긴급 우선</option>
+          <option value="높음">높음</option>
+          <option value="유지">유지·강화</option>
+        </select>
+      </div>
+      <div id="seoCompAuditBody"></div>
+    </section>
+
     <section class="panel">
       <div class="sec-head">
         <span class="sec-title">기간별 성장 비교표 (어제 ~ 1년 전 대비)</span>
@@ -1031,9 +1065,70 @@
           <td class="p-note" style="font-size:12px;color:var(--ink-2);">${row.note}</td>
         </tr>
       `).join("");
+      renderSeoGa4();
+      renderAdsenseGate();
+      renderCompAudit();
       renderSeoPosts();
       renderSeoGrowth();
       initSeoReports();
+    }
+
+    function renderSeoGa4() {
+      const g = seoData?.ga4;
+      const el = document.getElementById("seoGa4Body");
+      if (!g || !el) return;
+      document.getElementById("seoGa4Period").textContent = `${g.period || '최근 7일'} · 한국 ${g.active_users_kr || 0}명`;
+      const srcs = g.top_sources || [];
+      const pages = g.top_pages || [];
+      el.innerHTML = `
+        <div class="nf-kv"><span class="nf-k">오가닉 검색 세션</span><span class="nf-v c-up">${(g.organic_sessions || 0).toLocaleString()}세션 (${g.organic_growth || '-'})</span></div>
+        <div style="margin:10px 0 6px;font-size:12px;font-weight:500;color:var(--ink);">유입 소스 비중</div>
+        ${srcs.map(s => `<div class="nf-kv"><span class="nf-k">${s.source}</span><span class="nf-v">${s.sessions}세션 (${s.change})</span></div>`).join("")}
+        <div style="margin:12px 0 6px;font-size:12px;font-weight:500;color:var(--ink);">7일 급상승 인기 글</div>
+        ${pages.map(p => `<div class="nf-kv"><span class="nf-k" style="white-space:normal;line-height:1.4;">${p.title}</span><span class="nf-v c-up">${p.views}뷰 (${p.change})</span></div>`).join("")}
+      `;
+    }
+
+    function renderAdsenseGate() {
+      const list = seoData?.adsense_readiness || [];
+      const el = document.getElementById("seoAdsenseBody");
+      if (!el) return;
+      el.innerHTML = list.map(x => {
+        const cls = x.status === '통과' ? 'c-up' : x.status === '미흡' ? 'c-down' : '';
+        return `
+          <div class="holding-row" style="flex-direction:column;align-items:stretch;gap:4px;">
+            <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;">
+              <span style="font-size:13px;font-weight:500;color:var(--ink);">${x.item}</span>
+              <span class="note-cat-tag ${cls}" style="flex-shrink:0;">${x.status}</span>
+            </div>
+            <div style="font-size:12px;color:var(--ink-3);">${x.detail}</div>
+          </div>
+        `;
+      }).join("");
+    }
+
+    function renderCompAudit() {
+      const f = document.getElementById("compFilter")?.value || "all";
+      const list = (seoData?.competitor_audit || []).filter(c => f === "all" || c.priority === f);
+      const el = document.getElementById("seoCompAuditBody");
+      if (!el) return;
+      el.innerHTML = list.map((c, idx) => {
+        const pCls = c.priority === '긴급' ? 'c-down' : c.priority === '높음' ? '' : 'c-up';
+        return `
+          <div class="holding-row" style="flex-direction:column;align-items:stretch;gap:6px;">
+            <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;">
+              <span style="font-size:14px;font-weight:500;color:var(--ink);">${idx + 1}. ${c.keyword}</span>
+              <div style="display:flex;gap:6px;align-items:center;flex-shrink:0;">
+                <span style="font-size:11px;color:var(--ink-3);">${c.competitors}</span>
+                <span class="note-cat-tag ${pCls}">${c.priority}</span>
+              </div>
+            </div>
+            <div style="font-size:12px;color:var(--ink-2);">현재: ${c.our_status}</div>
+            <div style="font-size:12px;color:var(--ink-2);line-height:1.5;">1~3위 분석: ${c.gap}</div>
+            <div style="font-size:12px;color:var(--ink);font-weight:500;line-height:1.5;">승리 처방: ${c.action}</div>
+          </div>
+        `;
+      }).join("");
     }
 
     function fmtDiff(cur, prev) {
