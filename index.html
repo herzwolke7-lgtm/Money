@@ -609,7 +609,7 @@
       }).join("");
 
       const okxSub = document.getElementById("okxCardSub");
-      okxSub.textContent = (okx.pnl_usd >= 0 ? "+" : "") + "$" + okx.pnl_usd.toFixed(2) + " (" + fmtPct(okx.pnl_pct) + ")";
+      okxSub.textContent = fmtUsd(okx.pnl_usd) + " (" + fmtPct(okx.pnl_pct) + ")";
       okxSub.className = "sec-meta " + (okx.pnl_usd > 0 ? "up" : okx.pnl_usd < 0 ? "down" : "flat");
 
       document.getElementById("okxRows").innerHTML = okx.holdings.map(h => `
@@ -692,7 +692,7 @@
           <div class="stat-item"><div class="stat-k">총 합산 (실현+평가)</div><div class="stat-v ${(totRealized+totUnrealized) >= 0 ? 'c-up' : 'c-down'}">${fmtKrw(totRealized + totUnrealized)}</div></div>
           <div class="stat-item"><div class="stat-k">전체 매도 승률</div><div class="stat-v">${winRate}% (${wins}/${settled.length}종목)</div></div>
         `;
-        noteEl.textContent = `키움 올해(+${kwRealized.toLocaleString()}원) + OKX 최근 3개월(${fmtUsd(okxRealizedUsd)} · 약 ${fmtKrw(okxRealizedKrw)}) 합산`;
+        noteEl.textContent = `키움 올해(${fmtKrw(kwRealized)}) + OKX(${fmtUsd(okxRealizedUsd)} · 약 ${fmtKrw(okxRealizedKrw)}) 합산`;
       } else if (jSource === "키움") {
         titleEl.textContent = "키움 5280-4774 손익 · 승률 요약";
         kpiEl.innerHTML = `
@@ -703,14 +703,14 @@
         `;
         noteEl.textContent = "2026-01-01 ~ 현재 키움 전체 체결 기준";
       } else {
-        titleEl.textContent = "OKX 손익 · 승률 요약 (최근 3개월)";
+        titleEl.textContent = "OKX 손익 · 승률 요약";
         kpiEl.innerHTML = `
-          <div class="stat-item"><div class="stat-k">OKX 실현손익 (3개월)</div><div class="stat-v ${okxRealizedUsd >= 0 ? 'c-up' : 'c-down'}">${fmtUsd(okxRealizedUsd)} (${fmtKrw(okxRealizedKrw)})</div></div>
+          <div class="stat-item"><div class="stat-k">OKX 누적 실현손익</div><div class="stat-v ${okxRealizedUsd >= 0 ? 'c-up' : 'c-down'}">${fmtUsd(okxRealizedUsd)} (${fmtKrw(okxRealizedKrw)})</div></div>
           <div class="stat-item"><div class="stat-k">OKX 현재 평가손익</div><div class="stat-v ${okxUnrealizedUsd >= 0 ? 'c-up' : 'c-down'}">${fmtUsd(okxUnrealizedUsd)}</div></div>
           <div class="stat-item"><div class="stat-k">OKX 기록 코인</div><div class="stat-v">${okxSyms.length}종목 · ${trades.filter(t=>t.source==='OKX').length}건</div></div>
           <div class="stat-item"><div class="stat-k">OKX 매도 승률</div><div class="stat-v">${winRate}% (${wins}/${settled.length}종목)</div></div>
         `;
-        noteEl.textContent = "OKX API 보관 정책상 최근 3개월(8~11월) 체결분 기준이며, 오늘부터 이후 내역은 계속 누적됩니다";
+        noteEl.textContent = "OKX API 제공 전체 체결분(2025-11 ~ 현재) 기준이며, 이후 내역도 계속 누적됩니다";
       }
 
       const acctKey = jSource === "키움" ? "kiwoom" : (jSource === "OKX" ? "okx" : "all");
@@ -837,7 +837,7 @@
       const dailyTitle = document.getElementById("dailyPnlTitle");
       const pnlBadge = document.getElementById("dailyPnlBadge");
       if (jSource === "OKX") {
-        dailyTitle.textContent = "일별 실현손익 (OKX · 3개월)";
+        dailyTitle.textContent = "일별 실현손익 (OKX)";
         pnlBadge.textContent = fmtUsd(okxRealizedUsd);
         pnlBadge.className = "sec-meta " + (okxRealizedUsd > 0 ? "up" : okxRealizedUsd < 0 ? "down" : "flat");
         const rows = okxDaily.filter(d => jOutcome === "all" || (jOutcome === "win" && d.pl > 0) || (jOutcome === "loss" && d.pl < 0));
@@ -954,7 +954,7 @@
           pill.className = "delta-tag " + (pnl > 0 ? "up" : pnl < 0 ? "down" : "flat");
           pill.textContent = `오늘 평가손익 ${fmtKrw(pnl)} (${fmtPct(pct)})`;
         }
-        renderRealizedChart(fullSeries, currentAcct === "okx" ? "OKX 최근 3개월 누적 실현손익" : (currentAcct === "kiwoom" ? "키움 올해 누적 실현손익" : "전체 누적 실현손익"));
+        renderRealizedChart(fullSeries, currentAcct === "okx" ? "OKX 누적 실현손익" : (currentAcct === "kiwoom" ? "키움 올해 누적 실현손익" : "전체 누적 실현손익"));
       } else {
         const periodSum = scoped.length ? scoped[scoped.length - 1].cum : 0;
         pill.className = "delta-tag " + (periodSum > 0 ? "up" : periodSum < 0 ? "down" : "flat");
