@@ -40,7 +40,7 @@
     .topbar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; }
     .brand { display: flex; align-items: center; gap: 8px; }
     .live-dot { width: 7px; height: 7px; border-radius: 50%; background: #12b76a; box-shadow: 0 0 0 3px rgba(18,183,106,0.16); }
-    .brand-title { font-size: 16px; font-weight: 700; letter-spacing: -0.01em; }
+    .brand-title { font-size: 16px; font-weight: 500; letter-spacing: -0.01em; }
     .topbar-right { display: flex; align-items: center; gap: 8px; }
     .meta-time { font-size: 12px; color: var(--ink-3); font-weight: 500; }
     .icon-btn {
@@ -84,7 +84,7 @@
       border-radius: 14px; padding: 18px; margin-bottom: 12px;
     }
     .panel-label { font-size: 12px; color: var(--ink-2); font-weight: 500; }
-    .hero-figure { font-size: 32px; font-weight: 700; letter-spacing: -0.025em; margin: 4px 0 8px; }
+    .hero-figure { font-size: 32px; font-weight: 500; letter-spacing: -0.025em; margin: 4px 0 8px; }
     .delta-tag { display: inline-flex; align-items: center; font-size: 12px; font-weight: 600; padding: 4px 9px; border-radius: 6px; }
 
     .up { color: var(--up); background: var(--up-bg); }
@@ -110,7 +110,7 @@
     }
     .stat-item { padding: 10px 11px; border-radius: 9px; background: var(--bg); }
     .stat-k { font-size: 11px; color: var(--ink-3); font-weight: 500; }
-    .stat-v { font-size: 14px; font-weight: 700; margin-top: 2px; }
+    .stat-v { font-size: 14px; font-weight: 500; margin-top: 2px; }
     .stat-s { font-size: 10px; color: var(--ink-3); margin-top: 2px; }
 
     .period-row { display: flex; gap: 4px; margin-top: 14px; overflow-x: auto; }
@@ -129,7 +129,7 @@
     }
     .chart-readout { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 6px; gap: 8px; }
     .chart-date { font-size: 11px; color: var(--ink-3); font-weight: 600; }
-    .chart-val { font-size: 13px; color: var(--ink); font-weight: 700; }
+    .chart-val { font-size: 13px; color: var(--ink); font-weight: 500; }
     .chart-axis { display: flex; justify-content: space-between; font-size: 10px; color: var(--ink-3); margin-top: 4px; font-weight: 500; }
     .chart-note { font-size: 11px; color: var(--ink-3); margin-top: 6px; }
 
@@ -152,7 +152,7 @@
     }
 
     .sec-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; gap: 8px; }
-    .sec-title { font-size: 14px; font-weight: 700; }
+    .sec-title { font-size: 14px; font-weight: 500; }
     .sec-meta { font-size: 12px; font-weight: 600; padding: 3px 8px; border-radius: 6px; white-space: nowrap; }
 
     .holding-row {
@@ -164,7 +164,7 @@
     .h-name { font-size: 14px; font-weight: 600; color: var(--ink); }
     .h-sub { font-size: 12px; color: var(--ink-3); margin-top: 2px; line-height: 1.35; }
     .h-right { text-align: right; flex-shrink: 0; }
-    .h-val { font-size: 14px; font-weight: 700; color: var(--ink); }
+    .h-val { font-size: 14px; font-weight: 500; color: var(--ink); }
     .h-pnl { font-size: 12px; font-weight: 600; margin-top: 2px; }
 
     .search-box {
@@ -190,10 +190,10 @@
     }
     .sym-card:active { transform: scale(0.985); }
     .sym-card-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 8px; }
-    .sym-name { font-size: 15px; font-weight: 700; color: var(--ink); }
+    .sym-name { font-size: 15px; font-weight: 500; color: var(--ink); }
     .sym-sub { font-size: 12px; color: var(--ink-3); margin-top: 2px; }
     .sym-pnl-box { text-align: right; flex-shrink: 0; }
-    .sym-pnl-val { font-size: 15px; font-weight: 700; }
+    .sym-pnl-val { font-size: 15px; font-weight: 500; }
     .sym-pnl-rt { font-size: 12px; font-weight: 600; }
     .sym-flow {
       display: grid; grid-template-columns: 1fr 1fr; gap: 10px;
@@ -215,7 +215,7 @@
     .ball {
       width: 30px; height: 30px; border-radius: 50%;
       display: inline-flex; align-items: center; justify-content: center;
-      font-size: 12px; font-weight: 700; color: #fff;
+      font-size: 12px; font-weight: 500; color: #fff;
     }
     .b-y { background: #e5a910; }
     .b-b { background: #2d7ff9; }
@@ -254,51 +254,46 @@
       .portal-table tr { padding: 10px 0; border-bottom: 1px solid var(--hairline); }
       .portal-table tr:last-child { border-bottom: none; }
       .portal-table td { border: none; padding: 2px 0; text-align: left !important; white-space: normal !important; }
-      .portal-table td.p-name { font-size: 14px; font-weight: 700; margin-bottom: 4px; }
+      .portal-table td.p-name { font-size: 14px; font-weight: 500; margin-bottom: 4px; }
       .portal-table td.p-stat { display: inline-block; margin-right: 10px; font-size: 12px; color: var(--ink-2); }
       .portal-table td.p-note { font-size: 12px; color:var(--ink-3); margin-top: 4px; }
     }
 
-    /* Notes Timeline Redesign */
+    /* Notes Timeline — Unslop Editorial Pass (4px grid, quiet neutral chrome, no rainbow borders) */
     .routine-strip {
-      display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px; margin-bottom: 12px;
+      display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; margin-bottom: 12px;
     }
     @media (max-width: 640px) { .routine-strip { grid-template-columns: repeat(2, 1fr); } }
     .routine-chip {
-      background: var(--surface); border: 1px solid var(--hairline); border-radius: 10px;
-      padding: 8px 10px; display: flex; flex-direction: column; gap: 2px;
+      background: var(--surface); border: 1px solid var(--hairline); border-radius: 8px;
+      padding: 8px 12px; display: flex; flex-direction: column; gap: 4px;
     }
-    .routine-chip .rc-time { font-size: 11px; font-weight: 700; color: var(--ink); font-variant-numeric: tabular-nums; }
+    .routine-chip .rc-time { font-size: 12px; font-weight: 500; color: var(--ink); font-variant-numeric: tabular-nums; }
     .routine-chip .rc-name { font-size: 11px; color: var(--ink-3); }
-    .note-date-group { margin-top: 14px; }
+    .note-date-group { margin-top: 16px; }
     .note-date-group:first-child { margin-top: 0; }
     .note-date-label {
-      font-size: 11px; font-weight: 700; color: var(--ink-3); letter-spacing: 0.02em;
+      font-size: 11px; font-weight: 500; color: var(--ink-3);
       padding: 4px 0 8px; border-bottom: 1px solid var(--hairline); margin-bottom: 8px;
       display: flex; justify-content: space-between; align-items: center;
     }
-    .note-card {
-      position: relative; background: var(--surface-2); border: 1px solid var(--hairline);
-      border-left: 3px solid var(--ink-3); border-radius: 10px;
-      padding: 12px 14px; margin-bottom: 8px;
+    .note-row {
+      padding: 12px 0; border-bottom: 1px solid var(--hairline);
+      display: flex; flex-direction: column; gap: 4px;
     }
-    .note-card:last-child { margin-bottom: 0; }
-    .note-card.cat-morning { border-left-color: #d97706; }
-    .note-card.cat-stock { border-left-color: #2563eb; }
-    .note-card.cat-crypto { border-left-color: #7c3aed; }
-    .note-card.cat-seo { border-left-color: #059669; }
-    .note-card.cat-lottery { border-left-color: #e11d48; }
-    .note-card.is-high { background: #fffbf7; border-color: #fed7aa; border-left-color: #ea580c; }
-    .note-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 8px; margin-bottom: 6px; }
-    .note-title { font-size: 14px; font-weight: 700; color: var(--ink); line-height: 1.35; }
-    .note-meta { display: flex; align-items: center; gap: 6px; flex-shrink: 0; }
-    .note-cat-pill {
-      font-size: 10px; font-weight: 700; padding: 2px 7px; border-radius: 999px;
-      background: var(--surface); border: 1px solid var(--hairline-2); color: var(--ink-2); white-space: nowrap;
+    .note-row:last-child { border-bottom: none; padding-bottom: 0; }
+    .note-top { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; }
+    .note-title { font-size: 14px; font-weight: 500; color: var(--ink); line-height: 1.4; display: flex; align-items: center; gap: 8px; }
+    .note-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--ink-3); flex-shrink: 0; }
+    .note-dot.is-high { background: var(--ink); }
+    .note-meta { display: flex; align-items: center; gap: 8px; flex-shrink: 0; font-size: 11px; color: var(--ink-3); font-variant-numeric: tabular-nums; }
+    .note-cat-tag {
+      font-size: 11px; font-weight: 500; padding: 2px 8px; border-radius: 6px;
+      background: var(--surface-2); border: 1px solid var(--hairline); color: var(--ink-2); white-space: nowrap;
     }
-    .note-time { font-size: 11px; color: var(--ink-3); font-variant-numeric: tabular-nums; margin-top: 6px; }
-    .note-summary { font-size: 13px; color: var(--ink-2); line-height: 1.55; }
-    .panel { box-shadow: 0 1px 2px rgba(24,24,22,0.03); }
+    .note-summary { font-size: 13px; color: var(--ink-2); line-height: 1.55; padding-left: 14px; }
+    .pill-btn, .tab-btn, .sub-tab { transition: background-color 120ms cubic-bezier(0.2, 0, 0, 1), transform 120ms cubic-bezier(0.2, 0, 0, 1); }
+    .pill-btn:active, .tab-btn:active, .sub-tab:active { transform: scale(0.98); }
   </style>
 </head>
 <body>
@@ -548,11 +543,11 @@
   <!-- NOTES VIEW -->
   <main id="notesView" style="display:none;">
     <div class="routine-strip">
-      <div class="routine-chip"><span class="rc-time">☀️ 06:20 매일</span><span class="rc-name">아침 · 종목뉴스</span></div>
-      <div class="routine-chip"><span class="rc-time">🔍 09:00 매일</span><span class="rc-name">3포털 SEO 색인</span></div>
-      <div class="routine-chip"><span class="rc-time">📈 평일 10·12·14·16</span><span class="rc-name">키움 5280-4774</span></div>
-      <div class="routine-chip"><span class="rc-time">🪙 매일 6회</span><span class="rc-name">OKX 잔고·수익</span></div>
-      <div class="routine-chip"><span class="rc-time">🎱 월 · 🎟️ 금 10:30</span><span class="rc-name">로또 · 연금 구매</span></div>
+      <div class="routine-chip"><span class="rc-time">06:20 매일</span><span class="rc-name">아침 · 종목뉴스</span></div>
+      <div class="routine-chip"><span class="rc-time">09:00 매일</span><span class="rc-name">3포털 SEO 색인</span></div>
+      <div class="routine-chip"><span class="rc-time">평일 10·12·14·16</span><span class="rc-name">키움 5280-4774</span></div>
+      <div class="routine-chip"><span class="rc-time">매일 6회</span><span class="rc-name">OKX 잔고·수익</span></div>
+      <div class="routine-chip"><span class="rc-time">월 · 금 10:30</span><span class="rc-name">로또 · 연금 구매</span></div>
     </div>
     <div class="pill-row">
       <button class="pill-btn active" onclick="setNoteCat('all', this)">전체</button>
@@ -568,7 +563,7 @@
         <span class="meta-time" id="notesUpdated">-</span>
       </div>
       <div style="display:flex;gap:8px;margin-bottom:12px;align-items:center;">
-        <input id="noteSearch" type="text" placeholder="알림 제목 · 내용 검색..." oninput="renderNotes()" style="flex:1;height:34px;border:1px solid var(--hairline-2);border-radius:8px;padding:0 10px;font-size:13px;font-family:inherit;background:var(--surface);color:var(--ink);">
+        <input id="noteSearch" type="text" placeholder="검색" oninput="renderNotes()" style="flex:1;height:36px;border:1px solid var(--hairline-2);border-radius:8px;padding:0 12px;font-size:13px;font-family:inherit;background:var(--surface);color:var(--ink);">
         <span id="notesCount" style="font-size:12px;color:var(--ink-3);white-space:nowrap;">-</span>
       </div>
       <div id="notesList"></div>
@@ -670,7 +665,7 @@
         <span class="meta-time" id="seoPostCount">-</span>
       </div>
       <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px;">
-        <input id="seoPostSearch" type="text" placeholder="글 제목 검색..." oninput="renderSeoPosts()" style="flex:1;min-width:160px;height:32px;border:1px solid var(--hairline-2);border-radius:8px;padding:0 10px;font-size:12px;font-family:inherit;background:var(--surface);color:var(--ink);">
+        <input id="seoPostSearch" type="text" placeholder="검색" oninput="renderSeoPosts()" style="flex:1;min-width:160px;height:32px;border:1px solid var(--hairline-2);border-radius:8px;padding:0 10px;font-size:12px;font-family:inherit;background:var(--surface);color:var(--ink);">
         <select id="seoPostFilter" onchange="renderSeoPosts()" style="height:32px;border:1px solid var(--hairline-2);border-radius:8px;padding:0 8px;font-size:12px;font-family:inherit;background:var(--surface);color:var(--ink-2);">
           <option value="all">전체 글</option>
           <option value="unindexed">미색인 포함만</option>
@@ -878,16 +873,18 @@
         <div class="note-date-group">
           <div class="note-date-label"><span>${d}</span><span>${groups[d].length}건</span></div>
           ${groups[d].map(n => `
-            <div class="note-card cat-${n.category || 'seo'} ${n.priority === 'high' ? 'is-high' : ''}">
+            <div class="note-row">
               <div class="note-top">
-                <div class="note-title">${n.title}</div>
+                <div class="note-title">
+                  <span class="note-dot ${n.priority === 'high' ? 'is-high' : ''}"></span>
+                  <span>${n.title.replace(/^[\u{1F300}-\u{1FAFF}\u2600-\u27BF]\s*/u, '')}</span>
+                </div>
                 <div class="note-meta">
-                  ${n.priority === 'high' ? '<span class="note-cat-pill" style="color:#ea580c;border-color:#fdba74;background:#fff7ed;">중요</span>' : ''}
-                  <span class="note-cat-pill">${catLabel[n.category] || n.category}</span>
+                  <span>${(n.time || "").slice(11) || n.time}</span>
+                  <span class="note-cat-tag">${catLabel[n.category] || n.category}</span>
                 </div>
               </div>
               <div class="note-summary">${n.summary}</div>
-              <div class="note-time">${(n.time || "").slice(11) || n.time}</div>
             </div>
           `).join("")}
         </div>
@@ -944,9 +941,9 @@
       `).join("");
 
       document.getElementById("seoTopKeywords").innerHTML = `
-        <div style="font-size:12px;font-weight:700;color:var(--ink-2);margin-bottom:6px;">구글 효자 키워드</div>
+        <div style="font-size:12px;font-weight: 500;color:var(--ink-2);margin-bottom:6px;">구글 효자 키워드</div>
         ${g.top_keywords.map(k => `<div class="holding-row"><span style="font-size:13px;">${k.kw}</span><span class="t-num" style="font-size:12px;color:var(--ink-2);">${k.clicks}클릭 / ${k.impressions}노출 (${k.ctr}%)</span></div>`).join("")}
-        <div style="font-size:12px;font-weight:700;color:var(--ink-2);margin:12px 0 6px;">네이버 효자 문서</div>
+        <div style="font-size:12px;font-weight: 500;color:var(--ink-2);margin:12px 0 6px;">네이버 효자 문서</div>
         ${n.top_pages.map(p => `<div class="holding-row"><span style="font-size:13px;">${p.title}</span><span class="t-num" style="font-size:12px;color:var(--ink-2);">${p.clicks}클릭 / ${p.impressions.toLocaleString()}노출 (${p.ctr}%)</span></div>`).join("")}
       `;
       document.getElementById("seoTotalPostsMeta").textContent = `글 ${seoData.total_posts || 0}개 · 페이지 ${seoData.total_pages || 0}개`;
@@ -954,7 +951,7 @@
         <div class="holding-row" style="flex-direction:column;align-items:stretch;gap:4px;">
           <div style="display:flex;justify-content:space-between;align-items:center;">
             <strong style="font-size:13px;color:var(--ink);">${c.name}</strong>
-            <span class="t-num" style="font-size:12px;font-weight:700;color:var(--ink);">${c.count}개 (${c.pct}%)</span>
+            <span class="t-num" style="font-size:12px;font-weight: 500;color:var(--ink);">${c.count}개 (${c.pct}%)</span>
           </div>
           <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--ink-3);">
             <span>${c.cpc_note}</span>
@@ -964,10 +961,10 @@
       `).join("");
       document.getElementById("seoPortalTbody").innerHTML = (seoData.portal_index_table || []).map(row => `
         <tr>
-          <td class="p-name" style="font-weight:700;white-space:nowrap;">${row.portal}</td>
+          <td class="p-name" style="font-weight: 500;white-space:nowrap;">${row.portal}</td>
           <td class="p-stat num t-num">색인 ${row.indexed}</td>
           <td class="p-stat num t-num">미색인 ${row.not_indexed}</td>
-          <td class="p-stat num t-num c-up" style="font-weight:700;">${row.rate}</td>
+          <td class="p-stat num t-num c-up" style="font-weight: 500;">${row.rate}</td>
           <td class="p-note" style="font-size:12px;color:var(--ink-2);">${row.note}</td>
         </tr>
       `).join("");
@@ -1042,9 +1039,9 @@
         return;
       }
       document.getElementById("seoDailyReportBody").innerHTML = `
-        <div style="font-size:14px;font-weight:700;color:var(--ink);margin-bottom:6px;">${r.headline}</div>
+        <div style="font-size:14px;font-weight: 500;color:var(--ink);margin-bottom:6px;">${r.headline}</div>
         <div style="font-size:13px;color:var(--ink-2);line-height:1.55;margin-bottom:10px;">${r.summary}</div>
-        <div style="font-size:12px;font-weight:700;color:var(--ink);margin-bottom:4px;">실행 · 색인 관리 내역</div>
+        <div style="font-size:12px;font-weight: 500;color:var(--ink);margin-bottom:4px;">실행 · 색인 관리 내역</div>
         <ul style="margin:0 0 10px 16px;padding:0;font-size:12px;color:var(--ink-2);line-height:1.5;">
           ${(r.actions_taken || []).map(a => `<li>${a}</li>`).join("")}
         </ul>
@@ -1068,7 +1065,7 @@
       document.getElementById("seoPostsList").innerHTML = filtered.slice(0, 60).map(p => `
         <div class="holding-row" style="flex-direction:column;align-items:stretch;gap:6px;">
           <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;">
-            <a href="${p.url}" target="_blank" style="font-size:13px;font-weight:700;color:var(--ink);text-decoration:none;">${p.title}</a>
+            <a href="${p.url}" target="_blank" style="font-size:13px;font-weight: 500;color:var(--ink);text-decoration:none;">${p.title}</a>
             <span class="t-num" style="font-size:11px;color:var(--ink-3);">${p.lastmod}</span>
           </div>
           <div style="display:flex;gap:6px;flex-wrap:wrap;font-size:11px;">
@@ -2042,7 +2039,7 @@
                 ${tk.purchased ? `<span class="badge c-up" style="background:var(--up-bg);">구매완료</span>` : ""}
               </div>
               <div style="display:flex;align-items:center;gap:8px;">
-                <span class="${cls}" style="font-size:12px;font-weight:700;">${g.status}</span>
+                <span class="${cls}" style="font-size:12px;font-weight: 500;">${g.status}</span>
                 <button class="btn-ghost" style="height:22px;padding:0 6px;" onclick="deleteTicket('${tk.id}')">삭제</button>
               </div>
             </div>
