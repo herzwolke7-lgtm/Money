@@ -297,11 +297,29 @@
     .note-summary { font-size: 13px; color: var(--ink-2); line-height: 1.55; padding-left: 14px; }
     .note-toggle-hint { font-size: 11px; color: var(--ink-3); padding-left: 14px; margin-top: 2px; }
     .note-full {
-      display: none; margin-top: 8px; margin-left: 14px; padding: 12px;
-      background: var(--surface-2); border: 1px solid var(--hairline); border-radius: 8px;
-      font-size: 13px; color: var(--ink); line-height: 1.65; white-space: pre-wrap; word-break: break-word;
+      display: none; margin-top: 8px; margin-left: 14px; padding: 16px;
+      background: var(--surface); border: 1px solid var(--hairline-2); border-radius: 10px;
+      font-size: 13px; color: var(--ink); line-height: 1.55;
     }
     .note-row.open .note-full { display: block; }
+    .nf-head {
+      font-size: 12px; font-weight: 500; color: var(--ink-3);
+      padding-bottom: 8px; margin-bottom: 8px; border-bottom: 1px solid var(--hairline);
+    }
+    .nf-kv {
+      display: flex; justify-content: space-between; align-items: baseline; gap: 12px;
+      padding: 6px 0; border-bottom: 1px solid var(--hairline); font-size: 13px;
+    }
+    .nf-kv:last-of-type { border-bottom: none; }
+    .nf-k { color: var(--ink-2); flex-shrink: 0; }
+    .nf-v { color: var(--ink); font-weight: 500; text-align: right; font-variant-numeric: tabular-nums; }
+    .nf-sub { padding: 4px 0 4px 12px; font-size: 12px; color: var(--ink-2); font-variant-numeric: tabular-nums; }
+    .nf-foot { margin-top: 8px; padding-top: 8px; border-top: 1px solid var(--hairline); font-size: 12px; color: var(--ink-3); }
+    .seo-sec { padding: 12px 0; border-bottom: 1px solid var(--hairline); }
+    .seo-sec:last-child { border-bottom: none; padding-bottom: 0; }
+    .seo-sec-h { font-size: 13px; font-weight: 500; color: var(--ink); margin-bottom: 6px; }
+    .seo-sec-p { font-size: 13px; color: var(--ink-2); line-height: 1.6; }
+    .seo-sec-ul { margin: 4px 0 0 16px; padding: 0; font-size: 12px; color: var(--ink-2); line-height: 1.6; }
     .pill-btn, .tab-btn, .sub-tab { transition: background-color 120ms cubic-bezier(0.2, 0, 0, 1), transform 120ms cubic-bezier(0.2, 0, 0, 1); }
     .pill-btn:active, .tab-btn:active, .sub-tab:active { transform: scale(0.98); }
   </style>
@@ -861,6 +879,39 @@
       }
     }
 
+    function escHtml(s) {
+      return String(s || "").replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+    }
+
+    function formatNoteFull(text) {
+      const lines = String(text || "").split("\n").map(l => l.trimEnd()).filter(Boolean);
+      if (!lines.length) return "";
+      let html = "";
+      lines.forEach(line => {
+        const t = line.trim();
+        if (t.startsWith("[") && t.endsWith("]")) {
+          html += `<div class="nf-head">${escHtml(t.slice(1, -1))}</div>`;
+        } else if (t.startsWith("※")) {
+          html += `<div class="nf-foot">${escHtml(t)}</div>`;
+        } else if (t.startsWith("• ") && t.includes(":")) {
+          const body = t.slice(2);
+          const idx = body.indexOf(":");
+          const k = body.slice(0, idx).trim();
+          const v = body.slice(idx + 1).trim();
+          if (v) {
+            html += `<div class="nf-kv"><span class="nf-k">${escHtml(k)}</span><span class="nf-v">${escHtml(v)}</span></div>`;
+          } else {
+            html += `<div class="nf-kv"><span class="nf-k" style="color:var(--ink);font-weight:500;">${escHtml(k)}</span></div>`;
+          }
+        } else if (line.startsWith("  ") || t.startsWith("- ")) {
+          html += `<div class="nf-sub">${escHtml(t.replace(/^- /, ""))}</div>`;
+        } else {
+          html += `<div style="padding:4px 0;font-size:13px;color:var(--ink-2);line-height:1.55;">${escHtml(t)}</div>`;
+        }
+      });
+      return html;
+    }
+
     function renderNotes() {
       if (!notesData) return;
       document.getElementById("notesUpdated").textContent = notesData.updated_at || "-";
@@ -895,8 +946,8 @@
                 </div>
               </div>
               <div class="note-summary">${n.summary}</div>
-              <div class="note-toggle-hint">눌러서 원문 전체 보기</div>
-              <div class="note-full">${(n.full_text || n.summary || '').replace(/</g,'&lt;').replace(/>/g,'&gt;')}</div>
+              <div class="note-toggle-hint">원문 보기</div>
+              <div class="note-full" onclick="event.stopPropagation()">${formatNoteFull(n.full_text || n.summary)}</div>
             </div>
           `).join("")}
         </div>
@@ -1050,16 +1101,27 @@
         document.getElementById("seoDailyReportBody").innerHTML = `<div style="color:var(--ink-3);font-size:13px;">등록된 보고서가 없습니다.</div>`;
         return;
       }
+      const sections = r.sections || [];
       document.getElementById("seoDailyReportBody").innerHTML = `
-        <div style="font-size:14px;font-weight: 500;color:var(--ink);margin-bottom:6px;">${r.headline}</div>
-        <div style="font-size:13px;color:var(--ink-2);line-height:1.55;margin-bottom:10px;">${r.summary}</div>
-        <div style="font-size:12px;font-weight: 500;color:var(--ink);margin-bottom:4px;">실행 · 색인 관리 내역</div>
-        <ul style="margin:0 0 10px 16px;padding:0;font-size:12px;color:var(--ink-2);line-height:1.5;">
-          ${(r.actions_taken || []).map(a => `<li>${a}</li>`).join("")}
-        </ul>
-        <div style="padding:10px 12px;background:var(--surface-2);border-radius:8px;border:1px solid var(--hairline);font-size:12px;color:var(--ink-2);line-height:1.5;">
-          <strong style="color:var(--ink);">헤르메스 AI 운영 지침:</strong> ${r.hermes_directive || '-'}
-        </div>
+        <div style="font-size:15px;font-weight:500;color:var(--ink);margin-bottom:6px;line-height:1.4;">${r.headline}</div>
+        <div class="seo-sec-p" style="margin-bottom:8px;">${r.summary}</div>
+        ${sections.map(s => `
+          <div class="seo-sec">
+            <div class="seo-sec-h">${s.title}</div>
+            ${s.body ? `<div class="seo-sec-p">${s.body}</div>` : ''}
+            ${(s.items || []).length ? `<ul class="seo-sec-ul">${s.items.map(i => `<li>${i}</li>`).join("")}</ul>` : ''}
+          </div>
+        `).join("")}
+        ${!sections.length ? `
+          <div class="seo-sec">
+            <div class="seo-sec-h">실행 · 색인 관리 내역</div>
+            <ul class="seo-sec-ul">${(r.actions_taken || []).map(a => `<li>${a}</li>`).join("")}</ul>
+          </div>
+          <div class="seo-sec">
+            <div class="seo-sec-h">헤르메스 AI 운영 지침</div>
+            <div class="seo-sec-p">${r.hermes_directive || '-'}</div>
+          </div>
+        ` : ''}
       `;
     }
 
