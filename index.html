@@ -37,12 +37,7 @@
       -webkit-font-smoothing: antialiased;
     }
 
-    .topbar {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 16px;
-    }
+    .topbar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
     .brand { display: flex; align-items: center; gap: 8px; }
     .live-dot { width: 7px; height: 7px; border-radius: 50%; background: #12b76a; }
     .brand-title { font-size: 16px; font-weight: 600; }
@@ -52,8 +47,7 @@
       display: inline-flex; align-items: center; justify-content: center;
       width: 32px; height: 32px; border-radius: 8px;
       border: 1px solid var(--hairline-2); background: var(--surface); color: var(--ink-2);
-      cursor: pointer;
-      transition: transform 150ms var(--ease-out), background-color 140ms ease;
+      cursor: pointer; transition: transform 150ms var(--ease-out), background-color 140ms ease;
     }
     .icon-btn:active { transform: scale(0.95); }
 
@@ -61,8 +55,7 @@
       display: grid; grid-template-columns: 1fr 1fr;
       padding: 3px; background: var(--surface-2);
       border: 1px solid var(--hairline); border-radius: 10px;
-      margin-bottom: 16px;
-      max-width: 420px;
+      margin-bottom: 16px; max-width: 420px;
     }
     .seg-btn {
       height: 36px; border: none; border-radius: 7px;
@@ -71,20 +64,10 @@
       transition: transform 150ms var(--ease-out), background-color 140ms ease, color 140ms ease;
     }
     .seg-btn:active { transform: scale(0.97); }
-    .seg-btn.active {
-      background: var(--surface); color: var(--ink); font-weight: 600;
-      border: 1px solid var(--hairline);
-    }
+    .seg-btn.active { background: var(--surface); color: var(--ink); font-weight: 600; border: 1px solid var(--hairline); }
 
-    .bento {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 12px;
-      align-items: start;
-    }
-    @media (min-width: 760px) {
-      .bento { grid-template-columns: 1.15fr 0.85fr; }
-    }
+    .bento { display: grid; grid-template-columns: 1fr; gap: 12px; align-items: start; }
+    @media (min-width: 760px) { .bento { grid-template-columns: 1.15fr 0.85fr; } }
 
     .pill-row { display: flex; gap: 6px; margin-bottom: 12px; flex-wrap: wrap; }
     .pill-btn {
@@ -97,22 +80,19 @@
     .pill-btn.active { background: var(--ink); color: #fff; border-color: var(--ink); }
 
     .panel {
-      background: var(--surface);
-      border: 1px solid var(--hairline);
-      border-radius: 14px;
-      padding: 20px;
-      margin-bottom: 12px;
+      background: var(--surface); border: 1px solid var(--hairline);
+      border-radius: 14px; padding: 20px; margin-bottom: 12px;
     }
     .panel-label { font-size: 12px; color: var(--ink-2); font-weight: 500; }
     .hero-figure { font-size: 30px; font-weight: 600; letter-spacing: -0.02em; margin: 4px 0 8px; }
-    .delta-tag {
-      display: inline-flex; align-items: center;
-      font-size: 12px; font-weight: 600; padding: 4px 8px; border-radius: 6px;
-    }
+    .delta-tag { display: inline-flex; align-items: center; font-size: 12px; font-weight: 600; padding: 4px 8px; border-radius: 6px; }
 
     .up { color: var(--up); background: var(--up-bg); }
     .down { color: var(--down); background: var(--down-bg); }
     .flat { color: var(--ink-2); background: var(--surface-2); }
+    .c-up { color: var(--up); }
+    .c-down { color: var(--down); }
+    .c-flat { color: var(--ink-2); }
 
     .alloc-block { margin-top: 16px; }
     .alloc-track { height: 6px; border-radius: 999px; background: var(--surface-2); overflow: hidden; display: flex; gap: 2px; }
@@ -127,10 +107,6 @@
     .stat-item { padding: 10px 12px; border-radius: 8px; background: var(--bg); }
     .stat-k { font-size: 11px; color: var(--ink-3); font-weight: 500; }
     .stat-v { font-size: 14px; font-weight: 600; margin-top: 2px; }
-
-    .c-up { color: var(--up); }
-    .c-down { color: var(--down); }
-    .c-flat { color: var(--ink-2); }
 
     .period-row { display: flex; gap: 4px; margin-top: 16px; overflow-x: auto; }
     .period-row::-webkit-scrollbar { display: none; }
@@ -152,21 +128,12 @@
     .chart-note { font-size: 11px; color: var(--ink-3); margin-top: 6px; }
 
     .date-toggle {
-      margin-top: 12px;
-      font-size: 12px;
-      color: var(--ink-2);
-      cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
-      border: none;
-      background: none;
-      font-family: inherit;
-      font-weight: 500;
+      margin-top: 12px; font-size: 12px; color: var(--ink-2); cursor: pointer;
+      display: inline-flex; align-items: center; gap: 4px; border: none; background: none;
+      font-family: inherit; font-weight: 500;
     }
     .date-controls {
-      display: none;
-      margin-top: 10px; padding-top: 10px; border-top: 1px solid var(--hairline);
+      display: none; margin-top: 10px; padding-top: 10px; border-top: 1px solid var(--hairline);
       flex-direction: column; gap: 8px;
     }
     .date-controls.open { display: flex; }
@@ -182,14 +149,9 @@
     .sec-title { font-size: 14px; font-weight: 600; }
     .sec-meta { font-size: 12px; font-weight: 600; padding: 3px 8px; border-radius: 6px; white-space: nowrap; }
 
-    /* Clean Flex Holding Rows (No cramped table!) */
     .holding-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 12px;
-      padding: 12px 0;
-      border-bottom: 1px solid var(--hairline);
+      display: flex; justify-content: space-between; align-items: center; gap: 12px;
+      padding: 12px 0; border-bottom: 1px solid var(--hairline);
     }
     .holding-row:last-child { border-bottom: none; padding-bottom: 0; }
     .h-left { min-width: 0; }
@@ -199,7 +161,6 @@
     .h-val { font-size: 14px; font-weight: 600; color: var(--ink); }
     .h-pnl { font-size: 12px; font-weight: 500; margin-top: 2px; }
 
-    /* Journal */
     .search-box {
       width: 100%; height: 40px; border: 1px solid var(--hairline-2); border-radius: 8px;
       padding: 0 12px; font-family: inherit; font-size: 14px; color: var(--ink); background: var(--bg);
@@ -215,21 +176,12 @@
     }
     .btn-ghost:active { transform: scale(0.96); }
 
-    .sym-grid {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 8px;
-    }
-    @media (min-width: 760px) {
-      .sym-grid { grid-template-columns: 1fr 1fr; }
-    }
+    .sym-grid { display: grid; grid-template-columns: 1fr; gap: 8px; }
+    @media (min-width: 760px) { .sym-grid { grid-template-columns: 1fr 1fr; } }
 
     .sym-card {
-      border: 1px solid var(--hairline);
-      border-radius: 12px;
-      padding: 16px;
-      background: var(--surface);
-      cursor: pointer;
+      border: 1px solid var(--hairline); border-radius: 12px; padding: 16px;
+      background: var(--surface); cursor: pointer;
       transition: transform 150ms var(--ease-out), border-color 140ms ease;
     }
     .sym-card:active { transform: scale(0.985); }
@@ -241,26 +193,18 @@
     .sym-pnl-rt { font-size: 12px; font-weight: 500; }
     .sym-flow {
       display: grid; grid-template-columns: 1fr 1fr; gap: 10px;
-      margin-top: 12px; padding-top: 10px; border-top: 1px solid var(--hairline);
-      font-size: 12px;
+      margin-top: 12px; padding-top: 10px; border-top: 1px solid var(--hairline); font-size: 12px;
     }
     .sym-flow-col span { display: block; color: var(--ink-3); font-size: 11px; margin-bottom: 2px; }
     .sym-flow-col strong { font-weight: 500; color: var(--ink); }
-    .sym-detail {
-      display: none;
-      margin-top: 12px; padding-top: 10px; border-top: 1px dashed var(--hairline-2);
-    }
+    .sym-detail { display: none; margin-top: 12px; padding-top: 10px; border-top: 1px dashed var(--hairline-2); }
     .sym-card.open .sym-detail { display: block; }
     .fill-line {
       display: flex; justify-content: space-between; align-items: center; gap: 8px;
-      padding: 6px 0; font-size: 12px;
-      border-bottom: 1px solid var(--hairline);
+      padding: 6px 0; font-size: 12px; border-bottom: 1px solid var(--hairline);
     }
     .fill-line:last-child { border-bottom: none; }
-    .side-tag {
-      display: inline-block; font-size: 11px; font-weight: 600;
-      padding: 1px 6px; border-radius: 4px; margin-right: 4px;
-    }
+    .side-tag { display: inline-block; font-size: 11px; font-weight: 600; padding: 1px 6px; border-radius: 4px; margin-right: 4px; }
     .side-buy { color: var(--up); background: var(--up-bg); }
     .side-sell { color: var(--down); background: var(--down-bg); }
   </style>
@@ -374,12 +318,19 @@
 
   <!-- TRADE JOURNAL VIEW -->
   <main id="journalView" style="display:none;">
+    <div class="pill-row">
+      <button class="pill-btn active" onclick="setJSource('all', this)">전체 (키움+OKX)</button>
+      <button class="pill-btn" onclick="setJSource('키움', this)">키움 5280-4774</button>
+      <button class="pill-btn" onclick="setJSource('OKX', this)">OKX</button>
+    </div>
+
     <section class="panel">
       <div class="sec-head">
-        <span class="sec-title">올해 손익 · 승률 요약</span>
+        <span class="sec-title" id="journalSummaryTitle">전체 손익 · 승률 요약</span>
         <button class="btn-ghost" onclick="exportCsv()">CSV 저장</button>
       </div>
       <div class="stat-grid" id="journalKpi" style="margin-top:0;padding-top:0;border-top:none;"></div>
+      <div class="meta-time" id="journalNote" style="margin-top:10px;"></div>
     </section>
 
     <section class="panel">
@@ -394,9 +345,7 @@
         <button class="pill-btn" onclick="setJTab('fills', this)">전체 체결</button>
       </div>
       <div class="period-row" style="margin-top:8px;">
-        <button class="p-btn active" onclick="setJSource('all', this)">전체</button>
-        <button class="p-btn" onclick="setJSource('키움', this)">키움</button>
-        <button class="p-btn" onclick="setJSource('OKX', this)">OKX</button>
+        <button class="p-btn active" onclick="setJOutcome('all', this)">전체</button>
         <button class="p-btn" onclick="setJOutcome('win', this)">수익만</button>
         <button class="p-btn" onclick="setJOutcome('loss', this)">손실만</button>
         <button class="p-btn" onclick="setJOutcome('hold', this)">보유중</button>
@@ -407,7 +356,7 @@
 
     <section class="panel" id="jDailyPane" style="display:none;">
       <div class="sec-head">
-        <span class="sec-title">일별 실현손익 (키움)</span>
+        <span class="sec-title" id="dailyPnlTitle">일별 실현손익</span>
         <span class="sec-meta" id="dailyPnlBadge">-</span>
       </div>
       <div id="dailyPnlRows"></div>
@@ -445,6 +394,11 @@
       if (currentAcct === "kiwoom") return d.kiwoom_krw;
       if (currentAcct === "okx") return d.okx_krw;
       return d.total_krw;
+    }
+    function usdKrwRate() {
+      if (!payload) return 1347;
+      const o = payload.latest.okx;
+      return o.total_usd ? (o.total_krw / o.total_usd) : 1347;
     }
 
     function setMode(mode, btn) {
@@ -582,16 +536,15 @@
 
     function setJSource(src, btn) {
       jSource = src;
-      btn.parentElement.querySelectorAll(".p-btn").slice(0, 3).forEach(b => b.classList.remove("active"));
+      btn.parentElement.querySelectorAll(".pill-btn").forEach(b => b.classList.remove("active"));
       btn.classList.add("active");
       renderJournal();
     }
 
     function setJOutcome(out, btn) {
-      const was = btn.classList.contains("active");
-      btn.parentElement.querySelectorAll(".p-btn").slice(3).forEach(b => b.classList.remove("active"));
-      jOutcome = was ? "all" : out;
-      if (!was) btn.classList.add("active");
+      jOutcome = out;
+      btn.parentElement.querySelectorAll(".p-btn").forEach(b => b.classList.remove("active"));
+      btn.classList.add("active");
       renderJournal();
     }
 
@@ -599,25 +552,61 @@
       if (!payload) return;
       const summaries = payload.symbol_summaries || [];
       const trades = payload.trades || [];
-      const daily = payload.daily_pnl || [];
+      const kwDaily = payload.daily_pnl || [];
+      const rate = usdKrwRate();
+
+      // Calculate OKX 3-month realized PnL & daily PnL from OKX trades
+      const okxSyms = summaries.filter(s => s.source === "OKX");
+      const okxRealizedUsd = okxSyms.reduce((a, b) => a + (b.realized_pl || 0), 0);
+      const okxRealizedKrw = Math.round(okxRealizedUsd * rate);
+      const okxUnrealizedUsd = payload.latest.okx.pnl_usd || 0;
+      const okxUnrealizedKrw = Math.round(okxUnrealizedUsd * rate);
+
       const kwRealized = payload.kw_total_realized_pl || 0;
       const kwUnrealized = payload.latest.kiwoom.tot_pl_krw || 0;
 
-      const settled = summaries.filter(s => s.sell_qty > 0 && s.realized_pl !== 0);
+      const scopedSyms = summaries.filter(s => jSource === "all" || s.source === jSource);
+      const settled = scopedSyms.filter(s => s.sell_qty > 0 && s.realized_pl !== 0);
       const wins = settled.filter(s => s.realized_pl > 0).length;
       const winRate = settled.length ? Math.round((wins / settled.length) * 100) : 0;
 
-      document.getElementById("journalKpi").innerHTML = `
-        <div class="stat-item"><div class="stat-k">키움 실현손익 (올해)</div><div class="stat-v ${kwRealized >= 0 ? 'c-up' : 'c-down'}">${fmtKrw(kwRealized)}</div></div>
-        <div class="stat-item"><div class="stat-k">키움 현재 평가손익</div><div class="stat-v ${kwUnrealized >= 0 ? 'c-up' : 'c-down'}">${fmtKrw(kwUnrealized)}</div></div>
-        <div class="stat-item"><div class="stat-k">매도 승률 (키움+OKX)</div><div class="stat-v">${winRate}% (${wins}/${settled.length}종목)</div></div>
-        <div class="stat-item"><div class="stat-k">총 기록</div><div class="stat-v">${summaries.length}종목 · ${trades.length}건</div></div>
-      `;
+      const titleEl = document.getElementById("journalSummaryTitle");
+      const kpiEl = document.getElementById("journalKpi");
+      const noteEl = document.getElementById("journalNote");
+
+      if (jSource === "all") {
+        const totRealized = kwRealized + okxRealizedKrw;
+        const totUnrealized = kwUnrealized + okxUnrealizedKrw;
+        titleEl.textContent = "총 합산 손익 · 승률 요약 (키움 + OKX)";
+        kpiEl.innerHTML = `
+          <div class="stat-item"><div class="stat-k">총 누적 실현손익</div><div class="stat-v ${totRealized >= 0 ? 'c-up' : 'c-down'}">${fmtKrw(totRealized)}</div></div>
+          <div class="stat-item"><div class="stat-k">총 현재 평가손익</div><div class="stat-v ${totUnrealized >= 0 ? 'c-up' : 'c-down'}">${fmtKrw(totUnrealized)}</div></div>
+          <div class="stat-item"><div class="stat-k">총 합산 (실현+평가)</div><div class="stat-v ${(totRealized+totUnrealized) >= 0 ? 'c-up' : 'c-down'}">${fmtKrw(totRealized + totUnrealized)}</div></div>
+          <div class="stat-item"><div class="stat-k">전체 매도 승률</div><div class="stat-v">${winRate}% (${wins}/${settled.length}종목)</div></div>
+        `;
+        noteEl.textContent = `키움 올해(+${kwRealized.toLocaleString()}원) + OKX 최근 3개월(${fmtUsd(okxRealizedUsd)} · 약 ${fmtKrw(okxRealizedKrw)}) 합산`;
+      } else if (jSource === "키움") {
+        titleEl.textContent = "키움 5280-4774 손익 · 승률 요약";
+        kpiEl.innerHTML = `
+          <div class="stat-item"><div class="stat-k">키움 올해 실현손익</div><div class="stat-v ${kwRealized >= 0 ? 'c-up' : 'c-down'}">${fmtKrw(kwRealized)}</div></div>
+          <div class="stat-item"><div class="stat-k">키움 현재 평가손익</div><div class="stat-v ${kwUnrealized >= 0 ? 'c-up' : 'c-down'}">${fmtKrw(kwUnrealized)}</div></div>
+          <div class="stat-item"><div class="stat-k">키움 합산 손익</div><div class="stat-v ${(kwRealized+kwUnrealized) >= 0 ? 'c-up' : 'c-down'}">${fmtKrw(kwRealized + kwUnrealized)}</div></div>
+          <div class="stat-item"><div class="stat-k">키움 매도 승률</div><div class="stat-v">${winRate}% (${wins}/${settled.length}종목)</div></div>
+        `;
+        noteEl.textContent = "2026-01-01 ~ 현재 키움 전체 체결 기준";
+      } else {
+        titleEl.textContent = "OKX 손익 · 승률 요약 (최근 3개월)";
+        kpiEl.innerHTML = `
+          <div class="stat-item"><div class="stat-k">OKX 실현손익 (3개월)</div><div class="stat-v ${okxRealizedUsd >= 0 ? 'c-up' : 'c-down'}">${fmtUsd(okxRealizedUsd)} (${fmtKrw(okxRealizedKrw)})</div></div>
+          <div class="stat-item"><div class="stat-k">OKX 현재 평가손익</div><div class="stat-v ${okxUnrealizedUsd >= 0 ? 'c-up' : 'c-down'}">${fmtUsd(okxUnrealizedUsd)}</div></div>
+          <div class="stat-item"><div class="stat-k">OKX 기록 코인</div><div class="stat-v">${okxSyms.length}종목 · ${trades.filter(t=>t.source==='OKX').length}건</div></div>
+          <div class="stat-item"><div class="stat-k">OKX 매도 승률</div><div class="stat-v">${winRate}% (${wins}/${settled.length}종목)</div></div>
+        `;
+        noteEl.textContent = "OKX API 보관 정책상 최근 3개월(8~11월) 체결분 기준이며, 오늘부터 이후 내역은 계속 누적됩니다";
+      }
 
       const q = (document.getElementById("searchInput").value || "").trim().toLowerCase();
-
-      const filteredSyms = summaries.filter(s => {
-        if (jSource !== "all" && s.source !== jSource) return false;
+      const filteredSyms = scopedSyms.filter(s => {
         if (q && !s.symbol.toLowerCase().includes(q)) return false;
         if (jOutcome === "win" && !(s.realized_pl > 0 || s.unrealized_pl > 0)) return false;
         if (jOutcome === "loss" && !(s.realized_pl < 0 || s.unrealized_pl < 0)) return false;
@@ -632,7 +621,6 @@
         const hasBuy = s.buy_qty > 0;
         const isHolding = s.holding_qty > 0;
         const mainPnl = isHolding ? s.unrealized_pl : (hasSell ? s.realized_pl : 0);
-        const mainRt = isHolding ? s.unrealized_rt : (hasSell ? s.realized_rt : 0);
         const cls = mainPnl > 0 ? "c-up" : mainPnl < 0 ? "c-down" : "c-flat";
 
         let pnlText = "-";
@@ -641,7 +629,7 @@
           pnlText = isKrw ? fmtKrw(s.unrealized_pl) : fmtUsd(s.unrealized_pl);
           rtText = "보유 평가 " + fmtPct(s.unrealized_rt) + (s.realized_pl ? ` · 기실현 ${fmtKrw(s.realized_pl)}` : "");
         } else if (hasSell && s.realized_pl !== 0) {
-          pnlText = isKrw ? fmtKrw(s.realized_pl) : fmtUsd(s.realized_pl);
+          pnlText = isKrw ? fmtKrw(s.realized_pl) : `${fmtUsd(s.realized_pl)} (${fmtKrw(s.realized_pl * rate)})`;
           rtText = "매도 실현 " + fmtPct(s.realized_rt);
         } else if (hasSell) {
           pnlText = "이전 보유분 매도";
@@ -722,23 +710,48 @@
           </div>`;
       }).join("");
 
-      const pnlBadge = document.getElementById("dailyPnlBadge");
-      pnlBadge.textContent = fmtKrw(kwRealized);
-      pnlBadge.className = "sec-meta " + (kwRealized > 0 ? "up" : kwRealized < 0 ? "down" : "flat");
+      // Daily PnL scoped by jSource
+      const okxDailyMap = {};
+      trades.filter(t => t.source === "OKX").forEach(t => {
+        if (!okxDailyMap[t.date]) okxDailyMap[t.date] = { date: t.date, buy: 0, sell: 0, pl: 0 };
+        if (t.side === "매수") okxDailyMap[t.date].buy += t.amount;
+        else { okxDailyMap[t.date].sell += t.amount; okxDailyMap[t.date].pl += (t.pnl || 0); }
+      });
+      const okxDaily = Object.values(okxDailyMap).sort((a, b) => b.date.localeCompare(a.date));
 
-      document.getElementById("dailyPnlRows").innerHTML = daily.slice().reverse().map(d => {
-        const cls = d.realized_pl > 0 ? "c-up" : d.realized_pl < 0 ? "c-down" : "c-flat";
-        return `
-          <div class="holding-row">
-            <div class="h-left">
-              <div class="h-name">${d.date}</div>
-              <div class="h-sub">매도 ${d.sell_amt.toLocaleString()} · 매수 ${d.buy_amt.toLocaleString()} · 비용 ${(d.fee + d.tax).toLocaleString()}원</div>
-            </div>
-            <div class="h-right">
-              <div class="h-val ${cls}">${fmtKrw(d.realized_pl)}</div>
-            </div>
-          </div>`;
-      }).join("");
+      const dailyTitle = document.getElementById("dailyPnlTitle");
+      const pnlBadge = document.getElementById("dailyPnlBadge");
+      if (jSource === "OKX") {
+        dailyTitle.textContent = "일별 실현손익 (OKX · 3개월)";
+        pnlBadge.textContent = fmtUsd(okxRealizedUsd);
+        pnlBadge.className = "sec-meta " + (okxRealizedUsd > 0 ? "up" : okxRealizedUsd < 0 ? "down" : "flat");
+        document.getElementById("dailyPnlRows").innerHTML = okxDaily.map(d => {
+          const cls = d.pl > 0 ? "c-up" : d.pl < 0 ? "c-down" : "c-flat";
+          return `
+            <div class="holding-row">
+              <div class="h-left"><div class="h-name">${d.date}</div><div class="h-sub">매도 $${d.sell.toFixed(2)} · 매수 $${d.buy.toFixed(2)}</div></div>
+              <div class="h-right"><div class="h-val ${cls}">${fmtUsd(d.pl)}</div></div>
+            </div>`;
+        }).join("");
+      } else {
+        dailyTitle.textContent = jSource === "키움" ? "일별 실현손익 (키움)" : "일별 실현손익 (키움 + OKX)";
+        const combined = kwRealized + (jSource === "all" ? okxRealizedKrw : 0);
+        pnlBadge.textContent = fmtKrw(combined);
+        pnlBadge.className = "sec-meta " + (combined > 0 ? "up" : combined < 0 ? "down" : "flat");
+        const merged = kwDaily.map(d => ({ date: d.date, sub: `키움 · 매도 ${d.sell_amt.toLocaleString()} · 매수 ${d.buy_amt.toLocaleString()}`, pl: d.realized_pl }));
+        if (jSource === "all") {
+          okxDaily.forEach(d => merged.push({ date: d.date, sub: `OKX · 매도 $${d.sell.toFixed(2)} · 매수 $${d.buy.toFixed(2)}`, pl: Math.round(d.pl * rate), usd: d.pl }));
+        }
+        merged.sort((a, b) => b.date.localeCompare(a.date));
+        document.getElementById("dailyPnlRows").innerHTML = merged.map(d => {
+          const cls = d.pl > 0 ? "c-up" : d.pl < 0 ? "c-down" : "c-flat";
+          return `
+            <div class="holding-row">
+              <div class="h-left"><div class="h-name">${d.date}</div><div class="h-sub">${d.sub}</div></div>
+              <div class="h-right"><div class="h-val ${cls}">${d.usd !== undefined ? fmtUsd(d.usd) + " (" + fmtKrw(d.pl) + ")" : fmtKrw(d.pl)}</div></div>
+            </div>`;
+        }).join("");
+      }
     }
 
     function exportCsv() {
@@ -811,12 +824,8 @@
     function pickSingleDate(val) {
       if (!payload) return;
       const found = payload.history.filter(d => d.date === val);
-      if (found.length) {
-        updatePnlPill(found, val);
-        renderChart(found, val);
-      } else {
-        document.getElementById("chartNote").textContent = `${val} 기록 없음`;
-      }
+      if (found.length) { updatePnlPill(found, val); renderChart(found, val); }
+      else { document.getElementById("chartNote").textContent = `${val} 기록 없음`; }
     }
 
     function pickRange() {
@@ -824,24 +833,18 @@
       const s = document.getElementById("startDate").value;
       const e = document.getElementById("endDate").value;
       const found = payload.history.filter(d => (!s || d.date >= s) && (!e || d.date <= e));
-      if (found.length) {
-        updatePnlPill(found, `${s}~${e}`);
-        renderChart(found, `${s}~${e}`);
-      } else {
-        document.getElementById("chartNote").textContent = "선택한 기간의 기록 없음";
-      }
+      if (found.length) { updatePnlPill(found, `${s}~${e}`); renderChart(found, `${s}~${e}`); }
+      else { document.getElementById("chartNote").textContent = "선택한 기간의 기록 없음"; }
     }
 
     function renderChart(points, label) {
       const svg = document.getElementById("chartSvg");
       const w = 320, h = 110, padX = 10, padTop = 12, padBot = 14;
       svg.innerHTML = "";
-
       const hoverDate = document.getElementById("hoverDate");
       const hoverVal = document.getElementById("hoverVal");
       const noteEl = document.getElementById("chartNote");
 
-      // If asset history only has 1 snapshot so far, show cumulative realized PnL curve from daily_pnl!
       if (points.length <= 1 && payload.daily_pnl && payload.daily_pnl.length > 1) {
         let cum = 0;
         const series = payload.daily_pnl.map(d => { cum += d.realized_pl; return { date: d.date, val: cum }; });
@@ -855,24 +858,19 @@
         }));
         const linePts = coords.map(c => `${c.x.toFixed(1)},${c.y.toFixed(1)}`).join(" ");
         const areaPts = `${coords[0].x.toFixed(1)},${h - padBot} ${linePts} ${coords[coords.length - 1].x.toFixed(1)},${h - padBot}`;
-
         const defs = document.createElementNS("http://www.w3.org/2000/svg", "defs");
         defs.innerHTML = `<linearGradient id="cumG" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#161615" stop-opacity="0.12"/><stop offset="100%" stop-color="#161615" stop-opacity="0"/></linearGradient>`;
         svg.appendChild(defs);
-
         const polyArea = document.createElementNS("http://www.w3.org/2000/svg", "polygon");
         polyArea.setAttribute("fill", "url(#cumG)"); polyArea.setAttribute("points", areaPts);
         svg.appendChild(polyArea);
-
         const poly = document.createElementNS("http://www.w3.org/2000/svg", "polyline");
         poly.setAttribute("fill", "none"); poly.setAttribute("stroke", "#161615");
         poly.setAttribute("stroke-width", "1.8"); poly.setAttribute("points", linePts);
         svg.appendChild(poly);
-
         hoverDate.textContent = `키움 누적 실현손익 (${series[0].date} ~ ${series[series.length - 1].date})`;
         hoverVal.textContent = fmtKrw(cum);
         noteEl.textContent = "총 자산 스냅샷은 오늘부터 매일 자동 누적됩니다 (현재는 올해 누적 실현손익 추이 표시)";
-
         const onP = (cx) => {
           const rect = svg.getBoundingClientRect();
           const sx = ((cx - rect.left) / rect.width) * w;
@@ -891,7 +889,6 @@
       hoverDate.textContent = last.date;
       hoverVal.textContent = getVal(last).toLocaleString() + "원";
       noteEl.textContent = `${label} · ${points[0].date} ~ ${last.date} (${points.length}건)`;
-
       const vals = points.map(getVal);
       const min = Math.min(...vals), max = Math.max(...vals);
       const span = (max - min) || 1;
