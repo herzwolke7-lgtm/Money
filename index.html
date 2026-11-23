@@ -1342,24 +1342,24 @@
         if (!draw) return { status: "추첨 대기", prize: 0 };
         const matched = tk.nums.filter(n => draw.nums.includes(n)).length;
         const hasBonus = tk.nums.includes(draw.bonus);
-        if (matched === 6) return { status: "1등 당첨!", prize: draw.first_amt || 2000000000 };
-        if (matched === 5 && hasBonus) return { status: "2등 당첨!", prize: 50000000 };
-        if (matched === 5) return { status: "3등 당첨!", prize: 1500000 };
-        if (matched === 4) return { status: "4등 (5만원)", prize: 50000 };
-        if (matched === 3) return { status: "5등 (5천원)", prize: 5000 };
-        return { status: `낙첨 (${matched}개)`, prize: 0 };
+        if (matched === 6) return { status: "1등 당첨!", prize: draw.first_amt || 2000000000, date: draw.date };
+        if (matched === 5 && hasBonus) return { status: "2등 당첨!", prize: 50000000, date: draw.date };
+        if (matched === 5) return { status: "3등 당첨!", prize: 1500000, date: draw.date };
+        if (matched === 4) return { status: "4등 (5만원)", prize: 50000, date: draw.date };
+        if (matched === 3) return { status: "5등 (5천원)", prize: 5000, date: draw.date };
+        return { status: `낙첨 (${matched}개)`, prize: 0, date: draw.date };
       } else {
         const draw = lotData.pension.draws.find(d => d.round === tk.round);
         if (!draw) return { status: "추첨 대기", prize: 0 };
         const n = tk.num, w = draw.num;
-        if (tk.group === draw.group && n === w) return { status: "1등 (월 700만)", prize: 1680000000 };
-        if (n === w) return { status: "2등 (월 100만)", prize: 120000000 };
-        if (n.slice(1) === w.slice(1)) return { status: "3등 (100만원)", prize: 1000000 };
-        if (n.slice(2) === w.slice(2)) return { status: "4등 (10만원)", prize: 100000 };
-        if (n.slice(3) === w.slice(3)) return { status: "5등 (5만원)", prize: 50000 };
-        if (n.slice(4) === w.slice(4)) return { status: "6등 (5천원)", prize: 5000 };
-        if (n.slice(5) === w.slice(5)) return { status: "7등 (1천원)", prize: 1000 };
-        return { status: "낙첨", prize: 0 };
+        if (tk.group === draw.group && n === w) return { status: "1등 (월 700만)", prize: 1680000000, date: draw.date };
+        if (n === w) return { status: "2등 (월 100만)", prize: 120000000, date: draw.date };
+        if (n.slice(1) === w.slice(1)) return { status: "3등 (100만원)", prize: 1000000, date: draw.date };
+        if (n.slice(2) === w.slice(2)) return { status: "4등 (10만원)", prize: 100000, date: draw.date };
+        if (n.slice(3) === w.slice(3)) return { status: "5등 (5만원)", prize: 50000, date: draw.date };
+        if (n.slice(4) === w.slice(4)) return { status: "6등 (5천원)", prize: 5000, date: draw.date };
+        if (n.slice(5) === w.slice(5)) return { status: "7등 (1천원)", prize: 1000, date: draw.date };
+        return { status: "낙첨", prize: 0, date: draw.date };
       }
     }
 
@@ -1367,22 +1367,32 @@
       if (!lotData) return;
       const tickets = getTickets().filter(tk => tk.type === lotType);
       let spent = 0, settledSpent = 0, won = 0, wins = 0, settled = 0;
+      let bestWin = null;
       tickets.forEach(tk => {
         spent += 1000;
         const g = gradeTicket(tk);
         if (g.status !== "추첨 대기") {
           settled++;
           settledSpent += 1000;
-          if (g.prize > 0) { wins++; won += g.prize; }
+          if (g.prize > 0) {
+            wins++; won += g.prize;
+            if (!bestWin || g.prize > bestWin.prize) {
+              bestWin = { prize: g.prize, round: tk.round, date: g.date || "-", status: g.status };
+            }
+          }
         }
       });
       const net = won - settledSpent;
       const winRate = settled ? ((wins / settled) * 100).toFixed(1) : "0.0";
+      const bestText = bestWin
+        ? `<span class="c-up">${bestWin.prize.toLocaleString()}원</span><div style="font-size:11px;color:var(--ink-3);font-weight:500;margin-top:2px;">#${bestWin.round}회 (${bestWin.date}) · ${bestWin.status}</div>`
+        : `0원<div style="font-size:11px;color:var(--ink-3);font-weight:500;margin-top:2px;">아직 당첨 이력 없음</div>`;
       document.getElementById("lotKpiGrid").innerHTML = `
         <div class="stat-item"><div class="stat-k">총 투자금</div><div class="stat-v">${spent.toLocaleString()}원</div></div>
         <div class="stat-item"><div class="stat-k">총 당첨금</div><div class="stat-v ${won > 0 ? 'c-up' : ''}">${won.toLocaleString()}원</div></div>
         <div class="stat-item"><div class="stat-k">순수익</div><div class="stat-v ${net > 0 ? 'c-up' : net < 0 ? 'c-down' : ''}">${fmtKrw(net)}</div></div>
         <div class="stat-item"><div class="stat-k">당첨률 (승률)</div><div class="stat-v">${winRate}% (${wins}/${settled}건)</div></div>
+        <div class="stat-item" style="grid-column:1 / -1;"><div class="stat-k">역대 최고 당첨금</div><div class="stat-v">${bestText}</div></div>
       `;
 
       if (lotType === "lotto") {
