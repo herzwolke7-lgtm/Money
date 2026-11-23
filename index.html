@@ -1122,7 +1122,26 @@
             <div class="seo-sec-p">${r.hermes_directive || '-'}</div>
           </div>
         ` : ''}
+        ${r.hermes_prompt ? `
+          <div class="seo-sec">
+            <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:8px;">
+              <div class="seo-sec-h" style="margin-bottom:0;">7. 헤르메스 AI 복붙용 실행 지시서</div>
+              <button class="pill-btn" onclick="copyHermesPrompt(this)" style="height:28px;padding:0 10px;font-size:11px;">지시서 복사</button>
+            </div>
+            <pre id="hermesPromptText" style="margin:0;padding:12px;background:var(--surface-2);border:1px solid var(--hairline);border-radius:8px;font-size:12px;line-height:1.6;color:var(--ink);white-space:pre-wrap;word-break:break-word;font-family:inherit;">${escHtml(r.hermes_prompt)}</pre>
+          </div>
+        ` : ''}
       `;
+    }
+
+    function copyHermesPrompt(btn) {
+      const el = document.getElementById("hermesPromptText");
+      if (!el) return;
+      navigator.clipboard.writeText(el.textContent).then(() => {
+        const orig = btn.textContent;
+        btn.textContent = "복사 완료";
+        setTimeout(() => btn.textContent = orig, 1500);
+      });
     }
 
     function renderSeoPosts() {
