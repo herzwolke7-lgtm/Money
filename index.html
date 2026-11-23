@@ -1350,16 +1350,17 @@
     function renderLottery() {
       if (!lotData) return;
       const tickets = getTickets().filter(tk => tk.type === lotType);
-      let spent = 0, won = 0, wins = 0, settled = 0;
+      let spent = 0, settledSpent = 0, won = 0, wins = 0, settled = 0;
       tickets.forEach(tk => {
         spent += 1000;
         const g = gradeTicket(tk);
         if (g.status !== "추첨 대기") {
           settled++;
+          settledSpent += 1000;
           if (g.prize > 0) { wins++; won += g.prize; }
         }
       });
-      const net = won - spent;
+      const net = won - settledSpent;
       const winRate = settled ? ((wins / settled) * 100).toFixed(1) : "0.0";
       document.getElementById("lotKpiGrid").innerHTML = `
         <div class="stat-item"><div class="stat-k">총 투자금</div><div class="stat-v">${spent.toLocaleString()}원</div></div>
@@ -1481,7 +1482,7 @@
       }
       el.innerHTML = generatedPicks.map((p, i) => `
         <div class="gen-row">
-          ${p.type === "lotto" ? renderLottoBalls(p.nums) : renderPensionBalls(p.group, p.num)}
+          ${p.nums ? renderLottoBalls(p.nums) : renderPensionBalls(p.group, p.num)}
           <button class="btn-ghost" onclick="savePick(${i})">구매 저장</button>
         </div>
       `).join("");
@@ -1491,7 +1492,7 @@
       const p = generatedPicks[idx];
       if (!p) return;
       const tickets = getTickets();
-      tickets.unshift({ id: Date.now() + "_" + idx, ...p, created: new Date().toISOString().slice(0, 10) });
+      tickets.unshift({ id: Date.now() + "_" + idx, type: p.type || lotType, ...p, created: new Date().toISOString().slice(0, 10) });
       setTickets(tickets);
       renderLottery();
     }
