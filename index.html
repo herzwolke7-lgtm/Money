@@ -7,17 +7,18 @@
   <title>Ms.옥 포트폴리오</title>
   <style>
     :root {
-      --bg: #f4f6f9;
+      --bg: #f2f4f6;
       --card: #ffffff;
       --text: #191f28;
       --sub: #6b7684;
+      --muted: #8b95a1;
       --border: #e5e8eb;
       --up: #f04452;
       --up-bg: #fff0f1;
       --down: #3182f6;
       --down-bg: #eef5ff;
-      --neutral: #4e5968;
-      --accent: #191f28;
+      --flat: #4e5968;
+      --flat-bg: #f2f4f6;
     }
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
@@ -25,24 +26,31 @@
       background: var(--bg);
       color: var(--text);
       line-height: 1.45;
-      padding: 16px 14px 44px;
+      padding: 16px 14px 48px;
       max-width: 480px;
       margin: 0 auto;
+      font-variant-numeric: tabular-nums;
     }
+
+    /* Header */
     .header {
       display: flex;
       justify-content: space-between;
       align-items: center;
       margin-bottom: 14px;
     }
-    .header h1 { font-size: 20px; font-weight: 800; letter-spacing: -0.3px; }
+    .header h1 {
+      font-size: 20px;
+      font-weight: 800;
+      letter-spacing: -0.4px;
+    }
     .header-right { display: flex; align-items: center; gap: 6px; }
     .badge {
       font-size: 11px;
       font-weight: 600;
       color: var(--sub);
-      background: #e9edf2;
-      padding: 4px 9px;
+      background: #e5e8eb;
+      padding: 5px 10px;
       border-radius: 999px;
     }
     .refresh-btn {
@@ -51,37 +59,19 @@
       color: #fff;
       font-size: 11px;
       font-weight: 700;
-      padding: 5px 10px;
+      padding: 5px 11px;
       border-radius: 999px;
       cursor: pointer;
     }
-    .card {
-      background: var(--card);
-      border-radius: 18px;
-      padding: 18px;
-      margin-bottom: 12px;
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.03);
-    }
-    .label { font-size: 13px; color: var(--sub); font-weight: 600; }
-    .big-num { font-size: 28px; font-weight: 800; letter-spacing: -0.6px; margin: 4px 0 6px; }
-    .pnl-pill {
-      display: inline-block;
-      font-size: 13px;
-      font-weight: 700;
-      padding: 5px 10px;
-      border-radius: 8px;
-    }
-    .up { color: var(--up); background: var(--up-bg); }
-    .down { color: var(--down); background: var(--down-bg); }
-    .flat { color: var(--neutral); background: #f2f4f6; }
 
+    /* Account Switcher */
     .acct-tabs {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 6px;
-      background: #f2f4f6;
+      gap: 4px;
+      background: #e5e8eb;
       padding: 4px;
-      border-radius: 12px;
+      border-radius: 14px;
       margin-bottom: 12px;
     }
     .acct-btn {
@@ -90,20 +80,86 @@
       color: var(--sub);
       font-size: 13px;
       font-weight: 700;
-      padding: 8px 4px;
-      border-radius: 9px;
+      padding: 9px 4px;
+      border-radius: 10px;
       cursor: pointer;
+      transition: all 0.15s ease;
     }
     .acct-btn.active {
       background: #fff;
       color: var(--text);
-      box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+      box-shadow: 0 2px 6px rgba(0,0,0,0.06);
     }
 
+    /* Cards */
+    .card {
+      background: var(--card);
+      border-radius: 20px;
+      padding: 20px 18px;
+      margin-bottom: 12px;
+      box-shadow: 0 2px 12px rgba(0, 0, 0, 0.03);
+    }
+    .label { font-size: 13px; color: var(--sub); font-weight: 600; }
+    .big-num {
+      font-size: 30px;
+      font-weight: 800;
+      letter-spacing: -0.8px;
+      margin: 4px 0 8px;
+    }
+    .pnl-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 13px;
+      font-weight: 700;
+      padding: 5px 11px;
+      border-radius: 10px;
+    }
+    .up { color: var(--up); background: var(--up-bg); }
+    .down { color: var(--down); background: var(--down-bg); }
+    .flat { color: var(--flat); background: var(--flat-bg); }
+
+    /* Allocation Bar */
+    .alloc-wrap { margin-top: 16px; }
+    .alloc-bar {
+      height: 10px;
+      border-radius: 999px;
+      overflow: hidden;
+      display: flex;
+      background: #eef1f4;
+      gap: 2px;
+    }
+    .alloc-kw { background: #3182f6; border-radius: 999px 0 0 999px; }
+    .alloc-okx { background: #191f28; border-radius: 0 999px 999px 0; }
+    .alloc-legend {
+      display: flex;
+      justify-content: space-between;
+      font-size: 12px;
+      color: var(--sub);
+      font-weight: 600;
+      margin-top: 6px;
+    }
+
+    /* 2x2 KPI Grid */
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin-top: 14px;
+    }
+    .kpi-box {
+      background: #f8f9fb;
+      border-radius: 14px;
+      padding: 11px 12px;
+    }
+    .kpi-label { font-size: 11px; color: var(--muted); font-weight: 600; }
+    .kpi-val { font-size: 15px; font-weight: 800; margin-top: 3px; color: var(--text); }
+
+    /* Period Tabs */
     .tabs {
       display: flex;
       gap: 6px;
-      margin: 14px 0 10px;
+      margin: 16px 0 10px;
       overflow-x: auto;
       padding-bottom: 2px;
       -webkit-overflow-scrolling: touch;
@@ -116,20 +172,36 @@
       color: var(--sub);
       font-size: 12px;
       font-weight: 700;
-      padding: 8px 12px;
-      border-radius: 10px;
+      padding: 8px 13px;
+      border-radius: 999px;
       cursor: pointer;
-      white-space: nowrap;
     }
     .tab-btn.active {
-      background: var(--accent);
+      background: #191f28;
       color: #fff;
     }
 
+    /* Chart */
+    .chart-box {
+      margin-top: 10px;
+      background: #fafbfd;
+      border: 1px solid #edf0f4;
+      border-radius: 16px;
+      padding: 14px 12px 10px;
+    }
+    .chart-note {
+      font-size: 11px;
+      color: var(--sub);
+      margin-top: 6px;
+      text-align: center;
+      font-weight: 500;
+    }
+
+    /* Date Controls */
     .date-panel {
-      margin-top: 8px;
-      padding-top: 10px;
-      border-top: 1px solid var(--border);
+      margin-top: 12px;
+      padding-top: 12px;
+      border-top: 1px solid #f0f2f5;
       display: flex;
       flex-direction: column;
       gap: 8px;
@@ -145,88 +217,69 @@
     .date-row input[type="date"] {
       border: 1px solid var(--border);
       border-radius: 8px;
-      padding: 5px 7px;
+      padding: 5px 8px;
       font-size: 12px;
       color: var(--text);
-      background: #fafbfc;
+      background: #fff;
     }
 
-    .alloc-bar {
-      height: 8px;
-      border-radius: 999px;
-      overflow: hidden;
-      display: flex;
-      background: #eef1f4;
-      margin: 12px 0 6px;
-    }
-    .alloc-kw { background: #3182f6; }
-    .alloc-okx { background: #191f28; }
-    .alloc-legend {
+    /* Section Header & Clean Table */
+    .sec-head {
       display: flex;
       justify-content: space-between;
-      font-size: 11px;
-      color: var(--sub);
-      font-weight: 600;
-    }
-
-    .chart-box {
-      margin-top: 12px;
-      background: #fafbfd;
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 12px;
-    }
-    .chart-note {
-      font-size: 11px;
-      color: var(--sub);
-      margin-top: 6px;
-      text-align: center;
-    }
-    .sec-title {
-      font-size: 15px;
-      font-weight: 800;
+      align-items: center;
       margin-bottom: 12px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
     }
-    .sec-sub { font-size: 12px; font-weight: 700; }
-    .row {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 10px 0;
+    .sec-title { font-size: 16px; font-weight: 800; }
+    .sec-badge {
+      font-size: 12px;
+      font-weight: 700;
+      padding: 4px 9px;
+      border-radius: 8px;
+    }
+
+    table.holdings {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    table.holdings th {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--muted);
+      text-align: right;
+      padding: 0 0 8px;
+      border-bottom: 1px solid #f0f2f5;
+    }
+    table.holdings th:first-child { text-align: left; }
+    table.holdings td {
+      padding: 12px 0;
       border-bottom: 1px solid #f2f4f6;
+      vertical-align: middle;
+      text-align: right;
     }
-    .row:last-child { border-bottom: none; padding-bottom: 0; }
-    .item-name { font-size: 15px; font-weight: 700; }
-    .item-sub { font-size: 12px; color: var(--sub); margin-top: 2px; }
-    .item-right { text-align: right; }
-    .item-val { font-size: 15px; font-weight: 700; }
-    .item-rt { font-size: 12px; font-weight: 700; margin-top: 2px; }
+    table.holdings tr:last-child td { border-bottom: none; padding-bottom: 2px; }
+    table.holdings td:first-child { text-align: left; }
+
+    .t-name { font-size: 14px; font-weight: 700; color: var(--text); }
+    .t-sub { font-size: 11px; color: var(--muted); margin-top: 2px; }
+    .t-val { font-size: 14px; font-weight: 700; color: var(--text); }
+    .rt-tag {
+      display: inline-block;
+      font-size: 12px;
+      font-weight: 700;
+      padding: 3px 7px;
+      border-radius: 6px;
+    }
     .c-up { color: var(--up); }
     .c-down { color: var(--down); }
     .c-flat { color: var(--sub); }
-    .split {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 8px;
-      margin-top: 12px;
-    }
-    .mini-box {
-      background: #f8f9fb;
-      border-radius: 12px;
-      padding: 10px 12px;
-    }
-    .mini-label { font-size: 11px; color: var(--sub); font-weight: 600; }
-    .mini-val { font-size: 14px; font-weight: 800; margin-top: 3px; }
   </style>
 </head>
 <body>
   <div class="header">
     <h1>📊 내 자산 대시보드</h1>
     <div class="header-right">
-      <span class="badge" id="asOf">불러오는 중...</span>
+      <span class="badge" id="asOf">로딩 중</span>
       <button class="refresh-btn" onclick="loadData()">새로고침</button>
     </div>
   </div>
@@ -242,25 +295,18 @@
     <div class="big-num" id="totalVal">-</div>
     <span class="pnl-pill flat" id="periodPnl">계산 중...</span>
 
-    <div class="alloc-bar" id="allocBar">
-      <div class="alloc-kw" id="allocKwBar" style="width: 50%;"></div>
-      <div class="alloc-okx" id="allocOkxBar" style="width: 50%;"></div>
-    </div>
-    <div class="alloc-legend">
-      <span id="allocKwLabel">● 키움 -%</span>
-      <span id="allocOkxLabel">● OKX -%</span>
+    <div class="alloc-wrap">
+      <div class="alloc-bar">
+        <div class="alloc-kw" id="allocKwBar" style="width: 50%;"></div>
+        <div class="alloc-okx" id="allocOkxBar" style="width: 50%;"></div>
+      </div>
+      <div class="alloc-legend">
+        <span id="allocKwLabel">● 키움 -%</span>
+        <span id="allocOkxLabel">● OKX -%</span>
+      </div>
     </div>
 
-    <div class="split">
-      <div class="mini-box">
-        <div class="mini-label">📈 키움 5280-4774</div>
-        <div class="mini-val" id="miniKw">-</div>
-      </div>
-      <div class="mini-box">
-        <div class="mini-label">🪙 OKX</div>
-        <div class="mini-val" id="miniOkx">-</div>
-      </div>
-    </div>
+    <div class="kpi-grid" id="kpiGrid"></div>
 
     <div class="tabs">
       <button class="tab-btn active" data-period="today" onclick="setPeriod('today', this)">오늘</button>
@@ -273,6 +319,11 @@
       <button class="tab-btn" data-period="all" onclick="setPeriod('all', this)">전체</button>
     </div>
 
+    <div class="chart-box">
+      <svg id="chartSvg" viewBox="0 0 320 130" width="100%" height="130"></svg>
+      <div class="chart-note" id="chartNote">데이터를 불러오는 중...</div>
+    </div>
+
     <div class="date-panel">
       <div class="date-row">
         <label>원하는 날짜</label>
@@ -282,32 +333,45 @@
         <label>기간 지정</label>
         <div class="date-inputs">
           <input type="date" id="startDate" onchange="pickRange()" />
-          <span style="font-size:12px;color:#6b7684;">~</span>
+          <span style="font-size:12px;color:#8b95a1;">~</span>
           <input type="date" id="endDate" onchange="pickRange()" />
         </div>
       </div>
     </div>
-
-    <div class="chart-box">
-      <svg id="chartSvg" viewBox="0 0 320 110" width="100%" height="110"></svg>
-      <div class="chart-note" id="chartNote">데이터를 불러오는 중...</div>
-    </div>
   </div>
 
   <div class="card" id="kiwoomCard">
-    <div class="sec-title">
-      <span>📈 키움증권 5280-4774</span>
-      <span class="sec-sub" id="kwCardSub">-</span>
+    <div class="sec-head">
+      <span class="sec-title">📈 키움 5280-4774</span>
+      <span class="sec-badge" id="kwCardSub">-</span>
     </div>
-    <div id="kwRows"></div>
+    <table class="holdings">
+      <thead>
+        <tr>
+          <th>종목 · 수량</th>
+          <th>평가금액</th>
+          <th>수익률 · 손익</th>
+        </tr>
+      </thead>
+      <tbody id="kwRows"></tbody>
+    </table>
   </div>
 
   <div class="card" id="okxCard">
-    <div class="sec-title">
-      <span>🪙 OKX 계좌</span>
-      <span class="sec-sub" id="okxCardSub">-</span>
+    <div class="sec-head">
+      <span class="sec-title">🪙 OKX 계좌</span>
+      <span class="sec-badge" id="okxCardSub">-</span>
     </div>
-    <div id="okxRows"></div>
+    <table class="holdings">
+      <thead>
+        <tr>
+          <th>계정 · 자산</th>
+          <th>평가금액</th>
+          <th>원화 환산</th>
+        </tr>
+      </thead>
+      <tbody id="okxRows"></tbody>
+    </table>
   </div>
 
   <script>
@@ -348,7 +412,7 @@
         }
         renderAll();
       } catch (e) {
-        document.getElementById("chartNote").textContent = "데이터를 불러오지 못했습니다: " + e.message;
+        document.getElementById("chartNote").textContent = "데이터를 불러오지 못했습니다.";
       }
     }
 
@@ -366,80 +430,85 @@
       document.getElementById("allocKwLabel").textContent = "● 키움 " + kwPct + "%";
       document.getElementById("allocOkxLabel").textContent = "● OKX " + okxPct + "%";
 
-      document.getElementById("miniKw").textContent = kw.total_est_krw.toLocaleString() + "원";
-      document.getElementById("miniOkx").textContent = okx.total_krw.toLocaleString() + "원 ($" + okx.total_usd.toFixed(2) + ")";
-
       const labelEl = document.getElementById("mainLabel");
       const valEl = document.getElementById("totalVal");
+      const kpiGrid = document.getElementById("kpiGrid");
       const kwCard = document.getElementById("kiwoomCard");
       const okxCard = document.getElementById("okxCard");
 
       if (currentAcct === "all") {
         labelEl.textContent = "총 합산 자산 (키움 + OKX)";
         valEl.textContent = latest.total_krw.toLocaleString() + "원";
+        kpiGrid.innerHTML = `
+          <div class="kpi-box"><div class="kpi-label">📈 키움 추정자산</div><div class="kpi-val">${kw.total_est_krw.toLocaleString()}원</div></div>
+          <div class="kpi-box"><div class="kpi-label">🪙 OKX 자산</div><div class="kpi-val">${okx.total_krw.toLocaleString()}원 ($${okx.total_usd.toFixed(2)})</div></div>
+          <div class="kpi-box"><div class="kpi-label">주식 매입 / 평가</div><div class="kpi-val">${(kw.tot_pur_krw/10000).toFixed(0)}만 / ${(kw.tot_evlt_krw/10000).toFixed(0)}만</div></div>
+          <div class="kpi-box"><div class="kpi-label">예수금 (D+2)</div><div class="kpi-val">${kw.d2_deposit_krw.toLocaleString()}원</div></div>
+        `;
         kwCard.style.display = "block";
         okxCard.style.display = "block";
       } else if (currentAcct === "kiwoom") {
         labelEl.textContent = "키움증권 5280-4774 추정 자산";
         valEl.textContent = kw.total_est_krw.toLocaleString() + "원";
+        kpiGrid.innerHTML = `
+          <div class="kpi-box"><div class="kpi-label">총 매입금액</div><div class="kpi-val">${kw.tot_pur_krw.toLocaleString()}원</div></div>
+          <div class="kpi-box"><div class="kpi-label">총 평가금액</div><div class="kpi-val">${kw.tot_evlt_krw.toLocaleString()}원</div></div>
+          <div class="kpi-box"><div class="kpi-label">예수금</div><div class="kpi-val">${kw.deposit_krw.toLocaleString()}원</div></div>
+          <div class="kpi-box"><div class="kpi-label">D+2 추정예수금</div><div class="kpi-val">${kw.d2_deposit_krw.toLocaleString()}원</div></div>
+        `;
         kwCard.style.display = "block";
         okxCard.style.display = "none";
       } else {
         labelEl.textContent = "OKX 총 자산";
         valEl.textContent = "$" + okx.total_usd.toFixed(2) + " (" + okx.total_krw.toLocaleString() + "원)";
+        kpiGrid.innerHTML = `
+          <div class="kpi-box"><div class="kpi-label">Trading 계정</div><div class="kpi-val">$${okx.trading_usd.toFixed(2)}</div></div>
+          <div class="kpi-box"><div class="kpi-label">Funding 계정</div><div class="kpi-val">$${okx.funding_usd.toFixed(2)}</div></div>
+          <div class="kpi-box"><div class="kpi-label">Earn / 스테이킹</div><div class="kpi-val">$${okx.earn_usd.toFixed(2)}</div></div>
+          <div class="kpi-box"><div class="kpi-label">열린 포지션</div><div class="kpi-val">${okx.positions.length}건</div></div>
+        `;
         kwCard.style.display = "none";
         okxCard.style.display = "block";
       }
 
-      // Render Kiwoom stocks
+      // Kiwoom Table
       const kwSub = document.getElementById("kwCardSub");
       kwSub.textContent = fmtKrw(kw.tot_pl_krw) + " (" + fmtPct(kw.tot_prft_rt) + ")";
-      kwSub.className = "sec-sub " + (kw.tot_pl_krw > 0 ? "c-up" : kw.tot_pl_krw < 0 ? "c-down" : "c-flat");
+      kwSub.className = "sec-badge " + (kw.tot_pl_krw > 0 ? "up" : kw.tot_pl_krw < 0 ? "down" : "flat");
 
-      let kwHtml = kw.stocks.map(s => {
-        const cls = s.pl > 0 ? "c-up" : s.pl < 0 ? "c-down" : "c-flat";
+      document.getElementById("kwRows").innerHTML = kw.stocks.map(s => {
+        const pillCls = s.pl > 0 ? "up" : s.pl < 0 ? "down" : "flat";
+        const txtCls = s.pl > 0 ? "c-up" : s.pl < 0 ? "c-down" : "c-flat";
         return `
-          <div class="row">
-            <div>
-              <div class="item-name">${s.name}</div>
-              <div class="item-sub">${s.qty}주 · 평균 ${s.avg.toLocaleString()}원 → ${s.cur.toLocaleString()}원</div>
-            </div>
-            <div class="item-right">
-              <div class="item-val">${s.evlt.toLocaleString()}원</div>
-              <div class="item-rt ${cls}">${fmtPct(s.rt)} (${fmtKrw(s.pl)})</div>
-            </div>
-          </div>`;
+          <tr>
+            <td>
+              <div class="t-name">${s.name}</div>
+              <div class="t-sub">${s.qty}주 · ${s.avg.toLocaleString()}→${s.cur.toLocaleString()}</div>
+            </td>
+            <td>
+              <div class="t-val">${s.evlt.toLocaleString()}원</div>
+            </td>
+            <td>
+              <span class="rt-tag ${pillCls}">${fmtPct(s.rt)}</span>
+              <div class="t-sub ${txtCls}">${fmtKrw(s.pl)}</div>
+            </td>
+          </tr>`;
       }).join("");
-      kwHtml += `
-        <div class="row">
-          <div>
-            <div class="item-name">예수금 (D+2 추정)</div>
-            <div class="item-sub">주문가능 ${kw.ord_alow_krw.toLocaleString()}원</div>
-          </div>
-          <div class="item-right">
-            <div class="item-val">${kw.deposit_krw.toLocaleString()}원</div>
-            <div class="item-rt c-flat">D+2 ${kw.d2_deposit_krw.toLocaleString()}원</div>
-          </div>
-        </div>`;
-      document.getElementById("kwRows").innerHTML = kwHtml;
 
-      // Render OKX
+      // OKX Table
       const okxSub = document.getElementById("okxCardSub");
       okxSub.textContent = (okx.pnl_usd >= 0 ? "+" : "") + "$" + okx.pnl_usd.toFixed(2) + " (" + fmtPct(okx.pnl_pct) + ")";
-      okxSub.className = "sec-sub " + (okx.pnl_usd > 0 ? "c-up" : okx.pnl_usd < 0 ? "c-down" : "c-flat");
+      okxSub.className = "sec-badge " + (okx.pnl_usd > 0 ? "up" : okx.pnl_usd < 0 ? "down" : "flat");
 
-      let okxHtml = okx.holdings.map(h => `
-        <div class="row">
-          <div>
-            <div class="item-name">${h.name}</div>
-            <div class="item-sub">${h.sub}</div>
-          </div>
-          <div class="item-right">
-            <div class="item-val">$${h.usd.toFixed(2)}</div>
-            <div class="item-rt c-flat">${h.krw.toLocaleString()}원</div>
-          </div>
-        </div>`).join("");
-      document.getElementById("okxRows").innerHTML = okxHtml;
+      document.getElementById("okxRows").innerHTML = okx.holdings.map(h => `
+        <tr>
+          <td>
+            <div class="t-name">${h.name}</div>
+            <div class="t-sub">${h.sub}</div>
+          </td>
+          <td><div class="t-val">$${h.usd.toFixed(2)}</div></td>
+          <td><div class="t-sub" style="font-size:13px;font-weight:700;color:var(--text);">${h.krw.toLocaleString()}원</div></td>
+        </tr>`).join("");
 
       applyPeriod(currentPeriod);
     }
@@ -486,9 +555,10 @@
           pill.textContent = `보유 평가손익: $${okx.pnl_usd.toFixed(2)} (${fmtPct(okx.pnl_pct)} · 포지션 없음)`;
         } else {
           const pnl = kw.tot_pl_krw;
-          const pct = currentAcct === "kiwoom" ? kw.tot_prft_rt : (pnl / (payload.history[0].total_krw - pnl)) * 100;
+          const base = currentAcct === "kiwoom" ? kw.tot_pur_krw : (payload.history[0].total_krw - pnl);
+          const pct = base ? (pnl / base) * 100 : 0;
           pill.className = "pnl-pill " + (pnl > 0 ? "up" : pnl < 0 ? "down" : "flat");
-          pill.textContent = `${label} 보유 평가손익: ${fmtKrw(pnl)} (${fmtPct(pct)})`;
+          pill.textContent = `${label} 평가손익: ${fmtKrw(pnl)} (${fmtPct(pct)})`;
         }
       }
     }
@@ -500,8 +570,8 @@
       updatePnlPill(pts, labels[period]);
       document.getElementById("chartNote").textContent =
         pts.length <= 1
-          ? `${labels[period]} 추이 (2026-11-23부터 매일 브리핑마다 자동 누적됩니다.)`
-          : `${labels[period]} 기간 · ${pts[0].date} ~ ${pts[pts.length - 1].date} (${pts.length}개 기록)`;
+          ? `${labels[period]} 추이 · 2026-11-23부터 매일 브리핑마다 자동 누적됩니다.`
+          : `${labels[period]} (${pts[0].date} ~ ${pts[pts.length - 1].date} · ${pts.length}회 기록)`;
       renderChart(pts);
     }
 
@@ -533,29 +603,42 @@
 
     function renderChart(points) {
       const svg = document.getElementById("chartSvg");
-      const w = 320, h = 110, padX = 24, padY = 22;
+      const w = 320, h = 130, padX = 16, padTop = 26, padBot = 22;
       svg.innerHTML = "";
 
-      const grid = document.createElementNS("http://www.w3.org/2000/svg", "line");
-      grid.setAttribute("x1", padX); grid.setAttribute("x2", w - padX);
-      grid.setAttribute("y1", h / 2); grid.setAttribute("y2", h / 2);
-      grid.setAttribute("stroke", "#e5e8eb"); grid.setAttribute("stroke-dasharray", "3 3");
-      svg.appendChild(grid);
+      const defs = document.createElementNS("http://www.w3.org/2000/svg", "defs");
+      defs.innerHTML = `
+        <linearGradient id="areaGrad" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#3182f6" stop-opacity="0.22"/>
+          <stop offset="100%" stop-color="#3182f6" stop-opacity="0.0"/>
+        </linearGradient>`;
+      svg.appendChild(defs);
+
+      [padTop, (h - padBot + padTop) / 2, h - padBot].forEach(y => {
+        const g = document.createElementNS("http://www.w3.org/2000/svg", "line");
+        g.setAttribute("x1", padX); g.setAttribute("x2", w - padX);
+        g.setAttribute("y1", y); g.setAttribute("y2", y);
+        g.setAttribute("stroke", "#eceff3"); g.setAttribute("stroke-dasharray", "3 3");
+        svg.appendChild(g);
+      });
 
       if (!points.length) return;
       if (points.length === 1) {
-        const cx = w / 2, cy = h / 2;
+        const cx = w / 2, cy = (h - padBot + padTop) / 2;
+        const glow = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+        glow.setAttribute("cx", cx); glow.setAttribute("cy", cy); glow.setAttribute("r", 12);
+        glow.setAttribute("fill", "#3182f6"); glow.setAttribute("opacity", "0.15");
+        svg.appendChild(glow);
+
         const c = document.createElementNS("http://www.w3.org/2000/svg", "circle");
-        c.setAttribute("cx", cx); c.setAttribute("cy", cy); c.setAttribute("r", 6);
-        c.setAttribute("fill", "#3182f6");
+        c.setAttribute("cx", cx); c.setAttribute("cy", cy); c.setAttribute("r", 5.5);
+        c.setAttribute("fill", "#3182f6"); c.setAttribute("stroke", "#fff"); c.setAttribute("stroke-width", "2");
         svg.appendChild(c);
 
         const t = document.createElementNS("http://www.w3.org/2000/svg", "text");
-        t.setAttribute("x", cx); t.setAttribute("y", cy - 14);
+        t.setAttribute("x", cx); t.setAttribute("y", cy - 18);
         t.setAttribute("text-anchor", "middle");
-        t.setAttribute("font-size", "11");
-        t.setAttribute("font-weight", "700");
-        t.setAttribute("fill", "#191f28");
+        t.setAttribute("font-size", "11"); t.setAttribute("font-weight", "700"); t.setAttribute("fill", "#191f28");
         t.textContent = points[0].label + " · " + getVal(points[0]).toLocaleString() + "원";
         svg.appendChild(t);
         return;
@@ -564,18 +647,44 @@
       const vals = points.map(getVal);
       const min = Math.min(...vals), max = Math.max(...vals);
       const span = (max - min) || 1;
-      const pts = points.map((p, i) => {
+      const coords = points.map((p, i) => {
         const x = padX + (i / (points.length - 1)) * (w - padX * 2);
-        const y = h - padY - ((getVal(p) - min) / span) * (h - padY * 2);
-        return x.toFixed(1) + "," + y.toFixed(1);
-      }).join(" ");
+        const y = h - padBot - ((getVal(p) - min) / span) * (h - padTop - padBot);
+        return [x, y];
+      });
+
+      const linePts = coords.map(c => c[0].toFixed(1) + "," + c[1].toFixed(1)).join(" ");
+      const areaPts = `${coords[0][0].toFixed(1)},${h - padBot} ${linePts} ${coords[coords.length - 1][0].toFixed(1)},${h - padBot}`;
+
+      const area = document.createElementNS("http://www.w3.org/2000/svg", "polygon");
+      area.setAttribute("fill", "url(#areaGrad)");
+      area.setAttribute("points", areaPts);
+      svg.appendChild(area);
 
       const poly = document.createElementNS("http://www.w3.org/2000/svg", "polyline");
-      poly.setAttribute("fill", "none");
-      poly.setAttribute("stroke", "#3182f6");
-      poly.setAttribute("stroke-width", "2.5");
-      poly.setAttribute("points", pts);
+      poly.setAttribute("fill", "none"); poly.setAttribute("stroke", "#3182f6");
+      poly.setAttribute("stroke-width", "2.5"); poly.setAttribute("stroke-linejoin", "round");
+      poly.setAttribute("points", linePts);
       svg.appendChild(poly);
+
+      const last = coords[coords.length - 1];
+      const dot = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+      dot.setAttribute("cx", last[0]); dot.setAttribute("cy", last[1]); dot.setAttribute("r", 4.5);
+      dot.setAttribute("fill", "#3182f6"); dot.setAttribute("stroke", "#fff"); dot.setAttribute("stroke-width", "1.5");
+      svg.appendChild(dot);
+
+      const minLbl = document.createElementNS("http://www.w3.org/2000/svg", "text");
+      minLbl.setAttribute("x", padX); minLbl.setAttribute("y", h - 5);
+      minLbl.setAttribute("font-size", "10"); minLbl.setAttribute("fill", "#8b95a1");
+      minLbl.textContent = points[0].date.slice(5);
+      svg.appendChild(minLbl);
+
+      const maxLbl = document.createElementNS("http://www.w3.org/2000/svg", "text");
+      maxLbl.setAttribute("x", w - padX); maxLbl.setAttribute("y", h - 5);
+      maxLbl.setAttribute("text-anchor", "end");
+      maxLbl.setAttribute("font-size", "10"); maxLbl.setAttribute("fill", "#8b95a1");
+      maxLbl.textContent = points[points.length - 1].date.slice(5);
+      svg.appendChild(maxLbl);
     }
 
     loadData();
