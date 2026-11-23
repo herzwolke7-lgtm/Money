@@ -1281,10 +1281,33 @@
       try {
         const res = await fetch("./lottery.json?t=" + Date.now());
         lotData = await res.json();
+        seedRecommendedTickets();
         renderLottery();
       } catch (e) {
         document.getElementById("lotPatternBody").innerHTML = `<div style="color:var(--ink-3);font-size:13px;">복권 데이터를 불러오지 못했습니다</div>`;
       }
+    }
+
+    function seedRecommendedTickets() {
+      if (!lotData || !lotData.recommended) return;
+      const tickets = getTickets();
+      const ids = new Set(tickets.map(t => t.id));
+      let changed = false;
+      (lotData.recommended.lotto || []).forEach((p, idx) => {
+        const id = `rec_lotto_${p.round}_${idx}`;
+        if (!ids.has(id)) {
+          tickets.push({ id, type: "lotto", round: p.round, nums: p.nums, created: "2026-11-23" });
+          changed = true;
+        }
+      });
+      (lotData.recommended.pension || []).forEach((p, idx) => {
+        const id = `rec_pension_${p.round}_${idx}`;
+        if (!ids.has(id)) {
+          tickets.push({ id, type: "pension", round: p.round, group: p.group, num: p.num, created: "2026-11-23" });
+          changed = true;
+        }
+      });
+      if (changed) setTickets(tickets);
     }
 
     function setLotType(type, btn) {
