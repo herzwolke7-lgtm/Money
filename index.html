@@ -1290,19 +1290,23 @@
     }
 
     function seedRecommendedTickets() {
-      if (!lotData || !lotData.recommended) return;
+      if (!lotData) return;
+      const src = lotData.history_picks || lotData.recommended;
+      if (!src) return;
       const tickets = getTickets();
       const ids = new Set(tickets.map(t => t.id));
       let changed = false;
-      (lotData.recommended.lotto || []).forEach((p, idx) => {
-        const id = `rec_lotto_${p.round}_${idx}`;
+      (src.lotto || []).forEach((p, idx) => {
+        const i = p.idx !== undefined ? p.idx : idx;
+        const id = `rec_lotto_${p.round}_${i}`;
         if (!ids.has(id)) {
           tickets.push({ id, type: "lotto", round: p.round, nums: p.nums, created: "2026-11-23" });
           changed = true;
         }
       });
-      (lotData.recommended.pension || []).forEach((p, idx) => {
-        const id = `rec_pension_${p.round}_${idx}`;
+      (src.pension || []).forEach((p, idx) => {
+        const i = p.idx !== undefined ? p.idx : idx;
+        const id = `rec_pension_${p.round}_${i}`;
         if (!ids.has(id)) {
           tickets.push({ id, type: "pension", round: p.round, group: p.group, num: p.num, created: "2026-11-23" });
           changed = true;
