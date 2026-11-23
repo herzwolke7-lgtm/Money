@@ -1,14 +1,14 @@
 {
-  "updated_at": "2026-11-23 17:57",
+  "updated_at": "2026-11-23 18:01",
   "history": [
     {
-      "ts": "2026-11-23T17:57:30+09:00",
+      "ts": "2026-11-23T18:01:26+09:00",
       "date": "2026-11-23",
-      "label": "11/23 17:57",
-      "total_krw": 7058643,
+      "label": "11/23 18:01",
+      "total_krw": 7058634,
       "kiwoom_krw": 6630545,
-      "okx_krw": 428098,
-      "okx_usd": 318.19,
+      "okx_krw": 428089,
+      "okx_usd": 318.18,
       "kiwoom_pnl_krw": -218886,
       "kiwoom_pnl_pct": -3.88,
       "okx_pnl_usd": -0.05,
@@ -66,10 +66,10 @@
       ]
     },
     "okx": {
-      "total_usd": 318.19,
-      "total_krw": 428098,
-      "trading_usd": 317.68,
-      "trading_krw": 427412,
+      "total_usd": 318.18,
+      "total_krw": 428089,
+      "trading_usd": 317.67,
+      "trading_krw": 427403,
       "funding_usd": 0.51,
       "funding_krw": 686,
       "earn_usd": 0.0,
@@ -80,7 +80,7 @@
           "name": "USDT (Trading)",
           "sub": "318.10 USDT · 포지션 없음",
           "usd": 317.69,
-          "krw": 427419,
+          "krw": 427427,
           "pl_usd": 0.0,
           "rt": 0.0
         },
