@@ -518,6 +518,27 @@
       </div>
     </section>
 
+    <section class="panel">
+      <div class="sec-head">
+        <span class="sec-title">기간별 성장 비교표 (어제 ~ 1년 전 대비)</span>
+        <span class="meta-time" id="seoHistCount">-</span>
+      </div>
+      <div style="overflow-x:auto;">
+        <table class="data-table" style="width:100%;font-size:12px;">
+          <thead><tr><th>비교 기준</th><th style="text-align:right;">발행글</th><th style="text-align:right;">구글 클릭</th><th style="text-align:right;">구글 색인</th><th style="text-align:right;">네이버 클릭</th><th style="text-align:right;">네이버 노출</th><th style="text-align:right;">다음 노출</th></tr></thead>
+          <tbody id="seoGrowthTbody"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="panel">
+      <div class="sec-head">
+        <span class="sec-title">매일 일일 SEO 전문 보고서 · 과거 기록</span>
+        <select id="seoReportDate" onchange="renderSeoReport()" style="height:28px;border:1px solid var(--hairline-2);border-radius:6px;padding:0 8px;font-size:12px;font-family:inherit;background:var(--surface);color:var(--ink);"></select>
+      </div>
+      <div id="seoDailyReportBody"></div>
+    </section>
+
     <div class="bento">
       <div>
         <section class="panel">
@@ -853,6 +874,86 @@
         </tr>
       `).join("");
       renderSeoPosts();
+      renderSeoGrowth();
+      initSeoReports();
+    }
+
+    function fmtDiff(cur, prev) {
+      if (prev === undefined || prev === null) return "-";
+      const d = cur - prev;
+      const cls = d > 0 ? "c-up" : d < 0 ? "c-down" : "";
+      const s = d > 0 ? `+${d.toLocaleString()}` : d.toLocaleString();
+      return `<span class="${cls}">${cur.toLocaleString()} (${s})</span>`;
+    }
+
+    function renderSeoGrowth() {
+      if (!seoData) return;
+      const hist = (seoData.history || []).slice().sort((a, b) => a.date.localeCompare(b.date));
+      document.getElementById("seoHistCount").textContent = `누적 ${hist.length}일차`;
+      const cur = hist[hist.length - 1];
+      if (!cur) return;
+      const curMs = new Date(cur.date + "T00:00:00").getTime();
+      const horizons = [
+        { label: "어제 (1일 전)", days: 1 },
+        { label: "1주 전 (7일)", days: 7 },
+        { label: "1달 전 (30일)", days: 30 },
+        { label: "2달 전 (60일)", days: 60 },
+        { label: "3달 전 (90일)", days: 90 },
+        { label: "4달 전 (120일)", days: 120 },
+        { label: "6달 전 (180일)", days: 180 },
+        { label: "1년 전 (365일)", days: 365 }
+      ];
+      document.getElementById("seoGrowthTbody").innerHTML = horizons.map(h => {
+        const targetMs = curMs - h.days * 86400000;
+        let match = null;
+        for (let i = hist.length - 2; i >= 0; i--) {
+          const ms = new Date(hist[i].date + "T00:00:00").getTime();
+          if (ms <= targetMs) { match = hist[i]; break; }
+        }
+        if (!match) {
+          return `<tr><td style="font-weight:600;">${h.label}</td><td colspan="6" style="text-align:center;color:var(--ink-3);font-size:11px;">데이터 누적 중 (${hist[0].date}부터 기록 시작)</td></tr>`;
+        }
+        return `
+          <tr>
+            <td style="font-weight:600;">${h.label}<div style="font-size:10px;color:var(--ink-3);">${match.date}</div></td>
+            <td class="t-num" style="text-align:right;">${fmtDiff(cur.posts, match.posts)}</td>
+            <td class="t-num" style="text-align:right;">${fmtDiff(cur.g_clicks, match.g_clicks)}</td>
+            <td class="t-num" style="text-align:right;">${fmtDiff(cur.g_indexed, match.g_indexed)}</td>
+            <td class="t-num" style="text-align:right;">${fmtDiff(cur.n_clicks, match.n_clicks)}</td>
+            <td class="t-num" style="text-align:right;">${fmtDiff(cur.n_impr, match.n_impr)}</td>
+            <td class="t-num" style="text-align:right;">${fmtDiff(cur.d_impr, match.d_impr)}</td>
+          </tr>
+        `;
+      }).join("");
+    }
+
+    function initSeoReports() {
+      const reps = (seoData.daily_reports || []).slice().sort((a, b) => b.date.localeCompare(a.date));
+      const sel = document.getElementById("seoReportDate");
+      if (!sel) return;
+      sel.innerHTML = reps.map((r, i) => `<option value="${r.date}">${r.date}${i === 0 ? ' (최신)' : ''}</option>`).join("");
+      renderSeoReport();
+    }
+
+    function renderSeoReport() {
+      const sel = document.getElementById("seoReportDate");
+      const reps = seoData?.daily_reports || [];
+      const r = reps.find(x => x.date === sel?.value) || reps[0];
+      if (!r) {
+        document.getElementById("seoDailyReportBody").innerHTML = `<div style="color:var(--ink-3);font-size:13px;">등록된 보고서가 없습니다.</div>`;
+        return;
+      }
+      document.getElementById("seoDailyReportBody").innerHTML = `
+        <div style="font-size:14px;font-weight:700;color:var(--ink);margin-bottom:6px;">${r.headline}</div>
+        <div style="font-size:13px;color:var(--ink-2);line-height:1.55;margin-bottom:10px;">${r.summary}</div>
+        <div style="font-size:12px;font-weight:700;color:var(--ink);margin-bottom:4px;">실행 · 색인 관리 내역</div>
+        <ul style="margin:0 0 10px 16px;padding:0;font-size:12px;color:var(--ink-2);line-height:1.5;">
+          ${(r.actions_taken || []).map(a => `<li>${a}</li>`).join("")}
+        </ul>
+        <div style="padding:10px 12px;background:var(--surface-2);border-radius:8px;border:1px solid var(--hairline);font-size:12px;color:var(--ink-2);line-height:1.5;">
+          <strong style="color:var(--ink);">헤르메스 AI 운영 지침:</strong> ${r.hermes_directive || '-'}
+        </div>
+      `;
     }
 
     function renderSeoPosts() {
