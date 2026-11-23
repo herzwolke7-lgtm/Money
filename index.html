@@ -1293,34 +1293,38 @@
       if (!lotData) return;
       const src = lotData.history_picks || lotData.recommended;
       if (!src) return;
-      const tickets = getTickets();
-      const ids = new Set(tickets.map(t => t.id));
+      let tickets = getTickets().filter(t => !(String(t.id).startsWith("rec_") && !t.purchased));
       let changed = false;
       (src.lotto || []).forEach((p, idx) => {
+        if (!p.purchased) return;
         const i = p.idx !== undefined ? p.idx : idx;
         const id = `rec_lotto_${p.round}_${i}`;
         const existing = tickets.find(t => t.id === id);
         if (!existing) {
-          tickets.push({ id, type: "lotto", round: p.round, nums: p.nums, purchased: !!p.purchased, created: "2026-11-23" });
+          tickets.push({ id, type: "lotto", round: p.round, nums: p.nums, purchased: true, created: "2026-11-23" });
           changed = true;
-        } else if (!!p.purchased !== !!existing.purchased) {
-          existing.purchased = !!p.purchased;
+        } else {
+          existing.nums = p.nums;
+          existing.purchased = true;
           changed = true;
         }
       });
       (src.pension || []).forEach((p, idx) => {
+        if (!p.purchased) return;
         const i = p.idx !== undefined ? p.idx : idx;
         const id = `rec_pension_${p.round}_${i}`;
         const existing = tickets.find(t => t.id === id);
         if (!existing) {
-          tickets.push({ id, type: "pension", round: p.round, group: p.group, num: p.num, purchased: !!p.purchased, created: "2026-11-23" });
+          tickets.push({ id, type: "pension", round: p.round, group: p.group, num: p.num, purchased: true, created: "2026-11-23" });
           changed = true;
-        } else if (!!p.purchased !== !!existing.purchased) {
-          existing.purchased = !!p.purchased;
+        } else {
+          existing.group = p.group;
+          existing.num = p.num;
+          existing.purchased = true;
           changed = true;
         }
       });
-      if (changed) setTickets(tickets);
+      setTickets(tickets);
     }
 
     function setLotType(type, btn) {
@@ -1507,7 +1511,7 @@
       const p = generatedPicks[idx];
       if (!p) return;
       const tickets = getTickets();
-      tickets.unshift({ id: Date.now() + "_" + idx, type: p.type || lotType, ...p, created: new Date().toISOString().slice(0, 10) });
+      tickets.unshift({ id: Date.now() + "_" + idx, type: p.type || lotType, ...p, purchased: true, created: new Date().toISOString().slice(0, 10) });
       setTickets(tickets);
       renderLottery();
     }
@@ -1521,11 +1525,11 @@
         const nums = raw.split(/[,\s]+/).map(x => parseInt(x, 10)).filter(x => x >= 1 && x <= 45);
         const uniq = Array.from(new Set(nums)).sort((a, b) => a - b);
         if (uniq.length !== 6) { alert("로또 번호 6개(1~45)를 쉼표로 구분해 입력해 주세요."); return; }
-        tickets.unshift({ id: String(Date.now()), type: "lotto", round, nums: uniq, created: new Date().toISOString().slice(0, 10) });
+        tickets.unshift({ id: String(Date.now()), type: "lotto", round, nums: uniq, purchased: true, created: new Date().toISOString().slice(0, 10) });
       } else {
         const m = raw.match(/^([1-5])\s*[-조]?\s*(\d{6})$/);
         if (!m) { alert("연금복권 형식 예: 4-051131"); return; }
-        tickets.unshift({ id: String(Date.now()), type: "pension", round, group: m[1], num: m[2], created: new Date().toISOString().slice(0, 10) });
+        tickets.unshift({ id: String(Date.now()), type: "pension", round, group: m[1], num: m[2], purchased: true, created: new Date().toISOString().slice(0, 10) });
       }
       document.getElementById("manualNums").value = "";
       setTickets(tickets);
