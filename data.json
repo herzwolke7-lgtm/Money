@@ -1,0 +1,54 @@
+{
+  "updated_at": "2026-11-23 16:24",
+  "history": [
+    {
+      "ts": "2026-11-23T16:24:00+09:00",
+      "date": "2026-11-23",
+      "label": "11/23 16:24",
+      "total_krw": 7072600,
+      "kiwoom_krw": 6644143,
+      "okx_krw": 428457,
+      "okx_usd": 318.15,
+      "kiwoom_pnl_krw": -204594,
+      "kiwoom_pnl_pct": -3.62,
+      "okx_pnl_usd": 0.0,
+      "okx_pnl_pct": 0.0
+    }
+  ],
+  "latest": {
+    "kiwoom": {
+      "account": "5280-4774",
+      "total_est_krw": 6644143,
+      "tot_pur_krw": 5645185,
+      "tot_evlt_krw": 5453125,
+      "tot_pl_krw": -204594,
+      "tot_prft_rt": -3.62,
+      "deposit_krw": 6848737,
+      "d2_deposit_krw": 1202722,
+      "ord_alow_krw": 1203552,
+      "stocks": [
+        {"name": "노랑풍선", "qty": 139, "avg": 4541, "cur": 4715, "evlt": 655385, "pl": 22610, "rt": 3.58},
+        {"name": "파수AI", "qty": 260, "avg": 6468, "cur": 6270, "evlt": 1630200, "pl": -55430, "rt": -3.30},
+        {"name": "글로벌텍스프리", "qty": 276, "avg": 6118, "cur": 5870, "evlt": 1620120, "pl": -72440, "rt": -4.29},
+        {"name": "마녀공장", "qty": 98, "avg": 16767, "cur": 15790, "evlt": 1547420, "pl": -99334, "rt": -6.05}
+      ]
+    },
+    "okx": {
+      "total_usd": 318.15,
+      "total_krw": 428457,
+      "trading_usd": 317.64,
+      "trading_krw": 427770,
+      "funding_usd": 0.51,
+      "funding_krw": 687,
+      "earn_usd": 0.0,
+      "pnl_usd": 0.0,
+      "pnl_pct": 0.0,
+      "holdings": [
+        {"name": "USDT (Trading)", "sub": "318.10 USDT · 포지션 없음", "usd": 317.64, "krw": 427770, "pl_usd": 0.0, "rt": 0.0},
+        {"name": "USDT (Funding)", "sub": "0.51 USDT", "usd": 0.51, "krw": 687, "pl_usd": 0.0, "rt": 0.0},
+        {"name": "소액 잔고 (107종)", "sub": "$0.01 미만 코인", "usd": 0.01, "krw": 18, "pl_usd": 0.0, "rt": 0.0}
+      ],
+      "positions": []
+    }
+  }
+}

@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <title>Ms.옥 포트폴리오</title>
+  <style>
+    :root {
+      --bg: #f4f6f9;
+      --card: #ffffff;
+      --text: #191f28;
+      --sub: #6b7684;
+      --border: #e5e8eb;
+      --up: #f04452;
+      --up-bg: #fff0f1;
+      --down: #3182f6;
+      --down-bg: #eef5ff;
+      --neutral: #4e5968;
+      --accent: #191f28;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Noto Sans KR", sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.45;
+      padding: 16px 14px 44px;
+      max-width: 480px;
+      margin: 0 auto;
+    }
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 14px;
+    }
+    .header h1 { font-size: 20px; font-weight: 800; letter-spacing: -0.3px; }
+    .header-right { display: flex; align-items: center; gap: 6px; }
+    .badge {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--sub);
+      background: #e9edf2;
+      padding: 4px 9px;
+      border-radius: 999px;
+    }
+    .refresh-btn {
+      border: none;
+      background: #191f28;
+      color: #fff;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 5px 10px;
+      border-radius: 999px;
+      cursor: pointer;
+    }
+    .card {
+      background: var(--card);
+      border-radius: 18px;
+      padding: 18px;
+      margin-bottom: 12px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.03);
+    }
+    .label { font-size: 13px; color: var(--sub); font-weight: 600; }
+    .big-num { font-size: 28px; font-weight: 800; letter-spacing: -0.6px; margin: 4px 0 6px; }
+    .pnl-pill {
+      display: inline-block;
+      font-size: 13px;
+      font-weight: 700;
+      padding: 5px 10px;
+      border-radius: 8px;
+    }
+    .up { color: var(--up); background: var(--up-bg); }
+    .down { color: var(--down); background: var(--down-bg); }
+    .flat { color: var(--neutral); background: #f2f4f6; }
+
+    .acct-tabs {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 6px;
+      background: #f2f4f6;
+      padding: 4px;
+      border-radius: 12px;
+      margin-bottom: 12px;
+    }
+    .acct-btn {
+      border: none;
+      background: transparent;
+      color: var(--sub);
+      font-size: 13px;
+      font-weight: 700;
+      padding: 8px 4px;
+      border-radius: 9px;
+      cursor: pointer;
+    }
+    .acct-btn.active {
+      background: #fff;
+      color: var(--text);
+      box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+    }
+
+    .tabs {
+      display: flex;
+      gap: 6px;
+      margin: 14px 0 10px;
+      overflow-x: auto;
+      padding-bottom: 2px;
+      -webkit-overflow-scrolling: touch;
+    }
+    .tabs::-webkit-scrollbar { display: none; }
+    .tab-btn {
+      flex: 0 0 auto;
+      border: none;
+      background: #f2f4f6;
+      color: var(--sub);
+      font-size: 12px;
+      font-weight: 700;
+      padding: 8px 12px;
+      border-radius: 10px;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+    .tab-btn.active {
+      background: var(--accent);
+      color: #fff;
+    }
+
+    .date-panel {
+      margin-top: 8px;
+      padding-top: 10px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .date-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 6px;
+    }
+    .date-row label { font-size: 12px; color: var(--sub); font-weight: 600; white-space: nowrap; }
+    .date-inputs { display: flex; align-items: center; gap: 4px; }
+    .date-row input[type="date"] {
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 5px 7px;
+      font-size: 12px;
+      color: var(--text);
+      background: #fafbfc;
+    }
+
+    .alloc-bar {
+      height: 8px;
+      border-radius: 999px;
+      overflow: hidden;
+      display: flex;
+      background: #eef1f4;
+      margin: 12px 0 6px;
+    }
+    .alloc-kw { background: #3182f6; }
+    .alloc-okx { background: #191f28; }
+    .alloc-legend {
+      display: flex;
+      justify-content: space-between;
+      font-size: 11px;
+      color: var(--sub);
+      font-weight: 600;
+    }
+
+    .chart-box {
+      margin-top: 12px;
+      background: #fafbfd;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 12px;
+    }
+    .chart-note {
+      font-size: 11px;
+      color: var(--sub);
+      margin-top: 6px;
+      text-align: center;
+    }
+    .sec-title {
+      font-size: 15px;
+      font-weight: 800;
+      margin-bottom: 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .sec-sub { font-size: 12px; font-weight: 700; }
+    .row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 0;
+      border-bottom: 1px solid #f2f4f6;
+    }
+    .row:last-child { border-bottom: none; padding-bottom: 0; }
+    .item-name { font-size: 15px; font-weight: 700; }
+    .item-sub { font-size: 12px; color: var(--sub); margin-top: 2px; }
+    .item-right { text-align: right; }
+    .item-val { font-size: 15px; font-weight: 700; }
+    .item-rt { font-size: 12px; font-weight: 700; margin-top: 2px; }
+    .c-up { color: var(--up); }
+    .c-down { color: var(--down); }
+    .c-flat { color: var(--sub); }
+    .split {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin-top: 12px;
+    }
+    .mini-box {
+      background: #f8f9fb;
+      border-radius: 12px;
+      padding: 10px 12px;
+    }
+    .mini-label { font-size: 11px; color: var(--sub); font-weight: 600; }
+    .mini-val { font-size: 14px; font-weight: 800; margin-top: 3px; }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <h1>📊 내 자산 대시보드</h1>
+    <div class="header-right">
+      <span class="badge" id="asOf">불러오는 중...</span>
+      <button class="refresh-btn" onclick="loadData()">새로고침</button>
+    </div>
+  </div>
+
+  <div class="acct-tabs">
+    <button class="acct-btn active" onclick="setAcct('all', this)">전체 합산</button>
+    <button class="acct-btn" onclick="setAcct('kiwoom', this)">📈 키움</button>
+    <button class="acct-btn" onclick="setAcct('okx', this)">🪙 OKX</button>
+  </div>
+
+  <div class="card">
+    <div class="label" id="mainLabel">총 합산 자산 (키움 + OKX)</div>
+    <div class="big-num" id="totalVal">-</div>
+    <span class="pnl-pill flat" id="periodPnl">계산 중...</span>
+
+    <div class="alloc-bar" id="allocBar">
+      <div class="alloc-kw" id="allocKwBar" style="width: 50%;"></div>
+      <div class="alloc-okx" id="allocOkxBar" style="width: 50%;"></div>
+    </div>
+    <div class="alloc-legend">
+      <span id="allocKwLabel">● 키움 -%</span>
+      <span id="allocOkxLabel">● OKX -%</span>
+    </div>
+
+    <div class="split">
+      <div class="mini-box">
+        <div class="mini-label">📈 키움 5280-4774</div>
+        <div class="mini-val" id="miniKw">-</div>
+      </div>
+      <div class="mini-box">
+        <div class="mini-label">🪙 OKX</div>
+        <div class="mini-val" id="miniOkx">-</div>
+      </div>
+    </div>
+
+    <div class="tabs">
+      <button class="tab-btn active" data-period="today" onclick="setPeriod('today', this)">오늘</button>
+      <button class="tab-btn" data-period="1w" onclick="setPeriod('1w', this)">1주</button>
+      <button class="tab-btn" data-period="1m" onclick="setPeriod('1m', this)">1달</button>
+      <button class="tab-btn" data-period="2m" onclick="setPeriod('2m', this)">2달</button>
+      <button class="tab-btn" data-period="3m" onclick="setPeriod('3m', this)">3달</button>
+      <button class="tab-btn" data-period="6m" onclick="setPeriod('6m', this)">6달</button>
+      <button class="tab-btn" data-period="1y" onclick="setPeriod('1y', this)">1년</button>
+      <button class="tab-btn" data-period="all" onclick="setPeriod('all', this)">전체</button>
+    </div>
+
+    <div class="date-panel">
+      <div class="date-row">
+        <label>원하는 날짜</label>
+        <input type="date" id="singleDate" onchange="pickSingleDate(this.value)" />
+      </div>
+      <div class="date-row">
+        <label>기간 지정</label>
+        <div class="date-inputs">
+          <input type="date" id="startDate" onchange="pickRange()" />
+          <span style="font-size:12px;color:#6b7684;">~</span>
+          <input type="date" id="endDate" onchange="pickRange()" />
+        </div>
+      </div>
+    </div>
+
+    <div class="chart-box">
+      <svg id="chartSvg" viewBox="0 0 320 110" width="100%" height="110"></svg>
+      <div class="chart-note" id="chartNote">데이터를 불러오는 중...</div>
+    </div>
+  </div>
+
+  <div class="card" id="kiwoomCard">
+    <div class="sec-title">
+      <span>📈 키움증권 5280-4774</span>
+      <span class="sec-sub" id="kwCardSub">-</span>
+    </div>
+    <div id="kwRows"></div>
+  </div>
+
+  <div class="card" id="okxCard">
+    <div class="sec-title">
+      <span>🪙 OKX 계좌</span>
+      <span class="sec-sub" id="okxCardSub">-</span>
+    </div>
+    <div id="okxRows"></div>
+  </div>
+
+  <script>
+    let payload = null;
+    let currentAcct = "all";
+    let currentPeriod = "today";
+
+    function fmtKrw(n) {
+      const sign = n > 0 ? "+" : "";
+      return sign + Math.round(n).toLocaleString() + "원";
+    }
+    function fmtPct(p) {
+      const sign = p > 0 ? "+" : "";
+      return sign + p.toFixed(2) + "%";
+    }
+    function getVal(d) {
+      if (currentAcct === "kiwoom") return d.kiwoom_krw;
+      if (currentAcct === "okx") return d.okx_krw;
+      return d.total_krw;
+    }
+
+    async function loadData() {
+      try {
+        const res = await fetch("./data.json?t=" + Date.now());
+        payload = await res.json();
+        document.getElementById("asOf").textContent = payload.updated_at;
+
+        const hist = payload.history;
+        if (hist.length) {
+          const minD = hist[0].date;
+          const maxD = hist[hist.length - 1].date;
+          ["singleDate", "startDate", "endDate"].forEach(id => {
+            const el = document.getElementById(id);
+            el.min = minD;
+            el.max = maxD;
+            el.value = id === "startDate" ? minD : maxD;
+          });
+        }
+        renderAll();
+      } catch (e) {
+        document.getElementById("chartNote").textContent = "데이터를 불러오지 못했습니다: " + e.message;
+      }
+    }
+
+    function renderAll() {
+      if (!payload) return;
+      const latest = payload.history[payload.history.length - 1];
+      const kw = payload.latest.kiwoom;
+      const okx = payload.latest.okx;
+
+      const total = latest.total_krw || 1;
+      const kwPct = ((latest.kiwoom_krw / total) * 100).toFixed(1);
+      const okxPct = (100 - parseFloat(kwPct)).toFixed(1);
+      document.getElementById("allocKwBar").style.width = kwPct + "%";
+      document.getElementById("allocOkxBar").style.width = okxPct + "%";
+      document.getElementById("allocKwLabel").textContent = "● 키움 " + kwPct + "%";
+      document.getElementById("allocOkxLabel").textContent = "● OKX " + okxPct + "%";
+
+      document.getElementById("miniKw").textContent = kw.total_est_krw.toLocaleString() + "원";
+      document.getElementById("miniOkx").textContent = okx.total_krw.toLocaleString() + "원 ($" + okx.total_usd.toFixed(2) + ")";
+
+      const labelEl = document.getElementById("mainLabel");
+      const valEl = document.getElementById("totalVal");
+      const kwCard = document.getElementById("kiwoomCard");
+      const okxCard = document.getElementById("okxCard");
+
+      if (currentAcct === "all") {
+        labelEl.textContent = "총 합산 자산 (키움 + OKX)";
+        valEl.textContent = latest.total_krw.toLocaleString() + "원";
+        kwCard.style.display = "block";
+        okxCard.style.display = "block";
+      } else if (currentAcct === "kiwoom") {
+        labelEl.textContent = "키움증권 5280-4774 추정 자산";
+        valEl.textContent = kw.total_est_krw.toLocaleString() + "원";
+        kwCard.style.display = "block";
+        okxCard.style.display = "none";
+      } else {
+        labelEl.textContent = "OKX 총 자산";
+        valEl.textContent = "$" + okx.total_usd.toFixed(2) + " (" + okx.total_krw.toLocaleString() + "원)";
+        kwCard.style.display = "none";
+        okxCard.style.display = "block";
+      }
+
+      // Render Kiwoom stocks
+      const kwSub = document.getElementById("kwCardSub");
+      kwSub.textContent = fmtKrw(kw.tot_pl_krw) + " (" + fmtPct(kw.tot_prft_rt) + ")";
+      kwSub.className = "sec-sub " + (kw.tot_pl_krw > 0 ? "c-up" : kw.tot_pl_krw < 0 ? "c-down" : "c-flat");
+
+      let kwHtml = kw.stocks.map(s => {
+        const cls = s.pl > 0 ? "c-up" : s.pl < 0 ? "c-down" : "c-flat";
+        return `
+          <div class="row">
+            <div>
+              <div class="item-name">${s.name}</div>
+              <div class="item-sub">${s.qty}주 · 평균 ${s.avg.toLocaleString()}원 → ${s.cur.toLocaleString()}원</div>
+            </div>
+            <div class="item-right">
+              <div class="item-val">${s.evlt.toLocaleString()}원</div>
+              <div class="item-rt ${cls}">${fmtPct(s.rt)} (${fmtKrw(s.pl)})</div>
+            </div>
+          </div>`;
+      }).join("");
+      kwHtml += `
+        <div class="row">
+          <div>
+            <div class="item-name">예수금 (D+2 추정)</div>
+            <div class="item-sub">주문가능 ${kw.ord_alow_krw.toLocaleString()}원</div>
+          </div>
+          <div class="item-right">
+            <div class="item-val">${kw.deposit_krw.toLocaleString()}원</div>
+            <div class="item-rt c-flat">D+2 ${kw.d2_deposit_krw.toLocaleString()}원</div>
+          </div>
+        </div>`;
+      document.getElementById("kwRows").innerHTML = kwHtml;
+
+      // Render OKX
+      const okxSub = document.getElementById("okxCardSub");
+      okxSub.textContent = (okx.pnl_usd >= 0 ? "+" : "") + "$" + okx.pnl_usd.toFixed(2) + " (" + fmtPct(okx.pnl_pct) + ")";
+      okxSub.className = "sec-sub " + (okx.pnl_usd > 0 ? "c-up" : okx.pnl_usd < 0 ? "c-down" : "c-flat");
+
+      let okxHtml = okx.holdings.map(h => `
+        <div class="row">
+          <div>
+            <div class="item-name">${h.name}</div>
+            <div class="item-sub">${h.sub}</div>
+          </div>
+          <div class="item-right">
+            <div class="item-val">$${h.usd.toFixed(2)}</div>
+            <div class="item-rt c-flat">${h.krw.toLocaleString()}원</div>
+          </div>
+        </div>`).join("");
+      document.getElementById("okxRows").innerHTML = okxHtml;
+
+      applyPeriod(currentPeriod);
+    }
+
+    function setAcct(acct, btn) {
+      currentAcct = acct;
+      document.querySelectorAll(".acct-btn").forEach(b => b.classList.remove("active"));
+      if (btn) btn.classList.add("active");
+      renderAll();
+    }
+
+    function setPeriod(period, btn) {
+      currentPeriod = period;
+      document.querySelectorAll(".tab-btn").forEach(b => b.classList.remove("active"));
+      if (btn) btn.classList.add("active");
+      applyPeriod(period);
+    }
+
+    function filterByPeriod(period) {
+      const hist = payload.history;
+      if (!hist.length) return [];
+      const latestDate = new Date(hist[hist.length - 1].date + "T00:00:00");
+      const daysMap = { today: 0, "1w": 7, "1m": 30, "2m": 60, "3m": 90, "6m": 180, "1y": 365, all: 99999 };
+      const days = daysMap[period] ?? 0;
+      const cutoff = new Date(latestDate.getTime() - days * 86400000);
+      return hist.filter(d => new Date(d.date + "T00:00:00") >= cutoff);
+    }
+
+    function updatePnlPill(points, label) {
+      const pill = document.getElementById("periodPnl");
+      const kw = payload.latest.kiwoom;
+      const okx = payload.latest.okx;
+
+      if (points.length >= 2) {
+        const start = getVal(points[0]);
+        const end = getVal(points[points.length - 1]);
+        const diff = end - start;
+        const pct = start ? (diff / start) * 100 : 0;
+        pill.className = "pnl-pill " + (diff > 0 ? "up" : diff < 0 ? "down" : "flat");
+        pill.textContent = `${label} 손익: ${fmtKrw(diff)} (${fmtPct(pct)})`;
+      } else {
+        if (currentAcct === "okx") {
+          pill.className = "pnl-pill flat";
+          pill.textContent = `보유 평가손익: $${okx.pnl_usd.toFixed(2)} (${fmtPct(okx.pnl_pct)} · 포지션 없음)`;
+        } else {
+          const pnl = kw.tot_pl_krw;
+          const pct = currentAcct === "kiwoom" ? kw.tot_prft_rt : (pnl / (payload.history[0].total_krw - pnl)) * 100;
+          pill.className = "pnl-pill " + (pnl > 0 ? "up" : pnl < 0 ? "down" : "flat");
+          pill.textContent = `${label} 보유 평가손익: ${fmtKrw(pnl)} (${fmtPct(pct)})`;
+        }
+      }
+    }
+
+    function applyPeriod(period) {
+      if (!payload) return;
+      const labels = { today: "오늘", "1w": "1주", "1m": "1달", "2m": "2달", "3m": "3달", "6m": "6달", "1y": "1년", all: "전체" };
+      const pts = filterByPeriod(period);
+      updatePnlPill(pts, labels[period]);
+      document.getElementById("chartNote").textContent =
+        pts.length <= 1
+          ? `${labels[period]} 추이 (2026-11-23부터 매일 브리핑마다 자동 누적됩니다.)`
+          : `${labels[period]} 기간 · ${pts[0].date} ~ ${pts[pts.length - 1].date} (${pts.length}개 기록)`;
+      renderChart(pts);
+    }
+
+    function pickSingleDate(val) {
+      if (!payload) return;
+      const found = payload.history.filter(d => d.date === val);
+      if (found.length) {
+        updatePnlPill(found, val);
+        document.getElementById("chartNote").textContent = `${val} 조회: ${getVal(found[0]).toLocaleString()}원`;
+        renderChart(found);
+      } else {
+        document.getElementById("chartNote").textContent = `${val} 데이터가 아직 없습니다.`;
+      }
+    }
+
+    function pickRange() {
+      if (!payload) return;
+      const s = document.getElementById("startDate").value;
+      const e = document.getElementById("endDate").value;
+      const found = payload.history.filter(d => (!s || d.date >= s) && (!e || d.date <= e));
+      if (found.length) {
+        updatePnlPill(found, `${s}~${e}`);
+        document.getElementById("chartNote").textContent = `${s || "~"} ~ ${e || "~"} (${found.length}건)`;
+        renderChart(found);
+      } else {
+        document.getElementById("chartNote").textContent = "선택한 기간의 데이터가 아직 없습니다.";
+      }
+    }
+
+    function renderChart(points) {
+      const svg = document.getElementById("chartSvg");
+      const w = 320, h = 110, padX = 24, padY = 22;
+      svg.innerHTML = "";
+
+      const grid = document.createElementNS("http://www.w3.org/2000/svg", "line");
+      grid.setAttribute("x1", padX); grid.setAttribute("x2", w - padX);
+      grid.setAttribute("y1", h / 2); grid.setAttribute("y2", h / 2);
+      grid.setAttribute("stroke", "#e5e8eb"); grid.setAttribute("stroke-dasharray", "3 3");
+      svg.appendChild(grid);
+
+      if (!points.length) return;
+      if (points.length === 1) {
+        const cx = w / 2, cy = h / 2;
+        const c = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+        c.setAttribute("cx", cx); c.setAttribute("cy", cy); c.setAttribute("r", 6);
+        c.setAttribute("fill", "#3182f6");
+        svg.appendChild(c);
+
+        const t = document.createElementNS("http://www.w3.org/2000/svg", "text");
+        t.setAttribute("x", cx); t.setAttribute("y", cy - 14);
+        t.setAttribute("text-anchor", "middle");
+        t.setAttribute("font-size", "11");
+        t.setAttribute("font-weight", "700");
+        t.setAttribute("fill", "#191f28");
+        t.textContent = points[0].label + " · " + getVal(points[0]).toLocaleString() + "원";
+        svg.appendChild(t);
+        return;
+      }
+
+      const vals = points.map(getVal);
+      const min = Math.min(...vals), max = Math.max(...vals);
+      const span = (max - min) || 1;
+      const pts = points.map((p, i) => {
+        const x = padX + (i / (points.length - 1)) * (w - padX * 2);
+        const y = h - padY - ((getVal(p) - min) / span) * (h - padY * 2);
+        return x.toFixed(1) + "," + y.toFixed(1);
+      }).join(" ");
+
+      const poly = document.createElementNS("http://www.w3.org/2000/svg", "polyline");
+      poly.setAttribute("fill", "none");
+      poly.setAttribute("stroke", "#3182f6");
+      poly.setAttribute("stroke-width", "2.5");
+      poly.setAttribute("points", pts);
+      svg.appendChild(poly);
+    }
+
+    loadData();
+  </script>
+</body>
+</html>
