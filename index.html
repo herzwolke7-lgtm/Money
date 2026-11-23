@@ -52,14 +52,12 @@
     .icon-btn:active { transform: scale(0.95); }
 
     .seg-nav {
-      display: flex; flex-wrap: nowrap; overflow-x: auto; gap: 2px;
+      display: grid; grid-template-columns: 1fr 1fr 1fr;
       padding: 3px; background: var(--surface-2);
       border: 1px solid var(--hairline); border-radius: 10px;
-      margin-bottom: 14px; max-width: 100%; scrollbar-width: none;
+      margin-bottom: 14px; max-width: 520px;
     }
-    .seg-nav::-webkit-scrollbar { display: none; }
     .seg-btn {
-      flex: 1 0 auto; padding: 0 12px; white-space: nowrap;
       height: 36px; border: none; border-radius: 7px;
       background: transparent; color: var(--ink-2);
       font-family: inherit; font-size: 13px; font-weight: 600; cursor: pointer;
@@ -250,12 +248,18 @@
   </header>
 
   <nav class="seg-nav">
-    <button class="seg-btn active" onclick="setMode('portfolio', this)">자산 현황</button>
-    <button class="seg-btn" onclick="setMode('journal', this)">매매일지</button>
-    <button class="seg-btn" onclick="setMode('lottery', this)">로또·연금</button>
-    <button class="seg-btn" onclick="setMode('notes', this)">알림 메모장</button>
-    <button class="seg-btn" onclick="setMode('seo', this)">스테이앤플랜</button>
+    <button class="seg-btn active" onclick="setGroup('invest', this)">투자</button>
+    <button class="seg-btn" onclick="setGroup('lottery', this)">복권</button>
+    <button class="seg-btn" onclick="setGroup('ops', this)">메모·SEO</button>
   </nav>
+  <div class="pill-row" id="investSubNav" style="margin-bottom:10px;">
+    <button class="pill-btn active" onclick="setMode('portfolio', this)">자산 현황</button>
+    <button class="pill-btn" onclick="setMode('journal', this)">매매일지</button>
+  </div>
+  <div class="pill-row" id="opsSubNav" style="display:none;margin-bottom:10px;">
+    <button class="pill-btn active" onclick="setMode('notes', this)">알림 메모장</button>
+    <button class="pill-btn" onclick="setMode('seo', this)">스테이앤플랜 SEO</button>
+  </div>
 
   <!-- PORTFOLIO VIEW -->
   <main id="portfolioView">
@@ -495,10 +499,23 @@
   <main id="seoView" style="display:none;">
     <section class="panel">
       <div class="sec-head">
-        <span class="sec-title">스테이앤플랜 3포털 성장 요약</span>
+        <span class="sec-title">스테이앤플랜 3포털 성장 · 색인 요약</span>
         <span class="meta-time" id="seoUpdated">-</span>
       </div>
       <div class="stat-grid" id="seoKpiGrid" style="margin-top:0;padding-top:0;border-top:none;"></div>
+    </section>
+
+    <section class="panel">
+      <div class="sec-head">
+        <span class="sec-title">3포털 색인 · 미색인 비교표</span>
+        <span class="meta-time">Google · Naver · Daum</span>
+      </div>
+      <div style="overflow-x:auto;">
+        <table class="data-table" style="width:100%;font-size:12px;">
+          <thead><tr><th>포털</th><th style="text-align:right;">색인</th><th style="text-align:right;">미색인</th><th style="text-align:right;">색인율/지표</th><th>비고</th></tr></thead>
+          <tbody id="seoPortalTbody"></tbody>
+        </table>
+      </div>
     </section>
 
     <div class="bento">
@@ -537,6 +554,21 @@
         </section>
       </div>
     </div>
+
+    <section class="panel">
+      <div class="sec-head">
+        <span class="sec-title">전체 발행 글 3포털 색인 추적</span>
+        <span class="meta-time" id="seoPostCount">-</span>
+      </div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px;">
+        <input id="seoPostSearch" type="text" placeholder="글 제목 검색..." oninput="renderSeoPosts()" style="flex:1;min-width:160px;height:32px;border:1px solid var(--hairline-2);border-radius:8px;padding:0 10px;font-size:12px;font-family:inherit;background:var(--surface);color:var(--ink);">
+        <select id="seoPostFilter" onchange="renderSeoPosts()" style="height:32px;border:1px solid var(--hairline-2);border-radius:8px;padding:0 8px;font-size:12px;font-family:inherit;background:var(--surface);color:var(--ink-2);">
+          <option value="all">전체 글</option>
+          <option value="unindexed">미색인 포함만</option>
+        </select>
+      </div>
+      <div id="seoPostsList"></div>
+    </section>
   </main>
 
   <script>
@@ -662,9 +694,27 @@
       `;
     }
 
-    function setMode(mode, btn) {
+    let currentGroup = "invest";
+    function setGroup(grp, btn) {
+      currentGroup = grp;
       document.querySelectorAll(".seg-btn").forEach(b => b.classList.remove("active"));
       if (btn) btn.classList.add("active");
+      document.getElementById("investSubNav").style.display = grp === "invest" ? "flex" : "none";
+      document.getElementById("opsSubNav").style.display = grp === "ops" ? "flex" : "none";
+      if (grp === "invest") {
+        setMode("portfolio", document.querySelector("#investSubNav .pill-btn"));
+      } else if (grp === "lottery") {
+        setMode("lottery", null);
+      } else {
+        setMode("notes", document.querySelector("#opsSubNav .pill-btn"));
+      }
+    }
+
+    function setMode(mode, btn) {
+      if (btn && btn.parentElement) {
+        btn.parentElement.querySelectorAll(".pill-btn").forEach(b => b.classList.remove("active"));
+        btn.classList.add("active");
+      }
       document.getElementById("portfolioView").style.display = mode === "portfolio" ? "block" : "none";
       document.getElementById("journalView").style.display = mode === "journal" ? "block" : "none";
       document.getElementById("lotteryView").style.display = mode === "lottery" ? "block" : "none";
@@ -772,6 +822,42 @@
         <div style="font-size:12px;font-weight:700;color:var(--ink-2);margin:12px 0 6px;">네이버 효자 문서</div>
         ${n.top_pages.map(p => `<div class="holding-row"><span style="font-size:13px;">${p.title}</span><span class="t-num" style="font-size:12px;color:var(--ink-2);">${p.clicks}클릭 / ${p.impressions.toLocaleString()}노출 (${p.ctr}%)</span></div>`).join("")}
       `;
+      document.getElementById("seoPortalTbody").innerHTML = (seoData.portal_index_table || []).map(row => `
+        <tr>
+          <td style="font-weight:700;">${row.portal}</td>
+          <td class="t-num" style="text-align:right;">${row.indexed}</td>
+          <td class="t-num" style="text-align:right;">${row.not_indexed}</td>
+          <td class="t-num" style="text-align:right;">${row.rate}</td>
+          <td style="font-size:11px;color:var(--ink-3);">${row.note}</td>
+        </tr>
+      `).join("");
+      renderSeoPosts();
+    }
+
+    function renderSeoPosts() {
+      if (!seoData) return;
+      const q = (document.getElementById("seoPostSearch")?.value || "").trim().toLowerCase();
+      const f = document.getElementById("seoPostFilter")?.value || "all";
+      const all = seoData.posts || [];
+      const filtered = all.filter(p => {
+        if (q && !p.title.toLowerCase().includes(q)) return false;
+        if (f === "unindexed" && p.google === "색인됨" && p.naver === "색인됨" && p.daum === "색인됨") return false;
+        return true;
+      });
+      document.getElementById("seoPostCount").textContent = `${filtered.length} / ${all.length}개 글`;
+      document.getElementById("seoPostsList").innerHTML = filtered.slice(0, 60).map(p => `
+        <div class="holding-row" style="flex-direction:column;align-items:stretch;gap:6px;">
+          <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;">
+            <a href="${p.url}" target="_blank" style="font-size:13px;font-weight:700;color:var(--ink);text-decoration:none;">${p.title}</a>
+            <span class="t-num" style="font-size:11px;color:var(--ink-3);">${p.lastmod}</span>
+          </div>
+          <div style="display:flex;gap:6px;flex-wrap:wrap;font-size:11px;">
+            <span class="badge" style="background:var(--surface-2);">G: ${p.google}${p.google_reason && p.google_reason !== '-' ? ' (' + p.google_reason + ')' : ''}</span>
+            <span class="badge" style="background:var(--surface-2);">N: ${p.naver}</span>
+            <span class="badge" style="background:var(--surface-2);">D: ${p.daum}</span>
+          </div>
+        </div>
+      `).join("") + (filtered.length > 60 ? `<div style="padding:10px 0;text-align:center;font-size:12px;color:var(--ink-3);">검색어로 필터하면 179개 전체 글 중 원하는 글을 바로 찾을 수 있습니다.</div>` : "");
     }
 
     async function loadData() {
