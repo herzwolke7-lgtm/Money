@@ -1325,7 +1325,7 @@
 
     function renderLottery() {
       if (!lotData) return;
-      const tickets = getTickets();
+      const tickets = getTickets().filter(tk => tk.type === lotType);
       let spent = 0, won = 0, wins = 0, settled = 0;
       tickets.forEach(tk => {
         spent += 1000;
@@ -1498,7 +1498,7 @@
     }
 
     function renderTickets() {
-      const tickets = getTickets();
+      const tickets = getTickets().filter(tk => tk.type === lotType);
       document.getElementById("lotTicketCount").textContent = tickets.length + "건";
       if (!tickets.length) {
         document.getElementById("lotTicketRows").innerHTML = `<div style="padding:12px 0;color:var(--ink-3);font-size:13px;">저장된 구매 내역이 없습니다. 위 추천 번호에서 <strong>구매 저장</strong>을 눌러보세요!</div>`;
