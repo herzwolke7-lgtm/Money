@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
-  <title>Ms.옥 포트폴리오</title>
+  <title>Ms.옥 포트폴리오 & 매매일지</title>
   <style>
     :root {
       --bg: #f2f4f6;
@@ -31,19 +31,13 @@
       margin: 0 auto;
       font-variant-numeric: tabular-nums;
     }
-
-    /* Header */
     .header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 14px;
+      margin-bottom: 12px;
     }
-    .header h1 {
-      font-size: 20px;
-      font-weight: 800;
-      letter-spacing: -0.4px;
-    }
+    .header h1 { font-size: 20px; font-weight: 800; letter-spacing: -0.4px; }
     .header-right { display: flex; align-items: center; gap: 6px; }
     .badge {
       font-size: 11px;
@@ -64,14 +58,36 @@
       cursor: pointer;
     }
 
-    /* Account Switcher */
+    /* Main Mode Switcher */
+    .main-nav {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6px;
+      margin-bottom: 12px;
+    }
+    .nav-btn {
+      border: none;
+      background: #e5e8eb;
+      color: var(--sub);
+      font-size: 14px;
+      font-weight: 800;
+      padding: 11px 8px;
+      border-radius: 14px;
+      cursor: pointer;
+    }
+    .nav-btn.active {
+      background: #191f28;
+      color: #fff;
+    }
+
+    /* Sub Switcher */
     .acct-tabs {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 4px;
       background: #e5e8eb;
       padding: 4px;
-      border-radius: 14px;
+      border-radius: 12px;
       margin-bottom: 12px;
     }
     .acct-btn {
@@ -80,10 +96,9 @@
       color: var(--sub);
       font-size: 13px;
       font-weight: 700;
-      padding: 9px 4px;
-      border-radius: 10px;
+      padding: 8px 4px;
+      border-radius: 9px;
       cursor: pointer;
-      transition: all 0.15s ease;
     }
     .acct-btn.active {
       background: #fff;
@@ -91,7 +106,6 @@
       box-shadow: 0 2px 6px rgba(0,0,0,0.06);
     }
 
-    /* Cards */
     .card {
       background: var(--card);
       border-radius: 20px;
@@ -100,12 +114,7 @@
       box-shadow: 0 2px 12px rgba(0, 0, 0, 0.03);
     }
     .label { font-size: 13px; color: var(--sub); font-weight: 600; }
-    .big-num {
-      font-size: 30px;
-      font-weight: 800;
-      letter-spacing: -0.8px;
-      margin: 4px 0 8px;
-    }
+    .big-num { font-size: 29px; font-weight: 800; letter-spacing: -0.8px; margin: 4px 0 8px; }
     .pnl-pill {
       display: inline-flex;
       align-items: center;
@@ -119,7 +128,6 @@
     .down { color: var(--down); background: var(--down-bg); }
     .flat { color: var(--flat); background: var(--flat-bg); }
 
-    /* Allocation Bar */
     .alloc-wrap { margin-top: 16px; }
     .alloc-bar {
       height: 10px;
@@ -140,7 +148,6 @@
       margin-top: 6px;
     }
 
-    /* 2x2 KPI Grid */
     .kpi-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -155,7 +162,6 @@
     .kpi-label { font-size: 11px; color: var(--muted); font-weight: 600; }
     .kpi-val { font-size: 15px; font-weight: 800; margin-top: 3px; color: var(--text); }
 
-    /* Period Tabs */
     .tabs {
       display: flex;
       gap: 6px;
@@ -176,12 +182,8 @@
       border-radius: 999px;
       cursor: pointer;
     }
-    .tab-btn.active {
-      background: #191f28;
-      color: #fff;
-    }
+    .tab-btn.active { background: #191f28; color: #fff; }
 
-    /* Chart */
     .chart-box {
       margin-top: 10px;
       background: #fafbfd;
@@ -189,15 +191,8 @@
       border-radius: 16px;
       padding: 14px 12px 10px;
     }
-    .chart-note {
-      font-size: 11px;
-      color: var(--sub);
-      margin-top: 6px;
-      text-align: center;
-      font-weight: 500;
-    }
+    .chart-note { font-size: 11px; color: var(--sub); margin-top: 6px; text-align: center; font-weight: 500; }
 
-    /* Date Controls */
     .date-panel {
       margin-top: 12px;
       padding-top: 12px;
@@ -206,12 +201,7 @@
       flex-direction: column;
       gap: 8px;
     }
-    .date-row {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 6px;
-    }
+    .date-row { display: flex; align-items: center; justify-content: space-between; gap: 6px; }
     .date-row label { font-size: 12px; color: var(--sub); font-weight: 600; white-space: nowrap; }
     .date-inputs { display: flex; align-items: center; gap: 4px; }
     .date-row input[type="date"] {
@@ -223,39 +213,19 @@
       background: #fff;
     }
 
-    /* Section Header & Clean Table */
-    .sec-head {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 12px;
-    }
+    .sec-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
     .sec-title { font-size: 16px; font-weight: 800; }
-    .sec-badge {
-      font-size: 12px;
-      font-weight: 700;
-      padding: 4px 9px;
-      border-radius: 8px;
-    }
+    .sec-badge { font-size: 12px; font-weight: 700; padding: 4px 9px; border-radius: 8px; }
 
-    table.holdings {
-      width: 100%;
-      border-collapse: collapse;
-    }
+    table.holdings { width: 100%; border-collapse: collapse; }
     table.holdings th {
-      font-size: 11px;
-      font-weight: 600;
-      color: var(--muted);
-      text-align: right;
-      padding: 0 0 8px;
-      border-bottom: 1px solid #f0f2f5;
+      font-size: 11px; font-weight: 600; color: var(--muted);
+      text-align: right; padding: 0 0 8px; border-bottom: 1px solid #f0f2f5;
     }
     table.holdings th:first-child { text-align: left; }
     table.holdings td {
-      padding: 12px 0;
-      border-bottom: 1px solid #f2f4f6;
-      vertical-align: middle;
-      text-align: right;
+      padding: 11px 0; border-bottom: 1px solid #f2f4f6;
+      vertical-align: middle; text-align: right;
     }
     table.holdings tr:last-child td { border-bottom: none; padding-bottom: 2px; }
     table.holdings td:first-child { text-align: left; }
@@ -263,121 +233,190 @@
     .t-name { font-size: 14px; font-weight: 700; color: var(--text); }
     .t-sub { font-size: 11px; color: var(--muted); margin-top: 2px; }
     .t-val { font-size: 14px; font-weight: 700; color: var(--text); }
-    .rt-tag {
-      display: inline-block;
-      font-size: 12px;
-      font-weight: 700;
-      padding: 3px 7px;
-      border-radius: 6px;
-    }
+    .rt-tag { display: inline-block; font-size: 12px; font-weight: 700; padding: 3px 7px; border-radius: 6px; }
     .c-up { color: var(--up); }
     .c-down { color: var(--down); }
     .c-flat { color: var(--sub); }
+
+    /* Search & Trade Journal */
+    .search-input {
+      width: 100%;
+      border: 1.5px solid #e5e8eb;
+      border-radius: 12px;
+      padding: 11px 14px;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text);
+      background: #fafbfd;
+      outline: none;
+    }
+    .search-input:focus { border-color: #3182f6; background: #fff; }
+    .filter-row { display: flex; gap: 6px; margin-top: 10px; flex-wrap: wrap; }
+    .chip-btn {
+      border: none;
+      background: #f2f4f6;
+      color: var(--sub);
+      font-size: 12px;
+      font-weight: 700;
+      padding: 6px 11px;
+      border-radius: 999px;
+      cursor: pointer;
+    }
+    .chip-btn.active { background: #191f28; color: #fff; }
+    .side-buy { color: var(--up); background: var(--up-bg); padding: 2px 7px; border-radius: 6px; font-size: 11px; font-weight: 800; }
+    .side-sell { color: var(--down); background: var(--down-bg); padding: 2px 7px; border-radius: 6px; font-size: 11px; font-weight: 800; }
   </style>
 </head>
 <body>
   <div class="header">
-    <h1>📊 내 자산 대시보드</h1>
+    <h1>📊 내 자산 · 매매일지</h1>
     <div class="header-right">
       <span class="badge" id="asOf">로딩 중</span>
       <button class="refresh-btn" onclick="loadData()">새로고침</button>
     </div>
   </div>
 
-  <div class="acct-tabs">
-    <button class="acct-btn active" onclick="setAcct('all', this)">전체 합산</button>
-    <button class="acct-btn" onclick="setAcct('kiwoom', this)">📈 키움</button>
-    <button class="acct-btn" onclick="setAcct('okx', this)">🪙 OKX</button>
+  <div class="main-nav">
+    <button class="nav-btn active" onclick="setMode('portfolio', this)">📊 자산 현황</button>
+    <button class="nav-btn" onclick="setMode('journal', this)">📒 매매일지</button>
   </div>
 
-  <div class="card">
-    <div class="label" id="mainLabel">총 합산 자산 (키움 + OKX)</div>
-    <div class="big-num" id="totalVal">-</div>
-    <span class="pnl-pill flat" id="periodPnl">계산 중...</span>
-
-    <div class="alloc-wrap">
-      <div class="alloc-bar">
-        <div class="alloc-kw" id="allocKwBar" style="width: 50%;"></div>
-        <div class="alloc-okx" id="allocOkxBar" style="width: 50%;"></div>
-      </div>
-      <div class="alloc-legend">
-        <span id="allocKwLabel">● 키움 -%</span>
-        <span id="allocOkxLabel">● OKX -%</span>
-      </div>
+  <!-- PORTFOLIO VIEW -->
+  <div id="portfolioView">
+    <div class="acct-tabs">
+      <button class="acct-btn active" onclick="setAcct('all', this)">전체 합산</button>
+      <button class="acct-btn" onclick="setAcct('kiwoom', this)">📈 키움</button>
+      <button class="acct-btn" onclick="setAcct('okx', this)">🪙 OKX</button>
     </div>
 
-    <div class="kpi-grid" id="kpiGrid"></div>
+    <div class="card">
+      <div class="label" id="mainLabel">총 합산 자산 (키움 + OKX)</div>
+      <div class="big-num" id="totalVal">-</div>
+      <span class="pnl-pill flat" id="periodPnl">계산 중...</span>
 
-    <div class="tabs">
-      <button class="tab-btn active" data-period="today" onclick="setPeriod('today', this)">오늘</button>
-      <button class="tab-btn" data-period="1w" onclick="setPeriod('1w', this)">1주</button>
-      <button class="tab-btn" data-period="1m" onclick="setPeriod('1m', this)">1달</button>
-      <button class="tab-btn" data-period="2m" onclick="setPeriod('2m', this)">2달</button>
-      <button class="tab-btn" data-period="3m" onclick="setPeriod('3m', this)">3달</button>
-      <button class="tab-btn" data-period="6m" onclick="setPeriod('6m', this)">6달</button>
-      <button class="tab-btn" data-period="1y" onclick="setPeriod('1y', this)">1년</button>
-      <button class="tab-btn" data-period="all" onclick="setPeriod('all', this)">전체</button>
-    </div>
-
-    <div class="chart-box">
-      <svg id="chartSvg" viewBox="0 0 320 130" width="100%" height="130"></svg>
-      <div class="chart-note" id="chartNote">데이터를 불러오는 중...</div>
-    </div>
-
-    <div class="date-panel">
-      <div class="date-row">
-        <label>원하는 날짜</label>
-        <input type="date" id="singleDate" onchange="pickSingleDate(this.value)" />
+      <div class="alloc-wrap">
+        <div class="alloc-bar">
+          <div class="alloc-kw" id="allocKwBar" style="width: 50%;"></div>
+          <div class="alloc-okx" id="allocOkxBar" style="width: 50%;"></div>
+        </div>
+        <div class="alloc-legend">
+          <span id="allocKwLabel">● 키움 -%</span>
+          <span id="allocOkxLabel">● OKX -%</span>
+        </div>
       </div>
-      <div class="date-row">
-        <label>기간 지정</label>
-        <div class="date-inputs">
-          <input type="date" id="startDate" onchange="pickRange()" />
-          <span style="font-size:12px;color:#8b95a1;">~</span>
-          <input type="date" id="endDate" onchange="pickRange()" />
+
+      <div class="kpi-grid" id="kpiGrid"></div>
+
+      <div class="tabs">
+        <button class="tab-btn active" data-period="today" onclick="setPeriod('today', this)">오늘</button>
+        <button class="tab-btn" data-period="1w" onclick="setPeriod('1w', this)">1주</button>
+        <button class="tab-btn" data-period="1m" onclick="setPeriod('1m', this)">1달</button>
+        <button class="tab-btn" data-period="2m" onclick="setPeriod('2m', this)">2달</button>
+        <button class="tab-btn" data-period="3m" onclick="setPeriod('3m', this)">3달</button>
+        <button class="tab-btn" data-period="6m" onclick="setPeriod('6m', this)">6달</button>
+        <button class="tab-btn" data-period="1y" onclick="setPeriod('1y', this)">1년</button>
+        <button class="tab-btn" data-period="all" onclick="setPeriod('all', this)">전체</button>
+      </div>
+
+      <div class="chart-box">
+        <svg id="chartSvg" viewBox="0 0 320 130" width="100%" height="130"></svg>
+        <div class="chart-note" id="chartNote">데이터를 불러오는 중...</div>
+      </div>
+
+      <div class="date-panel">
+        <div class="date-row">
+          <label>원하는 날짜</label>
+          <input type="date" id="singleDate" onchange="pickSingleDate(this.value)" />
+        </div>
+        <div class="date-row">
+          <label>기간 지정</label>
+          <div class="date-inputs">
+            <input type="date" id="startDate" onchange="pickRange()" />
+            <span style="font-size:12px;color:#8b95a1;">~</span>
+            <input type="date" id="endDate" onchange="pickRange()" />
+          </div>
         </div>
       </div>
     </div>
+
+    <div class="card" id="kiwoomCard">
+      <div class="sec-head">
+        <span class="sec-title">📈 키움 5280-4774</span>
+        <span class="sec-badge" id="kwCardSub">-</span>
+      </div>
+      <table class="holdings">
+        <thead>
+          <tr><th>종목 · 수량</th><th>평가금액</th><th>수익률 · 손익</th></tr>
+        </thead>
+        <tbody id="kwRows"></tbody>
+      </table>
+    </div>
+
+    <div class="card" id="okxCard">
+      <div class="sec-head">
+        <span class="sec-title">🪙 OKX 계좌</span>
+        <span class="sec-badge" id="okxCardSub">-</span>
+      </div>
+      <table class="holdings">
+        <thead>
+          <tr><th>계정 · 자산</th><th>평가금액</th><th>원화 환산</th></tr>
+        </thead>
+        <tbody id="okxRows"></tbody>
+      </table>
+    </div>
   </div>
 
-  <div class="card" id="kiwoomCard">
-    <div class="sec-head">
-      <span class="sec-title">📈 키움 5280-4774</span>
-      <span class="sec-badge" id="kwCardSub">-</span>
+  <!-- TRADE JOURNAL VIEW -->
+  <div id="journalView" style="display:none;">
+    <div class="card">
+      <div class="sec-head">
+        <span class="sec-title">💰 누적 수익 요약</span>
+        <span class="badge" id="tradeCountBadge">0건</span>
+      </div>
+      <div class="kpi-grid" id="journalKpi"></div>
     </div>
-    <table class="holdings">
-      <thead>
-        <tr>
-          <th>종목 · 수량</th>
-          <th>평가금액</th>
-          <th>수익률 · 손익</th>
-        </tr>
-      </thead>
-      <tbody id="kwRows"></tbody>
-    </table>
-  </div>
 
-  <div class="card" id="okxCard">
-    <div class="sec-head">
-      <span class="sec-title">🪙 OKX 계좌</span>
-      <span class="sec-badge" id="okxCardSub">-</span>
+    <div class="card">
+      <div class="sec-head">
+        <span class="sec-title">🔍 종목 검색 · 체결 내역</span>
+      </div>
+      <input type="text" class="search-input" id="searchInput" placeholder="종목명 또는 코인 검색 (예: 파수AI, 노랑풍선, XRP)" oninput="renderJournal()" />
+      <div class="filter-row">
+        <button class="chip-btn active" onclick="setJSource('all', this)">전체 계좌</button>
+        <button class="chip-btn" onclick="setJSource('키움', this)">📈 키움</button>
+        <button class="chip-btn" onclick="setJSource('OKX', this)">🪙 OKX</button>
+        <button class="chip-btn" onclick="setJSide('매수', this)">매수만</button>
+        <button class="chip-btn" onclick="setJSide('매도', this)">매도만</button>
+      </div>
+      <div id="searchSummary" style="margin-top:12px;"></div>
+      <table class="holdings" style="margin-top:8px;">
+        <thead>
+          <tr><th>일시 · 종목</th><th>수량 · 단가</th><th>거래금액</th></tr>
+        </thead>
+        <tbody id="tradeRows"></tbody>
+      </table>
     </div>
-    <table class="holdings">
-      <thead>
-        <tr>
-          <th>계정 · 자산</th>
-          <th>평가금액</th>
-          <th>원화 환산</th>
-        </tr>
-      </thead>
-      <tbody id="okxRows"></tbody>
-    </table>
+
+    <div class="card">
+      <div class="sec-head">
+        <span class="sec-title">📅 키움 일별 실현손익</span>
+        <span class="sec-badge" id="dailyPnlBadge">-</span>
+      </div>
+      <table class="holdings">
+        <thead>
+          <tr><th>날짜</th><th>매도 / 매수</th><th>일 실현손익</th></tr>
+        </thead>
+        <tbody id="dailyPnlRows"></tbody>
+      </table>
+    </div>
   </div>
 
   <script>
     let payload = null;
     let currentAcct = "all";
     let currentPeriod = "today";
+    let jSource = "all";
+    let jSide = "all";
 
     function fmtKrw(n) {
       const sign = n > 0 ? "+" : "";
@@ -393,13 +432,21 @@
       return d.total_krw;
     }
 
+    function setMode(mode, btn) {
+      document.querySelectorAll(".nav-btn").forEach(b => b.classList.remove("active"));
+      if (btn) btn.classList.add("active");
+      document.getElementById("portfolioView").style.display = mode === "portfolio" ? "block" : "none";
+      document.getElementById("journalView").style.display = mode === "journal" ? "block" : "none";
+      if (mode === "journal") renderJournal();
+    }
+
     async function loadData() {
       try {
         const res = await fetch("./data.json?t=" + Date.now());
         payload = await res.json();
         document.getElementById("asOf").textContent = payload.updated_at;
 
-        const hist = payload.history;
+        const hist = payload.history || [];
         if (hist.length) {
           const minD = hist[0].date;
           const maxD = hist[hist.length - 1].date;
@@ -411,6 +458,7 @@
           });
         }
         renderAll();
+        renderJournal();
       } catch (e) {
         document.getElementById("chartNote").textContent = "데이터를 불러오지 못했습니다.";
       }
@@ -471,7 +519,6 @@
         okxCard.style.display = "block";
       }
 
-      // Kiwoom Table
       const kwSub = document.getElementById("kwCardSub");
       kwSub.textContent = fmtKrw(kw.tot_pl_krw) + " (" + fmtPct(kw.tot_prft_rt) + ")";
       kwSub.className = "sec-badge " + (kw.tot_pl_krw > 0 ? "up" : kw.tot_pl_krw < 0 ? "down" : "flat");
@@ -481,36 +528,116 @@
         const txtCls = s.pl > 0 ? "c-up" : s.pl < 0 ? "c-down" : "c-flat";
         return `
           <tr>
-            <td>
-              <div class="t-name">${s.name}</div>
-              <div class="t-sub">${s.qty}주 · ${s.avg.toLocaleString()}→${s.cur.toLocaleString()}</div>
-            </td>
-            <td>
-              <div class="t-val">${s.evlt.toLocaleString()}원</div>
-            </td>
-            <td>
-              <span class="rt-tag ${pillCls}">${fmtPct(s.rt)}</span>
-              <div class="t-sub ${txtCls}">${fmtKrw(s.pl)}</div>
-            </td>
+            <td><div class="t-name">${s.name}</div><div class="t-sub">${s.qty}주 · ${s.avg.toLocaleString()}→${s.cur.toLocaleString()}</div></td>
+            <td><div class="t-val">${s.evlt.toLocaleString()}원</div></td>
+            <td><span class="rt-tag ${pillCls}">${fmtPct(s.rt)}</span><div class="t-sub ${txtCls}">${fmtKrw(s.pl)}</div></td>
           </tr>`;
       }).join("");
 
-      // OKX Table
       const okxSub = document.getElementById("okxCardSub");
       okxSub.textContent = (okx.pnl_usd >= 0 ? "+" : "") + "$" + okx.pnl_usd.toFixed(2) + " (" + fmtPct(okx.pnl_pct) + ")";
       okxSub.className = "sec-badge " + (okx.pnl_usd > 0 ? "up" : okx.pnl_usd < 0 ? "down" : "flat");
 
       document.getElementById("okxRows").innerHTML = okx.holdings.map(h => `
         <tr>
-          <td>
-            <div class="t-name">${h.name}</div>
-            <div class="t-sub">${h.sub}</div>
-          </td>
+          <td><div class="t-name">${h.name}</div><div class="t-sub">${h.sub}</div></td>
           <td><div class="t-val">$${h.usd.toFixed(2)}</div></td>
           <td><div class="t-sub" style="font-size:13px;font-weight:700;color:var(--text);">${h.krw.toLocaleString()}원</div></td>
         </tr>`).join("");
 
       applyPeriod(currentPeriod);
+    }
+
+    function setJSource(src, btn) {
+      jSource = src;
+      document.querySelectorAll(".filter-row .chip-btn").forEach((b, idx) => {
+        if (idx < 3) b.classList.remove("active");
+      });
+      if (btn) btn.classList.add("active");
+      renderJournal();
+    }
+
+    function setJSide(side, btn) {
+      jSide = (jSide === side) ? "all" : side;
+      document.querySelectorAll(".filter-row .chip-btn").forEach((b, idx) => {
+        if (idx >= 3) b.classList.remove("active");
+      });
+      if (jSide !== "all" && btn) btn.classList.add("active");
+      renderJournal();
+    }
+
+    function renderJournal() {
+      if (!payload) return;
+      const trades = payload.trades || [];
+      const daily = payload.daily_pnl || [];
+      const kwRealized = payload.kw_total_realized_pl || 0;
+      const kwUnrealized = payload.latest.kiwoom.tot_pl_krw || 0;
+
+      document.getElementById("tradeCountBadge").textContent = trades.length + "건";
+      document.getElementById("journalKpi").innerHTML = `
+        <div class="kpi-box"><div class="kpi-label">키움 누적 실현손익</div><div class="kpi-val ${kwRealized >= 0 ? 'c-up' : 'c-down'}">${fmtKrw(kwRealized)}</div></div>
+        <div class="kpi-box"><div class="kpi-label">키움 현재 평가손익</div><div class="kpi-val ${kwUnrealized >= 0 ? 'c-up' : 'c-down'}">${fmtKrw(kwUnrealized)}</div></div>
+        <div class="kpi-box"><div class="kpi-label">총 합산 손익 (키움)</div><div class="kpi-val ${(kwRealized+kwUnrealized) >= 0 ? 'c-up' : 'c-down'}">${fmtKrw(kwRealized + kwUnrealized)}</div></div>
+        <div class="kpi-box"><div class="kpi-label">기록된 거래</div><div class="kpi-val">${trades.length}건 (키움+OKX)</div></div>
+      `;
+
+      const q = (document.getElementById("searchInput").value || "").trim().toLowerCase();
+      const filtered = trades.filter(t => {
+        if (jSource !== "all" && t.source !== jSource) return false;
+        if (jSide !== "all" && t.side !== jSide) return false;
+        if (q && !t.symbol.toLowerCase().includes(q)) return false;
+        return true;
+      });
+
+      const sumEl = document.getElementById("searchSummary");
+      if (q && filtered.length) {
+        const krwTrades = filtered.filter(t => t.currency === "KRW");
+        const usdTrades = filtered.filter(t => t.currency === "USD");
+        let parts = [];
+        if (krwTrades.length) {
+          const buy = krwTrades.filter(t => t.side === "매수").reduce((a, b) => a + b.amount, 0);
+          const sell = krwTrades.filter(t => t.side === "매도").reduce((a, b) => a + b.amount, 0);
+          parts.push(`키움 매수 ${buy.toLocaleString()}원 · 매도 ${sell.toLocaleString()}원`);
+        }
+        if (usdTrades.length) {
+          const buy = usdTrades.filter(t => t.side === "매수").reduce((a, b) => a + b.amount, 0);
+          const sell = usdTrades.filter(t => t.side === "매도").reduce((a, b) => a + b.amount, 0);
+          parts.push(`OKX 매수 $${buy.toFixed(2)} · 매도 $${sell.toFixed(2)}`);
+        }
+        sumEl.innerHTML = `<div class="pnl-pill flat" style="width:100%;justify-content:center;">"${q}" 검색 ${filtered.length}건 · ${parts.join(" / ")}</div>`;
+      } else {
+        sumEl.innerHTML = "";
+      }
+
+      document.getElementById("tradeRows").innerHTML = filtered.slice(0, 60).map(t => {
+        const sideCls = t.side === "매수" ? "side-buy" : "side-sell";
+        const amtStr = t.currency === "KRW" ? t.amount.toLocaleString() + "원" : "$" + t.amount.toFixed(2);
+        const pxStr = t.currency === "KRW" ? t.price.toLocaleString() + "원" : "$" + (t.price < 1 ? t.price.toFixed(4) : t.price.toFixed(2));
+        const qtyStr = t.currency === "KRW" ? t.qty.toLocaleString() + "주" : t.qty.toFixed(2);
+        return `
+          <tr>
+            <td>
+              <div class="t-name">${t.symbol} <span class="${sideCls}">${t.side}</span></div>
+              <div class="t-sub">${t.source} · ${t.date} ${t.time}</div>
+            </td>
+            <td><div class="t-val">${qtyStr}</div><div class="t-sub">${pxStr}</div></td>
+            <td><div class="t-val">${amtStr}</div></td>
+          </tr>`;
+      }).join("") || `<tr><td colspan="3" style="text-align:center;color:#8b95a1;padding:20px;">검색 결과가 없습니다.</td></tr>`;
+
+      const pnlBadge = document.getElementById("dailyPnlBadge");
+      pnlBadge.textContent = fmtKrw(kwRealized);
+      pnlBadge.className = "sec-badge " + (kwRealized > 0 ? "up" : kwRealized < 0 ? "down" : "flat");
+
+      document.getElementById("dailyPnlRows").innerHTML = daily.slice().reverse().map(d => {
+        const cls = d.realized_pl > 0 ? "c-up" : d.realized_pl < 0 ? "c-down" : "c-flat";
+        return `
+          <tr>
+            <td><div class="t-name">${d.date}</div><div class="t-sub">수수료·세금 ${(d.fee + d.tax).toLocaleString()}원</div></td>
+            <td><div class="t-sub">매도 ${d.sell_amt.toLocaleString()}원</div><div class="t-sub">매수 ${d.buy_amt.toLocaleString()}원</div></td>
+            <td><div class="t-val ${cls}">${fmtKrw(d.realized_pl)}</div></td>
+          </tr>`;
+      }).join("") || `<tr><td colspan="3" style="text-align:center;color:#8b95a1;padding:20px;">실현손익 내역이 없습니다.</td></tr>`;
     }
 
     function setAcct(acct, btn) {
@@ -541,7 +668,6 @@
       const pill = document.getElementById("periodPnl");
       const kw = payload.latest.kiwoom;
       const okx = payload.latest.okx;
-
       if (points.length >= 2) {
         const start = getVal(points[0]);
         const end = getVal(points[points.length - 1]);
@@ -657,8 +783,7 @@
       const areaPts = `${coords[0][0].toFixed(1)},${h - padBot} ${linePts} ${coords[coords.length - 1][0].toFixed(1)},${h - padBot}`;
 
       const area = document.createElementNS("http://www.w3.org/2000/svg", "polygon");
-      area.setAttribute("fill", "url(#areaGrad)");
-      area.setAttribute("points", areaPts);
+      area.setAttribute("fill", "url(#areaGrad)"); area.setAttribute("points", areaPts);
       svg.appendChild(area);
 
       const poly = document.createElementNS("http://www.w3.org/2000/svg", "polyline");
@@ -666,25 +791,6 @@
       poly.setAttribute("stroke-width", "2.5"); poly.setAttribute("stroke-linejoin", "round");
       poly.setAttribute("points", linePts);
       svg.appendChild(poly);
-
-      const last = coords[coords.length - 1];
-      const dot = document.createElementNS("http://www.w3.org/2000/svg", "circle");
-      dot.setAttribute("cx", last[0]); dot.setAttribute("cy", last[1]); dot.setAttribute("r", 4.5);
-      dot.setAttribute("fill", "#3182f6"); dot.setAttribute("stroke", "#fff"); dot.setAttribute("stroke-width", "1.5");
-      svg.appendChild(dot);
-
-      const minLbl = document.createElementNS("http://www.w3.org/2000/svg", "text");
-      minLbl.setAttribute("x", padX); minLbl.setAttribute("y", h - 5);
-      minLbl.setAttribute("font-size", "10"); minLbl.setAttribute("fill", "#8b95a1");
-      minLbl.textContent = points[0].date.slice(5);
-      svg.appendChild(minLbl);
-
-      const maxLbl = document.createElementNS("http://www.w3.org/2000/svg", "text");
-      maxLbl.setAttribute("x", w - padX); maxLbl.setAttribute("y", h - 5);
-      maxLbl.setAttribute("text-anchor", "end");
-      maxLbl.setAttribute("font-size", "10"); maxLbl.setAttribute("fill", "#8b95a1");
-      maxLbl.textContent = points[points.length - 1].date.slice(5);
-      svg.appendChild(maxLbl);
     }
 
     loadData();
