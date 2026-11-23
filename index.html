@@ -29,9 +29,9 @@
       font-family: "Pretendard", -apple-system, BlinkMacSystemFont, sans-serif;
       background: var(--bg);
       color: var(--ink);
-      line-height: 1.5;
+      line-height: 1.45;
       padding: 20px 16px 72px;
-      max-width: 480px;
+      max-width: 920px;
       margin: 0 auto;
       font-variant-numeric: tabular-nums;
       -webkit-font-smoothing: antialiased;
@@ -44,7 +44,7 @@
       margin-bottom: 16px;
     }
     .brand { display: flex; align-items: center; gap: 8px; }
-    .live-dot { width: 6px; height: 6px; border-radius: 50%; background: #12b76a; }
+    .live-dot { width: 7px; height: 7px; border-radius: 50%; background: #12b76a; }
     .brand-title { font-size: 16px; font-weight: 600; }
     .topbar-right { display: flex; align-items: center; gap: 8px; }
     .meta-time { font-size: 12px; color: var(--ink-3); font-weight: 500; }
@@ -62,6 +62,7 @@
       padding: 3px; background: var(--surface-2);
       border: 1px solid var(--hairline); border-radius: 10px;
       margin-bottom: 16px;
+      max-width: 420px;
     }
     .seg-btn {
       height: 36px; border: none; border-radius: 7px;
@@ -73,6 +74,16 @@
     .seg-btn.active {
       background: var(--surface); color: var(--ink); font-weight: 600;
       border: 1px solid var(--hairline);
+    }
+
+    .bento {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 12px;
+      align-items: start;
+    }
+    @media (min-width: 760px) {
+      .bento { grid-template-columns: 1.15fr 0.85fr; }
     }
 
     .pill-row { display: flex; gap: 6px; margin-bottom: 12px; flex-wrap: wrap; }
@@ -98,12 +109,10 @@
       display: inline-flex; align-items: center;
       font-size: 12px; font-weight: 600; padding: 4px 8px; border-radius: 6px;
     }
+
     .up { color: var(--up); background: var(--up-bg); }
     .down { color: var(--down); background: var(--down-bg); }
     .flat { color: var(--ink-2); background: var(--surface-2); }
-    .c-up { color: var(--up); }
-    .c-down { color: var(--down); }
-    .c-flat { color: var(--ink-2); }
 
     .alloc-block { margin-top: 16px; }
     .alloc-track { height: 6px; border-radius: 999px; background: var(--surface-2); overflow: hidden; display: flex; gap: 2px; }
@@ -117,7 +126,11 @@
     }
     .stat-item { padding: 10px 12px; border-radius: 8px; background: var(--bg); }
     .stat-k { font-size: 11px; color: var(--ink-3); font-weight: 500; }
-    .stat-v { font-size: 14px; color: var(--ink); font-weight: 600; margin-top: 2px; }
+    .stat-v { font-size: 14px; font-weight: 600; margin-top: 2px; }
+
+    .c-up { color: var(--up); }
+    .c-down { color: var(--down); }
+    .c-flat { color: var(--ink-2); }
 
     .period-row { display: flex; gap: 4px; margin-top: 16px; overflow-x: auto; }
     .period-row::-webkit-scrollbar { display: none; }
@@ -138,10 +151,25 @@
     .chart-val { font-size: 13px; color: var(--ink); font-weight: 600; }
     .chart-note { font-size: 11px; color: var(--ink-3); margin-top: 6px; }
 
-    .date-controls {
-      margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--hairline);
-      display: flex; flex-direction: column; gap: 8px;
+    .date-toggle {
+      margin-top: 12px;
+      font-size: 12px;
+      color: var(--ink-2);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      border: none;
+      background: none;
+      font-family: inherit;
+      font-weight: 500;
     }
+    .date-controls {
+      display: none;
+      margin-top: 10px; padding-top: 10px; border-top: 1px solid var(--hairline);
+      flex-direction: column; gap: 8px;
+    }
+    .date-controls.open { display: flex; }
     .date-line { display: flex; justify-content: space-between; align-items: center; gap: 8px; }
     .date-line label { font-size: 12px; color: var(--ink-2); font-weight: 500; white-space: nowrap; }
     .date-inputs { display: flex; align-items: center; gap: 4px; }
@@ -150,24 +178,26 @@
       font-family: inherit; font-size: 12px; color: var(--ink); background: var(--surface);
     }
 
-    .sec-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+    .sec-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; gap: 8px; }
     .sec-title { font-size: 14px; font-weight: 600; }
-    .sec-meta { font-size: 12px; font-weight: 600; padding: 3px 8px; border-radius: 6px; }
+    .sec-meta { font-size: 12px; font-weight: 600; padding: 3px 8px; border-radius: 6px; white-space: nowrap; }
 
-    .list-table { width: 100%; border-collapse: collapse; }
-    .list-table th {
-      font-size: 11px; font-weight: 500; color: var(--ink-3); text-align: right;
-      padding-bottom: 8px; border-bottom: 1px solid var(--hairline);
+    /* Clean Flex Holding Rows (No cramped table!) */
+    .holding-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 0;
+      border-bottom: 1px solid var(--hairline);
     }
-    .list-table th:first-child { text-align: left; }
-    .list-table td {
-      padding: 12px 0; border-bottom: 1px solid var(--hairline);
-      vertical-align: middle; text-align: right;
-    }
-    .list-table tr:last-child td { border-bottom: none; padding-bottom: 0; }
-    .list-table td:first-child { text-align: left; }
-    .row-main { font-size: 14px; font-weight: 500; color: var(--ink); }
-    .row-sub { font-size: 12px; color: var(--ink-3); margin-top: 2px; }
+    .holding-row:last-child { border-bottom: none; padding-bottom: 0; }
+    .h-left { min-width: 0; }
+    .h-name { font-size: 14px; font-weight: 600; color: var(--ink); }
+    .h-sub { font-size: 12px; color: var(--ink-3); margin-top: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .h-right { text-align: right; flex-shrink: 0; }
+    .h-val { font-size: 14px; font-weight: 600; color: var(--ink); }
+    .h-pnl { font-size: 12px; font-weight: 500; margin-top: 2px; }
 
     /* Journal */
     .search-box {
@@ -185,11 +215,19 @@
     }
     .btn-ghost:active { transform: scale(0.96); }
 
+    .sym-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 8px;
+    }
+    @media (min-width: 760px) {
+      .sym-grid { grid-template-columns: 1fr 1fr; }
+    }
+
     .sym-card {
       border: 1px solid var(--hairline);
       border-radius: 12px;
-      padding: 14px;
-      margin-bottom: 8px;
+      padding: 16px;
       background: var(--surface);
       cursor: pointer;
       transition: transform 150ms var(--ease-out), border-color 140ms ease;
@@ -198,23 +236,23 @@
     .sym-card-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 8px; }
     .sym-name { font-size: 15px; font-weight: 600; color: var(--ink); }
     .sym-sub { font-size: 12px; color: var(--ink-3); margin-top: 2px; }
-    .sym-pnl-box { text-align: right; }
+    .sym-pnl-box { text-align: right; flex-shrink: 0; }
     .sym-pnl-val { font-size: 15px; font-weight: 600; }
     .sym-pnl-rt { font-size: 12px; font-weight: 500; }
     .sym-flow {
-      display: grid; grid-template-columns: 1fr 1fr; gap: 8px;
-      margin-top: 10px; padding-top: 10px; border-top: 1px solid var(--hairline);
+      display: grid; grid-template-columns: 1fr 1fr; gap: 10px;
+      margin-top: 12px; padding-top: 10px; border-top: 1px solid var(--hairline);
       font-size: 12px;
     }
-    .sym-flow-col span { display: block; color: var(--ink-3); font-size: 11px; }
+    .sym-flow-col span { display: block; color: var(--ink-3); font-size: 11px; margin-bottom: 2px; }
     .sym-flow-col strong { font-weight: 500; color: var(--ink); }
     .sym-detail {
       display: none;
-      margin-top: 10px; padding-top: 10px; border-top: 1px dashed var(--hairline-2);
+      margin-top: 12px; padding-top: 10px; border-top: 1px dashed var(--hairline-2);
     }
     .sym-card.open .sym-detail { display: block; }
     .fill-line {
-      display: flex; justify-content: space-between; align-items: center;
+      display: flex; justify-content: space-between; align-items: center; gap: 8px;
       padding: 6px 0; font-size: 12px;
       border-bottom: 1px solid var(--hairline);
     }
@@ -256,92 +294,89 @@
       <button class="pill-btn" onclick="setAcct('okx', this)">OKX</button>
     </div>
 
-    <section class="panel">
-      <div class="panel-label" id="mainLabel">총 합산 자산</div>
-      <div class="hero-figure" id="totalVal">-</div>
-      <span class="delta-tag flat" id="periodPnl">-</span>
+    <div class="bento">
+      <div>
+        <section class="panel">
+          <div class="panel-label" id="mainLabel">총 합산 자산</div>
+          <div class="hero-figure" id="totalVal">-</div>
+          <span class="delta-tag flat" id="periodPnl">-</span>
 
-      <div class="alloc-block">
-        <div class="alloc-track">
-          <div class="alloc-a" id="allocKwBar" style="width: 50%;"></div>
-          <div class="alloc-b" id="allocOkxBar" style="width: 50%;"></div>
-        </div>
-        <div class="alloc-meta">
-          <span id="allocKwLabel">키움 -%</span>
-          <span id="allocOkxLabel">OKX -%</span>
-        </div>
-      </div>
-
-      <div class="stat-grid" id="kpiGrid"></div>
-
-      <div class="period-row">
-        <button class="p-btn active" onclick="setPeriod('today', this)">오늘</button>
-        <button class="p-btn" onclick="setPeriod('1w', this)">1주</button>
-        <button class="p-btn" onclick="setPeriod('1m', this)">1달</button>
-        <button class="p-btn" onclick="setPeriod('2m', this)">2달</button>
-        <button class="p-btn" onclick="setPeriod('3m', this)">3달</button>
-        <button class="p-btn" onclick="setPeriod('6m', this)">6달</button>
-        <button class="p-btn" onclick="setPeriod('1y', this)">1년</button>
-        <button class="p-btn" onclick="setPeriod('all', this)">전체</button>
-      </div>
-
-      <div class="chart-stage">
-        <div class="chart-readout">
-          <span class="chart-date" id="hoverDate">추이</span>
-          <span class="chart-val" id="hoverVal">-</span>
-        </div>
-        <svg id="chartSvg" viewBox="0 0 320 120" width="100%" height="120" style="touch-action:none;"></svg>
-        <div class="chart-note" id="chartNote">불러오는 중</div>
-      </div>
-
-      <div class="date-controls">
-        <div class="date-line">
-          <label>특정 날짜</label>
-          <input type="date" id="singleDate" onchange="pickSingleDate(this.value)" />
-        </div>
-        <div class="date-line">
-          <label>기간 조회</label>
-          <div class="date-inputs">
-            <input type="date" id="startDate" onchange="pickRange()" />
-            <span style="font-size:11px;color:var(--ink-3);">~</span>
-            <input type="date" id="endDate" onchange="pickRange()" />
+          <div class="alloc-block">
+            <div class="alloc-track">
+              <div class="alloc-a" id="allocKwBar" style="width: 50%;"></div>
+              <div class="alloc-b" id="allocOkxBar" style="width: 50%;"></div>
+            </div>
+            <div class="alloc-meta">
+              <span id="allocKwLabel">키움 -%</span>
+              <span id="allocOkxLabel">OKX -%</span>
+            </div>
           </div>
-        </div>
-      </div>
-    </section>
 
-    <section class="panel" id="kiwoomCard">
-      <div class="sec-head">
-        <span class="sec-title">키움 5280-4774 보유 종목</span>
-        <span class="sec-meta" id="kwCardSub">-</span>
-      </div>
-      <table class="list-table">
-        <thead>
-          <tr><th>종목 · 비중</th><th>평가금액</th><th>수익률 · 손익</th></tr>
-        </thead>
-        <tbody id="kwRows"></tbody>
-      </table>
-    </section>
+          <div class="stat-grid" id="kpiGrid"></div>
 
-    <section class="panel" id="okxCard">
-      <div class="sec-head">
-        <span class="sec-title">OKX 보유 현황</span>
-        <span class="sec-meta" id="okxCardSub">-</span>
+          <div class="period-row">
+            <button class="p-btn active" onclick="setPeriod('today', this)">오늘</button>
+            <button class="p-btn" onclick="setPeriod('1w', this)">1주</button>
+            <button class="p-btn" onclick="setPeriod('1m', this)">1달</button>
+            <button class="p-btn" onclick="setPeriod('2m', this)">2달</button>
+            <button class="p-btn" onclick="setPeriod('3m', this)">3달</button>
+            <button class="p-btn" onclick="setPeriod('6m', this)">6달</button>
+            <button class="p-btn" onclick="setPeriod('1y', this)">1년</button>
+            <button class="p-btn" onclick="setPeriod('all', this)">전체</button>
+          </div>
+
+          <div class="chart-stage">
+            <div class="chart-readout">
+              <span class="chart-date" id="hoverDate">-</span>
+              <span class="chart-val" id="hoverVal">-</span>
+            </div>
+            <svg id="chartSvg" viewBox="0 0 320 110" width="100%" height="110" style="touch-action:none;"></svg>
+            <div class="chart-note" id="chartNote">불러오는 중</div>
+          </div>
+
+          <button class="date-toggle" onclick="document.getElementById('dateControls').classList.toggle('open')">날짜 직접 조회 ▾</button>
+          <div class="date-controls" id="dateControls">
+            <div class="date-line">
+              <label>특정 날짜</label>
+              <input type="date" id="singleDate" onchange="pickSingleDate(this.value)" />
+            </div>
+            <div class="date-line">
+              <label>기간 조회</label>
+              <div class="date-inputs">
+                <input type="date" id="startDate" onchange="pickRange()" />
+                <span style="font-size:11px;color:var(--ink-3);">~</span>
+                <input type="date" id="endDate" onchange="pickRange()" />
+              </div>
+            </div>
+          </div>
+        </section>
       </div>
-      <table class="list-table">
-        <thead>
-          <tr><th>계정 · 자산</th><th>평가금액</th><th>원화 환산</th></tr>
-        </thead>
-        <tbody id="okxRows"></tbody>
-      </table>
-    </section>
+
+      <div>
+        <section class="panel" id="kiwoomCard">
+          <div class="sec-head">
+            <span class="sec-title">키움 5280-4774 보유 종목</span>
+            <span class="sec-meta" id="kwCardSub">-</span>
+          </div>
+          <div id="kwRows"></div>
+        </section>
+
+        <section class="panel" id="okxCard">
+          <div class="sec-head">
+            <span class="sec-title">OKX 보유 현황</span>
+            <span class="sec-meta" id="okxCardSub">-</span>
+          </div>
+          <div id="okxRows"></div>
+        </section>
+      </div>
+    </div>
   </main>
 
   <!-- TRADE JOURNAL VIEW -->
   <main id="journalView" style="display:none;">
     <section class="panel">
       <div class="sec-head">
-        <span class="sec-title">올해 손익 요약</span>
+        <span class="sec-title">올해 손익 · 승률 요약</span>
         <button class="btn-ghost" onclick="exportCsv()">CSV 저장</button>
       </div>
       <div class="stat-grid" id="journalKpi" style="margin-top:0;padding-top:0;border-top:none;"></div>
@@ -359,37 +394,30 @@
         <button class="pill-btn" onclick="setJTab('fills', this)">전체 체결</button>
       </div>
       <div class="period-row" style="margin-top:8px;">
-        <button class="p-btn active" onclick="setJSource('all', this)">전체 계좌</button>
+        <button class="p-btn active" onclick="setJSource('all', this)">전체</button>
         <button class="p-btn" onclick="setJSource('키움', this)">키움</button>
         <button class="p-btn" onclick="setJSource('OKX', this)">OKX</button>
+        <button class="p-btn" onclick="setJOutcome('win', this)">수익만</button>
+        <button class="p-btn" onclick="setJOutcome('loss', this)">손실만</button>
+        <button class="p-btn" onclick="setJOutcome('hold', this)">보유중</button>
       </div>
     </section>
 
-    <div id="jSymbolsPane"></div>
+    <div class="sym-grid" id="jSymbolsPane"></div>
 
     <section class="panel" id="jDailyPane" style="display:none;">
       <div class="sec-head">
         <span class="sec-title">일별 실현손익 (키움)</span>
         <span class="sec-meta" id="dailyPnlBadge">-</span>
       </div>
-      <table class="list-table">
-        <thead>
-          <tr><th>날짜 · 비용</th><th>매도 / 매수</th><th>실현손익</th></tr>
-        </thead>
-        <tbody id="dailyPnlRows"></tbody>
-      </table>
+      <div id="dailyPnlRows"></div>
     </section>
 
     <section class="panel" id="jFillsPane" style="display:none;">
       <div class="sec-head">
         <span class="sec-title">전체 체결 내역</span>
       </div>
-      <table class="list-table">
-        <thead>
-          <tr><th>일시 · 종목</th><th>수량 · 단가</th><th>금액 · 손익</th></tr>
-        </thead>
-        <tbody id="tradeRows"></tbody>
-      </table>
+      <div id="tradeRows"></div>
     </section>
   </main>
 
@@ -399,6 +427,7 @@
     let currentPeriod = "today";
     let jTab = "symbols";
     let jSource = "all";
+    let jOutcome = "all";
 
     function fmtKrw(n) {
       const sign = n > 0 ? "+" : "";
@@ -511,11 +540,16 @@
         const cls = s.pl > 0 ? "c-up" : s.pl < 0 ? "c-down" : "c-flat";
         const weight = ((s.evlt / kwTotalEvlt) * 100).toFixed(1);
         return `
-          <tr>
-            <td><div class="row-main">${s.name}</div><div class="row-sub">${s.qty}주 · 비중 ${weight}% · ${s.avg.toLocaleString()}→${s.cur.toLocaleString()}</div></td>
-            <td><div class="row-main">${s.evlt.toLocaleString()}원</div></td>
-            <td><div class="row-main ${cls}">${fmtPct(s.rt)}</div><div class="row-sub ${cls}">${fmtKrw(s.pl)}</div></td>
-          </tr>`;
+          <div class="holding-row">
+            <div class="h-left">
+              <div class="h-name">${s.name}</div>
+              <div class="h-sub">${s.qty}주 · 비중 ${weight}% · 평단 ${s.avg.toLocaleString()}→${s.cur.toLocaleString()}</div>
+            </div>
+            <div class="h-right">
+              <div class="h-val">${s.evlt.toLocaleString()}원</div>
+              <div class="h-pnl ${cls}">${fmtKrw(s.pl)} (${fmtPct(s.rt)})</div>
+            </div>
+          </div>`;
       }).join("");
 
       const okxSub = document.getElementById("okxCardSub");
@@ -523,11 +557,16 @@
       okxSub.className = "sec-meta " + (okx.pnl_usd > 0 ? "up" : okx.pnl_usd < 0 ? "down" : "flat");
 
       document.getElementById("okxRows").innerHTML = okx.holdings.map(h => `
-        <tr>
-          <td><div class="row-main">${h.name}</div><div class="row-sub">${h.sub}</div></td>
-          <td><div class="row-main">$${h.usd.toFixed(2)}</div></td>
-          <td><div class="row-main">${h.krw.toLocaleString()}원</div></td>
-        </tr>`).join("");
+        <div class="holding-row">
+          <div class="h-left">
+            <div class="h-name">${h.name}</div>
+            <div class="h-sub">${h.sub}</div>
+          </div>
+          <div class="h-right">
+            <div class="h-val">$${h.usd.toFixed(2)}</div>
+            <div class="h-pnl c-flat">${h.krw.toLocaleString()}원</div>
+          </div>
+        </div>`).join("");
 
       applyPeriod(currentPeriod);
     }
@@ -536,15 +575,23 @@
       jTab = tab;
       btn.parentElement.querySelectorAll(".pill-btn").forEach(b => b.classList.remove("active"));
       btn.classList.add("active");
-      document.getElementById("jSymbolsPane").style.display = tab === "symbols" ? "block" : "none";
+      document.getElementById("jSymbolsPane").style.display = tab === "symbols" ? "grid" : "none";
       document.getElementById("jDailyPane").style.display = tab === "daily" ? "block" : "none";
       document.getElementById("jFillsPane").style.display = tab === "fills" ? "block" : "none";
     }
 
     function setJSource(src, btn) {
       jSource = src;
-      btn.parentElement.querySelectorAll(".p-btn").forEach(b => b.classList.remove("active"));
+      btn.parentElement.querySelectorAll(".p-btn").slice(0, 3).forEach(b => b.classList.remove("active"));
       btn.classList.add("active");
+      renderJournal();
+    }
+
+    function setJOutcome(out, btn) {
+      const was = btn.classList.contains("active");
+      btn.parentElement.querySelectorAll(".p-btn").slice(3).forEach(b => b.classList.remove("active"));
+      jOutcome = was ? "all" : out;
+      if (!was) btn.classList.add("active");
       renderJournal();
     }
 
@@ -556,11 +603,15 @@
       const kwRealized = payload.kw_total_realized_pl || 0;
       const kwUnrealized = payload.latest.kiwoom.tot_pl_krw || 0;
 
+      const settled = summaries.filter(s => s.sell_qty > 0 && s.realized_pl !== 0);
+      const wins = settled.filter(s => s.realized_pl > 0).length;
+      const winRate = settled.length ? Math.round((wins / settled.length) * 100) : 0;
+
       document.getElementById("journalKpi").innerHTML = `
         <div class="stat-item"><div class="stat-k">키움 실현손익 (올해)</div><div class="stat-v ${kwRealized >= 0 ? 'c-up' : 'c-down'}">${fmtKrw(kwRealized)}</div></div>
         <div class="stat-item"><div class="stat-k">키움 현재 평가손익</div><div class="stat-v ${kwUnrealized >= 0 ? 'c-up' : 'c-down'}">${fmtKrw(kwUnrealized)}</div></div>
-        <div class="stat-item"><div class="stat-k">키움 합산 손익</div><div class="stat-v ${(kwRealized+kwUnrealized) >= 0 ? 'c-up' : 'c-down'}">${fmtKrw(kwRealized + kwUnrealized)}</div></div>
-        <div class="stat-item"><div class="stat-k">기록된 매매</div><div class="stat-v">${summaries.length}종목 · ${trades.length}건</div></div>
+        <div class="stat-item"><div class="stat-k">매도 승률 (키움+OKX)</div><div class="stat-v">${winRate}% (${wins}/${settled.length}종목)</div></div>
+        <div class="stat-item"><div class="stat-k">총 기록</div><div class="stat-v">${summaries.length}종목 · ${trades.length}건</div></div>
       `;
 
       const q = (document.getElementById("searchInput").value || "").trim().toLowerCase();
@@ -568,6 +619,9 @@
       const filteredSyms = summaries.filter(s => {
         if (jSource !== "all" && s.source !== jSource) return false;
         if (q && !s.symbol.toLowerCase().includes(q)) return false;
+        if (jOutcome === "win" && !(s.realized_pl > 0 || s.unrealized_pl > 0)) return false;
+        if (jOutcome === "loss" && !(s.realized_pl < 0 || s.unrealized_pl < 0)) return false;
+        if (jOutcome === "hold" && !(s.holding_qty > 0)) return false;
         return true;
       });
       document.getElementById("tradeCountBadge").textContent = filteredSyms.length + "종목";
@@ -576,21 +630,37 @@
         const isKrw = s.currency === "KRW";
         const hasSell = s.sell_qty > 0;
         const hasBuy = s.buy_qty > 0;
-        const mainPnl = hasSell ? s.realized_pl : s.unrealized_pl;
-        const mainRt = hasSell ? s.realized_rt : s.unrealized_rt;
-        const pnlLabel = hasSell ? "실현손익" : (s.holding_qty > 0 ? "평가손익" : "매수만 있음");
+        const isHolding = s.holding_qty > 0;
+        const mainPnl = isHolding ? s.unrealized_pl : (hasSell ? s.realized_pl : 0);
+        const mainRt = isHolding ? s.unrealized_rt : (hasSell ? s.realized_rt : 0);
         const cls = mainPnl > 0 ? "c-up" : mainPnl < 0 ? "c-down" : "c-flat";
-        const pnlText = hasSell || s.holding_qty > 0
-          ? (isKrw ? fmtKrw(mainPnl) : fmtUsd(mainPnl))
-          : "-";
-        const rtText = (hasSell && hasBuy) || s.holding_qty > 0 ? fmtPct(mainRt) : pnlLabel;
+
+        let pnlText = "-";
+        let rtText = "";
+        if (isHolding) {
+          pnlText = isKrw ? fmtKrw(s.unrealized_pl) : fmtUsd(s.unrealized_pl);
+          rtText = "보유 평가 " + fmtPct(s.unrealized_rt) + (s.realized_pl ? ` · 기실현 ${fmtKrw(s.realized_pl)}` : "");
+        } else if (hasSell && s.realized_pl !== 0) {
+          pnlText = isKrw ? fmtKrw(s.realized_pl) : fmtUsd(s.realized_pl);
+          rtText = "매도 실현 " + fmtPct(s.realized_rt);
+        } else if (hasSell) {
+          pnlText = "이전 보유분 매도";
+          rtText = "매수기록 기간 외";
+        }
 
         const buyLine = hasBuy
           ? (isKrw ? `${s.buy_qty.toLocaleString()}주 · 평균 ${s.avg_buy.toLocaleString()}원` : `${s.buy_qty.toFixed(2)} · 평균 $${s.avg_buy.toFixed(4)}`)
-          : "매수 기록 없음 (이전 보유)";
-        const sellLine = hasSell
-          ? (isKrw ? `${s.sell_qty.toLocaleString()}주 · 평균 ${s.avg_sell.toLocaleString()}원` : `${s.sell_qty.toFixed(2)} · 평균 $${s.avg_sell.toFixed(4)}`)
-          : (s.holding_qty > 0 ? `현재 ${s.holding_qty}주 보유 중` : "매도 없음");
+          : "기간 내 매수 없음";
+        let sellLine = "";
+        if (hasSell && isHolding) {
+          sellLine = isKrw ? `매도 ${s.sell_qty}주 / 보유 ${s.holding_qty}주` : `매도 ${s.sell_qty.toFixed(2)} / 보유`;
+        } else if (hasSell) {
+          sellLine = isKrw ? `${s.sell_qty.toLocaleString()}주 · 평균 ${s.avg_sell.toLocaleString()}원` : `${s.sell_qty.toFixed(2)} · 평균 $${s.avg_sell.toFixed(4)}`;
+        } else if (isHolding) {
+          sellLine = `현재 ${s.holding_qty}주 보유 중`;
+        } else {
+          sellLine = "매도 없음";
+        }
 
         const symTrades = trades.filter(t => t.source === s.source && t.symbol === s.symbol);
         const fillsHtml = symTrades.map(t => {
@@ -610,11 +680,11 @@
             <div class="sym-card-top">
               <div>
                 <div class="sym-name">${s.symbol}</div>
-                <div class="sym-sub">${s.source} · 최근 ${s.last_date} · ${s.trade_count}건 (눌러서 상세 보기)</div>
+                <div class="sym-sub">${s.source} · 최근 ${s.last_date} · ${s.trade_count}건</div>
               </div>
               <div class="sym-pnl-box">
                 <div class="sym-pnl-val ${cls}">${pnlText}</div>
-                <div class="sym-pnl-rt ${cls}">${hasSell ? "매도 실현 " + rtText : rtText}</div>
+                <div class="sym-pnl-rt ${cls}">${rtText}</div>
               </div>
             </div>
             <div class="sym-flow">
@@ -637,14 +707,19 @@
         const pxStr = isKrw ? t.price.toLocaleString() + "원" : "$" + t.price.toFixed(4);
         const qtyStr = isKrw ? t.qty.toLocaleString() + "주" : t.qty.toFixed(2);
         const pnlHtml = (t.side === "매도" && t.pnl)
-          ? `<div class="row-sub ${t.pnl >= 0 ? 'c-up' : 'c-down'}">실현 ${isKrw ? fmtKrw(t.pnl) : fmtUsd(t.pnl)}</div>`
-          : "";
+          ? `<div class="h-pnl ${t.pnl >= 0 ? 'c-up' : 'c-down'}">실현 ${isKrw ? fmtKrw(t.pnl) : fmtUsd(t.pnl)}</div>`
+          : `<div class="h-pnl c-flat">${pxStr}</div>`;
         return `
-          <tr>
-            <td><div class="row-main"><span class="side-tag ${sCls}">${t.side}</span>${t.symbol}</div><div class="row-sub">${t.source} · ${t.date} ${t.time}</div></td>
-            <td><div class="row-main">${qtyStr}</div><div class="row-sub">${pxStr}</div></td>
-            <td><div class="row-main">${amtStr}</div>${pnlHtml}</td>
-          </tr>`;
+          <div class="holding-row">
+            <div class="h-left">
+              <div class="h-name"><span class="side-tag ${sCls}">${t.side}</span>${t.symbol}</div>
+              <div class="h-sub">${t.source} · ${t.date} ${t.time} · ${qtyStr}</div>
+            </div>
+            <div class="h-right">
+              <div class="h-val">${amtStr}</div>
+              ${pnlHtml}
+            </div>
+          </div>`;
       }).join("");
 
       const pnlBadge = document.getElementById("dailyPnlBadge");
@@ -654,11 +729,15 @@
       document.getElementById("dailyPnlRows").innerHTML = daily.slice().reverse().map(d => {
         const cls = d.realized_pl > 0 ? "c-up" : d.realized_pl < 0 ? "c-down" : "c-flat";
         return `
-          <tr>
-            <td><div class="row-main">${d.date}</div><div class="row-sub">비용 ${(d.fee + d.tax).toLocaleString()}원</div></td>
-            <td><div class="row-sub">매도 ${d.sell_amt.toLocaleString()}원</div><div class="row-sub">매수 ${d.buy_amt.toLocaleString()}원</div></td>
-            <td><div class="row-main ${cls}">${fmtKrw(d.realized_pl)}</div></td>
-          </tr>`;
+          <div class="holding-row">
+            <div class="h-left">
+              <div class="h-name">${d.date}</div>
+              <div class="h-sub">매도 ${d.sell_amt.toLocaleString()} · 매수 ${d.buy_amt.toLocaleString()} · 비용 ${(d.fee + d.tax).toLocaleString()}원</div>
+            </div>
+            <div class="h-right">
+              <div class="h-val ${cls}">${fmtKrw(d.realized_pl)}</div>
+            </div>
+          </div>`;
       }).join("");
     }
 
@@ -726,11 +805,7 @@
       const labels = { today: "오늘", "1w": "1주", "1m": "1달", "2m": "2달", "3m": "3달", "6m": "6달", "1y": "1년", all: "전체" };
       const pts = filterByPeriod(period);
       updatePnlPill(pts, labels[period]);
-      document.getElementById("chartNote").textContent =
-        pts.length <= 1
-          ? `${labels[period]} 기준 · 매일 브리핑마다 자동 누적`
-          : `${labels[period]} · ${pts[0].date} ~ ${pts[pts.length - 1].date} (${pts.length}건)`;
-      renderChart(pts);
+      renderChart(pts, labels[period]);
     }
 
     function pickSingleDate(val) {
@@ -738,8 +813,7 @@
       const found = payload.history.filter(d => d.date === val);
       if (found.length) {
         updatePnlPill(found, val);
-        document.getElementById("chartNote").textContent = `${val} · ${getVal(found[0]).toLocaleString()}원`;
-        renderChart(found);
+        renderChart(found, val);
       } else {
         document.getElementById("chartNote").textContent = `${val} 기록 없음`;
       }
@@ -752,94 +826,85 @@
       const found = payload.history.filter(d => (!s || d.date >= s) && (!e || d.date <= e));
       if (found.length) {
         updatePnlPill(found, `${s}~${e}`);
-        document.getElementById("chartNote").textContent = `${s || "~"} ~ ${e || "~"} (${found.length}건)`;
-        renderChart(found);
+        renderChart(found, `${s}~${e}`);
       } else {
         document.getElementById("chartNote").textContent = "선택한 기간의 기록 없음";
       }
     }
 
-    function renderChart(points) {
+    function renderChart(points, label) {
       const svg = document.getElementById("chartSvg");
-      const w = 320, h = 120, padX = 12, padTop = 14, padBot = 14;
+      const w = 320, h = 110, padX = 10, padTop = 12, padBot = 14;
       svg.innerHTML = "";
 
       const hoverDate = document.getElementById("hoverDate");
       const hoverVal = document.getElementById("hoverVal");
+      const noteEl = document.getElementById("chartNote");
 
-      [padTop, (h - padBot + padTop) / 2, h - padBot].forEach(y => {
-        const g = document.createElementNS("http://www.w3.org/2000/svg", "line");
-        g.setAttribute("x1", padX); g.setAttribute("x2", w - padX);
-        g.setAttribute("y1", y); g.setAttribute("y2", y);
-        g.setAttribute("stroke", "rgba(22,22,21,0.06)");
-        g.setAttribute("stroke-dasharray", "2 3");
-        svg.appendChild(g);
-      });
+      // If asset history only has 1 snapshot so far, show cumulative realized PnL curve from daily_pnl!
+      if (points.length <= 1 && payload.daily_pnl && payload.daily_pnl.length > 1) {
+        let cum = 0;
+        const series = payload.daily_pnl.map(d => { cum += d.realized_pl; return { date: d.date, val: cum }; });
+        const vals = series.map(s => s.val);
+        const min = Math.min(...vals, 0), max = Math.max(...vals, 1);
+        const span = (max - min) || 1;
+        const coords = series.map((s, i) => ({
+          x: padX + (i / (series.length - 1)) * (w - padX * 2),
+          y: h - padBot - ((s.val - min) / span) * (h - padTop - padBot),
+          item: s
+        }));
+        const linePts = coords.map(c => `${c.x.toFixed(1)},${c.y.toFixed(1)}`).join(" ");
+        const areaPts = `${coords[0].x.toFixed(1)},${h - padBot} ${linePts} ${coords[coords.length - 1].x.toFixed(1)},${h - padBot}`;
 
-      if (!points.length) return;
-      if (points.length === 1) {
-        const cx = w / 2, cy = (h - padBot + padTop) / 2;
-        hoverDate.textContent = points[0].date;
-        hoverVal.textContent = getVal(points[0]).toLocaleString() + "원";
-        const c = document.createElementNS("http://www.w3.org/2000/svg", "circle");
-        c.setAttribute("cx", cx); c.setAttribute("cy", cy); c.setAttribute("r", 4.5);
-        c.setAttribute("fill", "#161615");
-        svg.appendChild(c);
+        const defs = document.createElementNS("http://www.w3.org/2000/svg", "defs");
+        defs.innerHTML = `<linearGradient id="cumG" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#161615" stop-opacity="0.12"/><stop offset="100%" stop-color="#161615" stop-opacity="0"/></linearGradient>`;
+        svg.appendChild(defs);
+
+        const polyArea = document.createElementNS("http://www.w3.org/2000/svg", "polygon");
+        polyArea.setAttribute("fill", "url(#cumG)"); polyArea.setAttribute("points", areaPts);
+        svg.appendChild(polyArea);
+
+        const poly = document.createElementNS("http://www.w3.org/2000/svg", "polyline");
+        poly.setAttribute("fill", "none"); poly.setAttribute("stroke", "#161615");
+        poly.setAttribute("stroke-width", "1.8"); poly.setAttribute("points", linePts);
+        svg.appendChild(poly);
+
+        hoverDate.textContent = `키움 누적 실현손익 (${series[0].date} ~ ${series[series.length - 1].date})`;
+        hoverVal.textContent = fmtKrw(cum);
+        noteEl.textContent = "총 자산 스냅샷은 오늘부터 매일 자동 누적됩니다 (현재는 올해 누적 실현손익 추이 표시)";
+
+        const onP = (cx) => {
+          const rect = svg.getBoundingClientRect();
+          const sx = ((cx - rect.left) / rect.width) * w;
+          let near = coords[0], best = Math.abs(sx - near.x);
+          for (const c of coords) { const d = Math.abs(sx - c.x); if (d < best) { best = d; near = c; } }
+          hoverDate.textContent = near.item.date;
+          hoverVal.textContent = fmtKrw(near.item.val);
+        };
+        svg.onpointermove = (e) => onP(e.clientX);
+        svg.onpointerdown = (e) => onP(e.clientX);
         return;
       }
 
+      if (!points.length) return;
       const last = points[points.length - 1];
       hoverDate.textContent = last.date;
       hoverVal.textContent = getVal(last).toLocaleString() + "원";
+      noteEl.textContent = `${label} · ${points[0].date} ~ ${last.date} (${points.length}건)`;
 
       const vals = points.map(getVal);
       const min = Math.min(...vals), max = Math.max(...vals);
       const span = (max - min) || 1;
-      const coords = points.map((p, i) => {
-        const x = padX + (i / (points.length - 1)) * (w - padX * 2);
-        const y = h - padBot - ((getVal(p) - min) / span) * (h - padTop - padBot);
-        return { x, y, point: p };
-      });
-
+      const coords = points.map((p, i) => ({
+        x: padX + (i / (points.length - 1)) * (w - padX * 2),
+        y: h - padBot - ((getVal(p) - min) / span) * (h - padTop - padBot),
+        point: p
+      }));
       const linePts = coords.map(c => `${c.x.toFixed(1)},${c.y.toFixed(1)}`).join(" ");
       const poly = document.createElementNS("http://www.w3.org/2000/svg", "polyline");
-      poly.setAttribute("fill", "none");
-      poly.setAttribute("stroke", "#161615");
-      poly.setAttribute("stroke-width", "1.8");
-      poly.setAttribute("stroke-linejoin", "round");
-      poly.setAttribute("points", linePts);
+      poly.setAttribute("fill", "none"); poly.setAttribute("stroke", "#161615");
+      poly.setAttribute("stroke-width", "1.8"); poly.setAttribute("points", linePts);
       svg.appendChild(poly);
-
-      const guide = document.createElementNS("http://www.w3.org/2000/svg", "line");
-      guide.setAttribute("y1", padTop); guide.setAttribute("y2", h - padBot);
-      guide.setAttribute("stroke", "rgba(22,22,21,0.25)"); guide.setAttribute("stroke-width", "1");
-      guide.style.display = "none";
-      svg.appendChild(guide);
-
-      const dot = document.createElementNS("http://www.w3.org/2000/svg", "circle");
-      dot.setAttribute("r", "4"); dot.setAttribute("fill", "#161615");
-      dot.setAttribute("stroke", "#fff"); dot.setAttribute("stroke-width", "1.5");
-      dot.style.display = "none";
-      svg.appendChild(dot);
-
-      const onPointer = (clientX) => {
-        const rect = svg.getBoundingClientRect();
-        const svgX = ((clientX - rect.left) / rect.width) * w;
-        let nearest = coords[0], best = Math.abs(svgX - nearest.x);
-        for (const c of coords) {
-          const d = Math.abs(svgX - c.x);
-          if (d < best) { best = d; nearest = c; }
-        }
-        guide.setAttribute("x1", nearest.x); guide.setAttribute("x2", nearest.x);
-        guide.style.display = "block";
-        dot.setAttribute("cx", nearest.x); dot.setAttribute("cy", nearest.y);
-        dot.style.display = "block";
-        hoverDate.textContent = nearest.point.label || nearest.point.date;
-        hoverVal.textContent = getVal(nearest.point).toLocaleString() + "원";
-      };
-
-      svg.onpointermove = (e) => onPointer(e.clientX);
-      svg.onpointerdown = (e) => onPointer(e.clientX);
     }
 
     loadData();
