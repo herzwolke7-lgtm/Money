@@ -433,17 +433,10 @@
     <section class="panel">
       <div class="sec-head">
         <span class="sec-title">이번 주 추천 5게임</span>
-        <div style="display:flex;gap:6px;align-items:center;">
-          <select id="lotStrategy" style="height:28px;border:1px solid var(--hairline-2);border-radius:6px;padding:0 8px;font-family:inherit;font-size:12px;background:var(--surface);color:var(--ink-2);">
-            <option value="balanced">균형 (핫+콜드+밸런스)</option>
-            <option value="hot">최다 출현 위주</option>
-            <option value="cold">미출현 반등</option>
-          </select>
-          <button class="pill-btn active" style="height:28px;padding:0 12px;" onclick="generateLotteryPicks()">다시 뽑기</button>
-        </div>
+        <span class="meta-time" id="lotPickModel">최적화 모델 자동 추출</span>
       </div>
       <div id="lotGenRows">
-        <div style="padding:12px 0;color:var(--ink-3);font-size:13px;">위 <strong>5게임 추천</strong> 버튼을 누르면 공식 데이터 패턴으로 번호를 뽑아드려요</div>
+        <div style="padding:12px 0;color:var(--ink-3);font-size:13px;">추천 번호를 불러오는 중입니다</div>
       </div>
     </section>
 
