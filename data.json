@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-11-24 14:02",
+  "updated_at": "2026-11-24 14:03",
   "history": [
     {
       "ts": "2026-11-23T22:39:03+09:00",
@@ -15,59 +15,59 @@
       "okx_pnl_pct": -0.02
     },
     {
-      "ts": "2026-11-24T14:02:00+09:00",
+      "ts": "2026-11-24T14:03:04+09:00",
       "date": "2026-11-24",
-      "label": "11/24 14:02",
-      "total_krw": 7079930,
-      "kiwoom_krw": 6652724,
+      "label": "11/24 14:03",
+      "total_krw": 7067516,
+      "kiwoom_krw": 6640310,
       "okx_krw": 427206,
       "okx_usd": 318.22,
-      "kiwoom_pnl_krw": -60804,
-      "kiwoom_pnl_pct": -3.9,
+      "kiwoom_pnl_krw": -72874,
+      "kiwoom_pnl_pct": -4.67,
       "okx_pnl_usd": -0.05,
       "okx_pnl_pct": -0.02
     }
   ],
   "latest": {
     "kiwoom": {
-      "tot_prft_rt": -3.9,
+      "tot_prft_rt": -4.67,
       "ord_alow_krw": 0,
-      "total_est_krw": 6652724,
+      "total_est_krw": 6640310,
       "stocks": [
         {
-          "pl": 1590,
+          "pl": -5640,
           "name": "노랑풍선",
           "qty": 69,
           "avg": 4541,
-          "evlt": 315675,
-          "cur": 4575,
-          "rt": 0.51
+          "evlt": 308430,
+          "cur": 4470,
+          "rt": -1.8
         },
         {
-          "pl": -43101,
+          "pl": -47223,
           "name": "글로벌텍스프리",
           "qty": 138,
           "avg": 6118,
-          "evlt": 803160,
-          "cur": 5820,
-          "rt": -5.1
+          "evlt": 799020,
+          "cur": 5790,
+          "rt": -5.59
         },
         {
-          "pl": -19293,
+          "pl": -20011,
           "name": "마녀공장",
           "qty": 24,
           "avg": 16767,
-          "evlt": 384000,
-          "cur": 16000,
-          "rt": -4.79
+          "evlt": 383280,
+          "cur": 15970,
+          "rt": -4.97
         }
       ],
       "d2_deposit_krw": 5152760,
       "tot_pur_krw": 1560204,
-      "tot_evlt_krw": 1502835,
+      "tot_evlt_krw": 1490730,
       "account": "5280-4774",
       "deposit_krw": 6838737,
-      "tot_pl_krw": -60804
+      "tot_pl_krw": -72874
     },
     "okx": {
       "total_usd": 318.22,
@@ -5999,8 +5999,8 @@
       "realized_pl": 0.0,
       "realized_rt": 0.0,
       "holding_qty": 69,
-      "unrealized_pl": 1590,
-      "unrealized_rt": 0.51,
+      "unrealized_pl": -5640,
+      "unrealized_rt": -1.8,
       "last_date": "2026-11-24",
       "trade_count": 1
     },
@@ -6018,8 +6018,8 @@
       "realized_pl": 0.0,
       "realized_rt": 0.0,
       "holding_qty": 138,
-      "unrealized_pl": -43101,
-      "unrealized_rt": -5.1,
+      "unrealized_pl": -47223,
+      "unrealized_rt": -5.59,
       "last_date": "2026-11-24",
       "trade_count": 1
     },
@@ -6037,8 +6037,8 @@
       "realized_pl": 0.0,
       "realized_rt": 0.0,
       "holding_qty": 24,
-      "unrealized_pl": -19293,
-      "unrealized_rt": -4.79,
+      "unrealized_pl": -20011,
+      "unrealized_rt": -4.97,
       "last_date": "2026-11-24",
       "trade_count": 2
     },
