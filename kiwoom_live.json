@@ -1,36 +1,19 @@
 {
-    "kw_total_realized_pl":  -116571,
-    "updated_at":  "2026-11-24 15:30",
+    "kw_total_realized_pl":  -154163,
+    "updated_at":  "2026-11-24 15:35",
     "kiwoom":  {
-                   "tot_prft_rt":  -3.56,
+                   "tot_prft_rt":  0,
                    "ord_alow_krw":  0,
-                   "total_est_krw":  6660379,
+                   "total_est_krw":  6662091,
                    "stocks":  [
-                                  {
-                                      "pl":  557,
-                                      "name":  "노랑풍선",
-                                      "qty":  69,
-                                      "avg":  4541,
-                                      "evlt":  314640,
-                                      "cur":  4560,
-                                      "rt":  0.18
-                                  },
-                                  {
-                                      "pl":  -41724,
-                                      "name":  "글로벌텍스프리",
-                                      "qty":  138,
-                                      "avg":  6118,
-                                      "evlt":  804540,
-                                      "cur":  5830,
-                                      "rt":  -4.94
-                                  }
+
                               ],
-                   "d2_deposit_krw":  5543597,
-                   "tot_pur_krw":  1157789,
-                   "tot_evlt_krw":  1119180,
+                   "d2_deposit_krw":  6662091,
+                   "tot_pur_krw":  0,
+                   "tot_evlt_krw":  0,
                    "account":  "5280-4774",
                    "deposit_krw":  6838737,
-                   "tot_pl_krw":  -41167
+                   "tot_pl_krw":  0
                },
     "trades":  [
                    {
@@ -3053,6 +3036,22 @@
                        "source":  "키움",
                        "symbol":  "노랑풍선",
                        "qty":  69,
+                       "instType":  "주식",
+                       "date":  "2026-11-24",
+                       "pnl":  0
+                   },
+                   {
+                       "tax":  0,
+                       "id":  "kw_today_0346492",
+                       "time":  "15:22:13",
+                       "amount":  808680,
+                       "price":  5860,
+                       "currency":  "KRW",
+                       "side":  "매도",
+                       "fee":  0,
+                       "source":  "키움",
+                       "symbol":  "글로벌텍스프리",
+                       "qty":  138,
                        "instType":  "주식",
                        "date":  "2026-11-24",
                        "pnl":  0
