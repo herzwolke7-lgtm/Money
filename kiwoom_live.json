@@ -1,45 +1,45 @@
 {
-    "kw_total_realized_pl":  -68216,
-    "updated_at":  "2026-11-24 10:35",
+    "kw_total_realized_pl":  -103063,
+    "updated_at":  "2026-11-24 10:40",
     "kiwoom":  {
-                   "tot_prft_rt":  -4.04,
+                   "tot_prft_rt":  -3.71,
                    "ord_alow_krw":  0,
-                   "total_est_krw":  6650988,
+                   "total_est_krw":  6655256,
                    "stocks":  [
                                   {
-                                      "pl":  -2197,
+                                      "pl":  -1164,
                                       "name":  "노랑풍선",
                                       "qty":  69,
                                       "avg":  4541,
-                                      "evlt":  311880,
-                                      "cur":  4520,
-                                      "rt":  -0.7
+                                      "evlt":  312915,
+                                      "cur":  4535,
+                                      "rt":  -0.37
                                   },
                                   {
-                                      "pl":  -72440,
+                                      "pl":  -34837,
                                       "name":  "글로벌텍스프리",
-                                      "qty":  276,
+                                      "qty":  138,
                                       "avg":  6118,
-                                      "evlt":  1620120,
-                                      "cur":  5870,
-                                      "rt":  -4.29
+                                      "evlt":  811440,
+                                      "cur":  5880,
+                                      "rt":  -4.13
                                   },
                                   {
-                                      "pl":  -22406,
+                                      "pl":  -21927,
                                       "name":  "마녀공장",
                                       "qty":  24,
                                       "avg":  16767,
-                                      "evlt":  380880,
-                                      "cur":  15870,
-                                      "rt":  -5.57
+                                      "evlt":  381360,
+                                      "cur":  15890,
+                                      "rt":  -5.45
                                   }
                               ],
-                   "d2_deposit_krw":  4343062,
-                   "tot_pur_krw":  2404619,
-                   "tot_evlt_krw":  2312880,
+                   "d2_deposit_krw":  5152760,
+                   "tot_pur_krw":  1560204,
+                   "tot_evlt_krw":  1505715,
                    "account":  "5280-4774",
                    "deposit_krw":  6838737,
-                   "tot_pl_krw":  -97043
+                   "tot_pl_krw":  -57928
                },
     "trades":  [
                    {
@@ -2982,6 +2982,22 @@
                        "source":  "키움",
                        "symbol":  "파수AI",
                        "qty":  65,
+                       "instType":  "주식",
+                       "date":  "2026-11-24",
+                       "pnl":  0
+                   },
+                   {
+                       "tax":  0,
+                       "id":  "kw_today_0060138",
+                       "time":  "09:02:11",
+                       "amount":  811440,
+                       "price":  5880,
+                       "currency":  "KRW",
+                       "side":  "매도",
+                       "fee":  0,
+                       "source":  "키움",
+                       "symbol":  "글로벌텍스프리",
+                       "qty":  138,
                        "instType":  "주식",
                        "date":  "2026-11-24",
                        "pnl":  0
