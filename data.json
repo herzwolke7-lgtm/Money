@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-11-24 10:01",
+  "updated_at": "2026-11-24 12:00",
   "history": [
     {
       "ts": "2026-11-23T22:39:03+09:00",
@@ -15,59 +15,59 @@
       "okx_pnl_pct": -0.02
     },
     {
-      "ts": "2026-11-24T10:01:37+09:00",
+      "ts": "2026-11-24T12:00:40+09:00",
       "date": "2026-11-24",
-      "label": "11/24 10:01",
-      "total_krw": 7061334,
-      "kiwoom_krw": 6634546,
+      "label": "11/24 12:00",
+      "total_krw": 7079512,
+      "kiwoom_krw": 6652724,
       "okx_krw": 426788,
       "okx_usd": 318.16,
-      "kiwoom_pnl_krw": -110740,
-      "kiwoom_pnl_pct": -4.61,
+      "kiwoom_pnl_krw": -60804,
+      "kiwoom_pnl_pct": -3.9,
       "okx_pnl_usd": -0.05,
       "okx_pnl_pct": -0.02
     }
   ],
   "latest": {
     "kiwoom": {
-      "tot_prft_rt": -4.61,
+      "tot_prft_rt": -3.9,
       "ord_alow_krw": 0,
-      "total_est_krw": 6634546,
+      "total_est_krw": 6652724,
       "stocks": [
         {
-          "pl": 4345,
+          "pl": 1590,
           "name": "노랑풍선",
           "qty": 69,
           "avg": 4541,
-          "evlt": 318435,
-          "cur": 4615,
-          "rt": 1.39
+          "evlt": 315675,
+          "cur": 4575,
+          "rt": 0.51
         },
         {
-          "pl": -91721,
+          "pl": -43101,
           "name": "글로벌텍스프리",
-          "qty": 276,
+          "qty": 138,
           "avg": 6118,
-          "evlt": 1600800,
-          "cur": 5800,
-          "rt": -5.43
+          "evlt": 803160,
+          "cur": 5820,
+          "rt": -5.1
         },
         {
-          "pl": -23364,
+          "pl": -19293,
           "name": "마녀공장",
           "qty": 24,
           "avg": 16767,
-          "evlt": 379920,
-          "cur": 15830,
-          "rt": -5.81
+          "evlt": 384000,
+          "cur": 16000,
+          "rt": -4.79
         }
       ],
-      "d2_deposit_krw": 4343062,
-      "tot_pur_krw": 2404619,
-      "tot_evlt_krw": 2299155,
+      "d2_deposit_krw": 5152760,
+      "tot_pur_krw": 1560204,
+      "tot_evlt_krw": 1502835,
       "account": "5280-4774",
       "deposit_krw": 6838737,
-      "tot_pl_krw": -110740
+      "tot_pl_krw": -60804
     },
     "okx": {
       "total_usd": 318.16,
@@ -137,6 +137,22 @@
       "source": "키움",
       "symbol": "마녀공장",
       "qty": 49,
+      "instType": "주식",
+      "date": "2026-11-24",
+      "pnl": 0
+    },
+    {
+      "tax": 0,
+      "id": "kw_today_0060138",
+      "time": "09:02:11",
+      "amount": 811440,
+      "price": 5880,
+      "currency": "KRW",
+      "side": "매도",
+      "fee": 0,
+      "source": "키움",
+      "symbol": "글로벌텍스프리",
+      "qty": 138,
       "instType": "주식",
       "date": "2026-11-24",
       "pnl": 0
@@ -5967,7 +5983,7 @@
     }
   ],
   "daily_pnl": [],
-  "kw_total_realized_pl": -68216,
+  "kw_total_realized_pl": -103063,
   "symbol_summaries": [
     {
       "source": "키움",
@@ -5983,8 +5999,27 @@
       "realized_pl": 0.0,
       "realized_rt": 0.0,
       "holding_qty": 69,
-      "unrealized_pl": 4345,
-      "unrealized_rt": 1.39,
+      "unrealized_pl": 1590,
+      "unrealized_rt": 0.51,
+      "last_date": "2026-11-24",
+      "trade_count": 1
+    },
+    {
+      "source": "키움",
+      "symbol": "글로벌텍스프리",
+      "currency": "KRW",
+      "buy_qty": 0.0,
+      "buy_amt": 0.0,
+      "avg_buy": 0.0,
+      "sell_qty": 138.0,
+      "sell_amt": 811440.0,
+      "avg_sell": 5880.0,
+      "fee_tax": 0.0,
+      "realized_pl": 0.0,
+      "realized_rt": 0.0,
+      "holding_qty": 138,
+      "unrealized_pl": -43101,
+      "unrealized_rt": -5.1,
       "last_date": "2026-11-24",
       "trade_count": 1
     },
@@ -6002,8 +6037,8 @@
       "realized_pl": 0.0,
       "realized_rt": 0.0,
       "holding_qty": 24,
-      "unrealized_pl": -23364,
-      "unrealized_rt": -5.81,
+      "unrealized_pl": -19293,
+      "unrealized_rt": -4.79,
       "last_date": "2026-11-24",
       "trade_count": 2
     },
