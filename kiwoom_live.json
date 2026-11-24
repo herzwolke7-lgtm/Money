@@ -1,45 +1,45 @@
 {
     "kw_total_realized_pl":  -103063,
-    "updated_at":  "2026-11-24 14:40",
+    "updated_at":  "2026-11-24 14:45",
     "kiwoom":  {
-                   "tot_prft_rt":  -3.76,
+                   "tot_prft_rt":  -3.68,
                    "ord_alow_krw":  0,
-                   "total_est_krw":  6654492,
+                   "total_est_krw":  6655794,
                    "stocks":  [
                                   {
-                                      "pl":  -4263,
+                                      "pl":  -2542,
                                       "name":  "노랑풍선",
                                       "qty":  69,
                                       "avg":  4541,
-                                      "evlt":  309810,
-                                      "cur":  4490,
-                                      "rt":  -1.36
+                                      "evlt":  311535,
+                                      "cur":  4515,
+                                      "rt":  -0.81
                                   },
                                   {
-                                      "pl":  -38969,
+                                      "pl":  -40346,
                                       "name":  "글로벌텍스프리",
                                       "qty":  138,
                                       "avg":  6118,
-                                      "evlt":  807300,
-                                      "cur":  5850,
-                                      "rt":  -4.61
+                                      "evlt":  805920,
+                                      "cur":  5840,
+                                      "rt":  -4.78
                                   },
                                   {
-                                      "pl":  -15460,
+                                      "pl":  -14502,
                                       "name":  "마녀공장",
                                       "qty":  24,
                                       "avg":  16767,
-                                      "evlt":  387840,
-                                      "cur":  16160,
-                                      "rt":  -3.84
+                                      "evlt":  388800,
+                                      "cur":  16200,
+                                      "rt":  -3.6
                                   }
                               ],
                    "d2_deposit_krw":  5152760,
                    "tot_pur_krw":  1560204,
-                   "tot_evlt_krw":  1504950,
+                   "tot_evlt_krw":  1506255,
                    "account":  "5280-4774",
                    "deposit_krw":  6838737,
-                   "tot_pl_krw":  -58692
+                   "tot_pl_krw":  -57390
                },
     "trades":  [
                    {
