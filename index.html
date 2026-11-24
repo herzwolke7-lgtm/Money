@@ -266,6 +266,9 @@
     @media (max-width: 640px) {
       .routine-strip { grid-template-columns: repeat(2, 1fr); }
       .routine-strip .routine-chip:last-child { grid-column: span 2; }
+      /* 섹션 헤더: 좁은 화면에서 제목과 갱신시각이 한 줄에 눌려 날짜가 중간에서 끊기는 것 방지 */
+      .sec-head { flex-wrap: wrap; align-items: flex-start; }
+      .sec-head .meta-time { flex-basis: 100%; white-space: nowrap; font-size: 11px; }
     }
     .routine-chip {
       background: var(--surface); border: 1px solid var(--hairline); border-radius: 8px;
