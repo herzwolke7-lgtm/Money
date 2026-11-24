@@ -1,36 +1,36 @@
 {
     "kw_total_realized_pl":  -114700,
-    "updated_at":  "2026-11-24 15:10",
+    "updated_at":  "2026-11-24 15:15",
     "kiwoom":  {
-                   "tot_prft_rt":  -3.67,
+                   "tot_prft_rt":  -3.5,
                    "ord_alow_krw":  0,
-                   "total_est_krw":  6659003,
+                   "total_est_krw":  6661068,
                    "stocks":  [
                                   {
-                                      "pl":  -2197,
+                                      "pl":  -1509,
                                       "name":  "노랑풍선",
                                       "qty":  69,
                                       "avg":  4541,
-                                      "evlt":  311880,
-                                      "cur":  4520,
-                                      "rt":  -0.7
+                                      "evlt":  312570,
+                                      "cur":  4530,
+                                      "rt":  -0.48
                                   },
                                   {
-                                      "pl":  -40346,
+                                      "pl":  -38969,
                                       "name":  "글로벌텍스프리",
                                       "qty":  138,
                                       "avg":  6118,
-                                      "evlt":  805920,
-                                      "cur":  5840,
-                                      "rt":  -4.78
+                                      "evlt":  807300,
+                                      "cur":  5850,
+                                      "rt":  -4.61
                                   }
                               ],
                    "d2_deposit_krw":  5543597,
                    "tot_pur_krw":  1157789,
-                   "tot_evlt_krw":  1117800,
+                   "tot_evlt_krw":  1119870,
                    "account":  "5280-4774",
                    "deposit_krw":  6838737,
-                   "tot_pl_krw":  -42543
+                   "tot_pl_krw":  -40478
                },
     "trades":  [
                    {
