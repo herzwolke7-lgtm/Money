@@ -2272,6 +2272,20 @@
     }
 
     loadData();
+
+    // 탭 딥링크: /Money/#seo, /Money/#notes 로 바로 열 수 있게
+    document.addEventListener("DOMContentLoaded", function () {
+      var h = (location.hash || "").replace("#", "");
+      if (h !== "seo" && h !== "notes") return;
+      var grp = Array.prototype.find.call(document.querySelectorAll(".seg-btn"), function (b) {
+        return b.textContent.trim() === "메모·SEO";
+      });
+      setGroup("ops", grp);
+      var sub = Array.prototype.find.call(document.querySelectorAll("#opsSubNav .pill-btn"), function (b) {
+        return h === "seo" ? b.textContent.indexOf("SEO") >= 0 : b.textContent.indexOf("메모") >= 0;
+      });
+      setMode(h, sub);
+    });
   </script>
 </body>
 </html>
