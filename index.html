@@ -112,6 +112,16 @@
     .stat-k { font-size: 11px; color: var(--ink-3); font-weight: 500; }
     .stat-v { font-size: 14px; font-weight: 500; margin-top: 2px; }
     .stat-s { font-size: 10px; color: var(--ink-3); margin-top: 2px; }
+    .pnl-comp-row {
+      display: grid; grid-template-columns: 76px 1fr 1fr; gap: 8px; align-items: center;
+      padding: 9px 0; border-bottom: 1px solid var(--hairline); font-size: 12px;
+      font-variant-numeric: tabular-nums;
+    }
+    .pnl-comp-row:last-child { border-bottom: none; }
+    .pnl-comp-head { font-size: 11px; color: var(--ink-3); font-weight: 500; padding-top: 2px; }
+    .pnl-comp-k { color: var(--ink-2); font-weight: 500; }
+    .pnl-comp-v { text-align: right; font-weight: 500; overflow-wrap: anywhere; }
+    .pnl-comp-sub { display: block; font-size: 10px; color: var(--ink-3); font-weight: 400; margin-top: 1px; }
 
     .period-row { display: flex; gap: 4px; margin-top: 14px; overflow-x: auto; }
     .period-row::-webkit-scrollbar { display: none; }
@@ -426,6 +436,14 @@
               </div>
             </div>
           </div>
+        </section>
+
+        <section class="panel" id="periodPnlTableCard">
+          <div class="sec-head">
+            <span class="sec-title">기간별 손익 비교</span>
+            <span class="sec-meta" id="periodCompSub">실현손익 · 총 자산</span>
+          </div>
+          <div id="periodCompRows"></div>
         </section>
       </div>
 
@@ -1335,6 +1353,7 @@
       const okxPct = (100 - parseFloat(kwPct)).toFixed(1);
       document.getElementById("allocKwBar").style.width = kwPct + "%";
       document.getElementById("allocOkxBar").style.width = okxPct + "%";
+      renderPeriodComparison();
       document.getElementById("allocKwLabel").textContent = "키움 " + kwPct + "%";
       document.getElementById("allocOkxLabel").textContent = "OKX " + okxPct + "%";
 
@@ -1725,11 +1744,85 @@
       return filtered.map(s => { cum += s.daily; return { date: s.date, daily: s.daily, cum }; });
     }
 
+    function renderPeriodComparison() {
+      const box = document.getElementById("periodCompRows");
+      if (!box || !payload) return;
+      const fullSeries = buildRealizedSeries(currentAcct);
+      const hist = payload.history || [];
+      const latestHist = hist[hist.length - 1] || {};
+      const latestDateStr = latestHist.date || new Date().toISOString().slice(0, 10);
+      const baseMs = new Date(latestDateStr + "T00:00:00").getTime();
+
+      const curAsset = currentAcct === "okx"
+        ? (payload.latest.okx.total_usd || 0)
+        : (currentAcct === "kiwoom" ? (payload.latest.kiwoom.total_est_krw || 0) : (latestHist.total_krw || 0));
+
+      const rows = [
+        { key: "yesterday", label: "어제 대비", days: 1 },
+        { key: "1w", label: "1주 전 대비", days: 7 },
+        { key: "1m", label: "1달 전 대비", days: 30 },
+        { key: "2m", label: "2달 전 대비", days: 60 },
+        { key: "3m", label: "3달 전 대비", days: 90 },
+        { key: "6m", label: "6달 전 대비", days: 180 },
+        { key: "1y", label: "1년 전 대비", days: 365 },
+        { key: "all", label: "전체 누적", days: 99999 }
+      ];
+
+      let html = `<div class="pnl-comp-row pnl-comp-head">
+        <div>기간</div>
+        <div style="text-align:right;">실현손익 (매도 확정)</div>
+        <div style="text-align:right;">총 자산 변화</div>
+      </div>`;
+
+      rows.forEach(r => {
+        const cutoffStr = r.days >= 99999 ? "0000-00-00" : new Date(baseMs - r.days * 86400000).toISOString().slice(0, 10);
+        const scoped = fullSeries.filter(s => s.date >= cutoffStr);
+        const realizedSum = scoped.reduce((acc, s) => acc + s.daily, 0);
+        const rCls = realizedSum > 0 ? "up" : (realizedSum < 0 ? "down" : "flat");
+        const rText = !scoped.length
+          ? "거래 없음"
+          : (currentAcct === "okx" ? fmtUsd(realizedSum) : fmtKrw(realizedSum));
+        const rPct = (curAsset > 0 && scoped.length) ? fmtPct((realizedSum / curAsset) * 100) : "";
+
+        // Asset snapshot comparison: find snapshot on or before cutoffStr (for yesterday, exact previous day or earlier)
+        let snapMatch = null;
+        if (r.days >= 99999 && hist.length >= 2) {
+          snapMatch = hist[0];
+        } else if (hist.length >= 2) {
+          for (let i = hist.length - 2; i >= 0; i--) {
+            if (hist[i].date <= cutoffStr) { snapMatch = hist[i]; break; }
+          }
+        }
+        let assetHtml = `<span class="pnl-comp-v flat">-<span class="pnl-comp-sub">11/23부터 누적</span></span>`;
+        if (snapMatch) {
+          const prevVal = getVal(snapMatch);
+          const diff = curAsset - prevVal;
+          const aCls = diff > 0 ? "up" : (diff < 0 ? "down" : "flat");
+          const dText = currentAcct === "okx" ? fmtUsd(diff) : fmtKrw(diff);
+          const dPct = prevVal ? fmtPct((diff / prevVal) * 100) : "";
+          assetHtml = `<span class="pnl-comp-v ${aCls}">${dText}<span class="pnl-comp-sub">${dPct} (${snapMatch.date.slice(5)} 대비)</span></span>`;
+        }
+
+        html += `<div class="pnl-comp-row">
+          <div class="pnl-comp-k">${r.label}</div>
+          <div class="pnl-comp-v ${rCls}">${rText}${rPct ? `<span class="pnl-comp-sub">${rPct}</span>` : ""}</div>
+          ${assetHtml}
+        </div>`;
+      });
+
+      box.innerHTML = html;
+    }
+
     function applyPeriod(period) {
       if (!payload) return;
       const labels = { today: "오늘", "1w": "1주", "1m": "1달", "2m": "2달", "3m": "3달", "6m": "6달", "1y": "1년", all: "전체" };
       const label = labels[period];
-      const histPts = filterHistByPeriod(period);
+      const hist = payload.history || [];
+      const daysMap = { today: 0, "1w": 7, "1m": 30, "2m": 60, "3m": 90, "6m": 180, "1y": 365, all: 99999 };
+      const latestDateStr = hist.length ? hist[hist.length - 1].date : new Date().toISOString().slice(0, 10);
+      const targetCutoff = new Date(new Date(latestDateStr + "T00:00:00").getTime() - (daysMap[period] || 0) * 86400000).toISOString().slice(0, 10);
+      const hasFullHistSpan = hist.length >= 2 && period !== "today" && hist[0].date <= targetCutoff;
+      const histPts = hasFullHistSpan ? filterHistByPeriod(period) : [];
 
       if (histPts.length >= 2) {
         const start = getVal(histPts[0]);
