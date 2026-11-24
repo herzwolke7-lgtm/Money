@@ -1,10 +1,10 @@
 {
     "kw_total_realized_pl":  -103063,
-    "updated_at":  "2026-11-24 14:30",
+    "updated_at":  "2026-11-24 14:35",
     "kiwoom":  {
-                   "tot_prft_rt":  -3.72,
+                   "tot_prft_rt":  -3.62,
                    "ord_alow_krw":  0,
-                   "total_est_krw":  6655075,
+                   "total_est_krw":  6656693,
                    "stocks":  [
                                   {
                                       "pl":  -1164,
@@ -16,30 +16,30 @@
                                       "rt":  -0.37
                                   },
                                   {
-                                      "pl":  -41724,
+                                      "pl":  -40346,
                                       "name":  "글로벌텍스프리",
                                       "qty":  138,
                                       "avg":  6118,
-                                      "evlt":  804540,
-                                      "cur":  5830,
-                                      "rt":  -4.94
+                                      "evlt":  805920,
+                                      "cur":  5840,
+                                      "rt":  -4.78
                                   },
                                   {
-                                      "pl":  -15221,
+                                      "pl":  -14981,
                                       "name":  "마녀공장",
                                       "qty":  24,
                                       "avg":  16767,
-                                      "evlt":  388080,
-                                      "cur":  16170,
-                                      "rt":  -3.78
+                                      "evlt":  388320,
+                                      "cur":  16180,
+                                      "rt":  -3.72
                                   }
                               ],
                    "d2_deposit_krw":  5152760,
                    "tot_pur_krw":  1560204,
-                   "tot_evlt_krw":  1505535,
+                   "tot_evlt_krw":  1507155,
                    "account":  "5280-4774",
                    "deposit_krw":  6838737,
-                   "tot_pl_krw":  -58109
+                   "tot_pl_krw":  -56491
                },
     "trades":  [
                    {
