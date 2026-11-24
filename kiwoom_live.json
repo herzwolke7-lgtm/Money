@@ -1,10 +1,10 @@
 {
     "kw_total_realized_pl":  -68216,
-    "updated_at":  "2026-11-24 09:53",
+    "updated_at":  "2026-11-24 09:55",
     "kiwoom":  {
-                   "tot_prft_rt":  -4.51,
+                   "tot_prft_rt":  -4.4,
                    "ord_alow_krw":  0,
-                   "total_est_krw":  6639491,
+                   "total_est_krw":  6643278,
                    "stocks":  [
                                   {
                                       "pl":  6066,
@@ -16,13 +16,13 @@
                                       "rt":  1.94
                                   },
                                   {
-                                      "pl":  -91721,
+                                      "pl":  -88967,
                                       "name":  "글로벌텍스프리",
                                       "qty":  276,
                                       "avg":  6118,
-                                      "evlt":  1600800,
-                                      "cur":  5800,
-                                      "rt":  -5.43
+                                      "evlt":  1603560,
+                                      "cur":  5810,
+                                      "rt":  -5.27
                                   },
                                   {
                                       "pl":  -22885,
@@ -36,10 +36,10 @@
                               ],
                    "d2_deposit_krw":  4343062,
                    "tot_pur_krw":  2404619,
-                   "tot_evlt_krw":  2301360,
+                   "tot_evlt_krw":  2304120,
                    "account":  "5280-4774",
                    "deposit_krw":  6838737,
-                   "tot_pl_krw":  -108540
+                   "tot_pl_krw":  -105786
                },
     "trades":  [
                    {
