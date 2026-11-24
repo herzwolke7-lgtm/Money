@@ -1,10 +1,10 @@
 {
     "kw_total_realized_pl":  -103063,
-    "updated_at":  "2026-11-24 12:35",
+    "updated_at":  "2026-11-24 12:40",
     "kiwoom":  {
-                   "tot_prft_rt":  -3.83,
+                   "tot_prft_rt":  -3.77,
                    "ord_alow_krw":  0,
-                   "total_est_krw":  6653474,
+                   "total_est_krw":  6654776,
                    "stocks":  [
                                   {
                                       "pl":  2623,
@@ -25,21 +25,21 @@
                                       "rt":  -5.27
                                   },
                                   {
-                                      "pl":  -17855,
+                                      "pl":  -16897,
                                       "name":  "마녀공장",
                                       "qty":  24,
                                       "avg":  16767,
-                                      "evlt":  385440,
-                                      "cur":  16060,
-                                      "rt":  -4.44
+                                      "evlt":  386400,
+                                      "cur":  16100,
+                                      "rt":  -4.2
                                   }
                               ],
                    "d2_deposit_krw":  5152760,
                    "tot_pur_krw":  1560204,
-                   "tot_evlt_krw":  1503930,
+                   "tot_evlt_krw":  1504890,
                    "account":  "5280-4774",
                    "deposit_krw":  6838737,
-                   "tot_pl_krw":  -59710
+                   "tot_pl_krw":  -58752
                },
     "trades":  [
                    {
