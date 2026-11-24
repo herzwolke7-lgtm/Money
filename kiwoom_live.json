@@ -1,19 +1,19 @@
 {
-    "kw_total_realized_pl":  -103063,
-    "updated_at":  "2026-11-24 14:55",
+    "kw_total_realized_pl":  -114700,
+    "updated_at":  "2026-11-24 15:00",
     "kiwoom":  {
-                   "tot_prft_rt":  -3.58,
+                   "tot_prft_rt":  -3.47,
                    "ord_alow_krw":  0,
-                   "total_est_krw":  6657381,
+                   "total_est_krw":  6661413,
                    "stocks":  [
                                   {
-                                      "pl":  -1853,
+                                      "pl":  -1164,
                                       "name":  "노랑풍선",
                                       "qty":  69,
                                       "avg":  4541,
-                                      "evlt":  312225,
-                                      "cur":  4525,
-                                      "rt":  -0.59
+                                      "evlt":  312915,
+                                      "cur":  4535,
+                                      "rt":  -0.37
                                   },
                                   {
                                       "pl":  -38969,
@@ -23,23 +23,14 @@
                                       "evlt":  807300,
                                       "cur":  5850,
                                       "rt":  -4.61
-                                  },
-                                  {
-                                      "pl":  -14981,
-                                      "name":  "마녀공장",
-                                      "qty":  24,
-                                      "avg":  16767,
-                                      "evlt":  388320,
-                                      "cur":  16180,
-                                      "rt":  -3.72
                                   }
                               ],
-                   "d2_deposit_krw":  5152760,
-                   "tot_pur_krw":  1560204,
-                   "tot_evlt_krw":  1507845,
+                   "d2_deposit_krw":  5543597,
+                   "tot_pur_krw":  1157789,
+                   "tot_evlt_krw":  1120215,
                    "account":  "5280-4774",
                    "deposit_krw":  6838737,
-                   "tot_pl_krw":  -55803
+                   "tot_pl_krw":  -40133
                },
     "trades":  [
                    {
@@ -3030,6 +3021,22 @@
                        "source":  "키움",
                        "symbol":  "마녀공장",
                        "qty":  25,
+                       "instType":  "주식",
+                       "date":  "2026-11-24",
+                       "pnl":  0
+                   },
+                   {
+                       "tax":  0,
+                       "id":  "kw_today_0060367",
+                       "time":  "09:02:15",
+                       "amount":  391680,
+                       "price":  16320,
+                       "currency":  "KRW",
+                       "side":  "매도",
+                       "fee":  0,
+                       "source":  "키움",
+                       "symbol":  "마녀공장",
+                       "qty":  24,
                        "instType":  "주식",
                        "date":  "2026-11-24",
                        "pnl":  0
