@@ -1774,8 +1774,13 @@
         <div style="text-align:right;">총 자산 변화</div>
       </div>`;
 
+      function localYmd(ms) {
+        const dt = new Date(ms);
+        return dt.getFullYear() + "-" + String(dt.getMonth() + 1).padStart(2, "0") + "-" + String(dt.getDate()).padStart(2, "0");
+      }
+
       rows.forEach(r => {
-        const cutoffStr = r.days >= 99999 ? "0000-00-00" : new Date(baseMs - r.days * 86400000).toISOString().slice(0, 10);
+        const cutoffStr = r.days >= 99999 ? "0000-00-00" : localYmd(baseMs - r.days * 86400000);
         const scoped = fullSeries.filter(s => s.date >= cutoffStr);
         const realizedSum = scoped.reduce((acc, s) => acc + s.daily, 0);
         const rCls = realizedSum > 0 ? "up" : (realizedSum < 0 ? "down" : "flat");
