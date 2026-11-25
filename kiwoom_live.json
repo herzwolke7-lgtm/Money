@@ -2,53 +2,53 @@
     "kw_total_realized_pl":  -154163,
     "updated_at":  "2026-11-25 09:05",
     "kiwoom":  {
-                   "tot_prft_rt":  1,
+                   "tot_prft_rt":  0.24,
                    "ord_alow_krw":  0,
-                   "total_est_krw":  6692110,
+                   "total_est_krw":  6668576,
                    "stocks":  [
                                   {
-                                      "pl":  29484,
+                                      "pl":  16510,
                                       "name":  "에스피지",
                                       "qty":  10,
                                       "avg":  89640,
-                                      "evlt":  928000,
-                                      "cur":  92800,
-                                      "rt":  3.29
+                                      "evlt":  915000,
+                                      "cur":  91500,
+                                      "rt":  1.84
                                   },
                                   {
-                                      "pl":  1833,
+                                      "pl":  1334,
                                       "name":  "로보티즈",
                                       "qty":  1,
                                       "avg":  291000,
-                                      "evlt":  293500,
-                                      "cur":  293500,
-                                      "rt":  0.63
+                                      "evlt":  293000,
+                                      "cur":  293000,
+                                      "rt":  0.46
                                   },
                                   {
-                                      "pl":  1884,
+                                      "pl":  -3744,
                                       "name":  "금양그린파워",
                                       "qty":  94,
                                       "avg":  10785,
-                                      "evlt":  1018020,
-                                      "cur":  10830,
-                                      "rt":  0.19
+                                      "evlt":  1012380,
+                                      "cur":  10770,
+                                      "rt":  -0.37
                                   },
                                   {
-                                      "pl":  -4121,
+                                      "pl":  -7116,
                                       "name":  "현대오토에버",
                                       "qty":  2,
                                       "avg":  356750,
-                                      "evlt":  711000,
-                                      "cur":  355500,
-                                      "rt":  -0.58
+                                      "evlt":  708000,
+                                      "cur":  354000,
+                                      "rt":  -1
                                   }
                               ],
                    "d2_deposit_krw":  3746971,
                    "tot_pur_krw":  2914700,
-                   "tot_evlt_krw":  2950520,
+                   "tot_evlt_krw":  2928380,
                    "account":  "5280-4774",
                    "deposit_krw":  1192722,
-                   "tot_pl_krw":  29080
+                   "tot_pl_krw":  6984
                },
     "trades":  [
                    {
