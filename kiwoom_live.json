@@ -2,9 +2,9 @@
     "kw_total_realized_pl":  -106398,
     "updated_at":  "2026-11-25 13:55",
     "kiwoom":  {
-                   "tot_prft_rt":  -3.68,
+                   "tot_prft_rt":  -3.65,
                    "ord_alow_krw":  0,
-                   "total_est_krw":  6595716,
+                   "total_est_krw":  6596714,
                    "stocks":  [
                                   {
                                       "pl":  16510,
@@ -16,13 +16,13 @@
                                       "rt":  1.84
                                   },
                                   {
-                                      "pl":  -2316,
+                                      "pl":  -1318,
                                       "name":  "로보티즈",
                                       "qty":  2,
                                       "avg":  289500,
-                                      "evlt":  578000,
-                                      "cur":  289000,
-                                      "rt":  -0.4
+                                      "evlt":  579000,
+                                      "cur":  289500,
+                                      "rt":  -0.23
                                   },
                                   {
                                       "pl":  -128334,
@@ -36,10 +36,10 @@
                               ],
                    "d2_deposit_krw":  3611926,
                    "tot_pur_krw":  3097480,
-                   "tot_evlt_krw":  2990200,
+                   "tot_evlt_krw":  2991200,
                    "account":  "5280-4774",
                    "deposit_krw":  1192722,
-                   "tot_pl_krw":  -114140
+                   "tot_pl_krw":  -113142
                },
     "trades":  [
                    {
