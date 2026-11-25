@@ -28,59 +28,59 @@
       "okx_pnl_pct": -0.02
     },
     {
-      "ts": "2026-11-25T16:02:16+09:00",
+      "ts": "2026-11-25T16:02:48+09:00",
       "date": "2026-11-25",
       "label": "11/25 16:02",
-      "total_krw": 7029515,
-      "kiwoom_krw": 6602223,
+      "total_krw": 7010325,
+      "kiwoom_krw": 6583033,
       "okx_krw": 427292,
       "okx_usd": 318.17,
-      "kiwoom_pnl_krw": -107633,
-      "kiwoom_pnl_pct": -3.47,
+      "kiwoom_pnl_krw": -126823,
+      "kiwoom_pnl_pct": -3.75,
       "okx_pnl_usd": -0.05,
       "okx_pnl_pct": -0.02
     }
   ],
   "latest": {
     "kiwoom": {
-      "tot_prft_rt": -3.47,
+      "tot_prft_rt": -3.75,
       "ord_alow_krw": 0,
-      "total_est_krw": 6602223,
+      "total_est_krw": 6583033,
       "stocks": [
         {
-          "pl": 18506,
+          "pl": 6530,
           "name": "에스피지",
           "qty": 10,
           "avg": 89640,
-          "evlt": 917000,
-          "cur": 91700,
-          "rt": 2.06
+          "evlt": 905000,
+          "cur": 90500,
+          "rt": 0.73
         },
         {
-          "pl": 678,
+          "pl": -468,
           "name": "로보티즈",
-          "qty": 2,
-          "avg": 289500,
-          "evlt": 581000,
-          "cur": 290500,
-          "rt": 0.12
+          "qty": 3,
+          "avg": 287500,
+          "evlt": 864000,
+          "cur": 288000,
+          "rt": -0.05
         },
         {
-          "pl": -126817,
+          "pl": -132885,
           "name": "금양그린파워",
           "qty": 152,
           "avg": 10671,
-          "evlt": 1498720,
-          "cur": 9860,
-          "rt": -7.82
+          "evlt": 1492640,
+          "cur": 9820,
+          "rt": -8.19
         }
       ],
-      "d2_deposit_krw": 3611926,
-      "tot_pur_krw": 3097480,
-      "tot_evlt_krw": 2996720,
+      "d2_deposit_krw": 3328386,
+      "tot_pur_krw": 3380980,
+      "tot_evlt_krw": 3261640,
       "account": "5280-4774",
       "deposit_krw": 1192722,
-      "tot_pl_krw": -107633
+      "tot_pl_krw": -126823
     },
     "okx": {
       "total_usd": 318.17,
@@ -256,6 +256,22 @@
       "time": "09:00:18",
       "amount": 288000,
       "price": 288000,
+      "currency": "KRW",
+      "side": "매수",
+      "fee": 0,
+      "source": "키움",
+      "symbol": "로보티즈",
+      "qty": 1,
+      "instType": "주식",
+      "date": "2026-11-25",
+      "pnl": 0
+    },
+    {
+      "tax": 0,
+      "id": "kw_today_0045076",
+      "time": "09:00:18",
+      "amount": 283500,
+      "price": 283500,
       "currency": "KRW",
       "side": "매수",
       "fee": 0,
@@ -6380,8 +6396,8 @@
       "realized_pl": 0.0,
       "realized_rt": 0.0,
       "holding_qty": 10,
-      "unrealized_pl": 18506,
-      "unrealized_rt": 2.06,
+      "unrealized_pl": 6530,
+      "unrealized_rt": 0.73,
       "last_date": "2026-11-25",
       "trade_count": 3
     },
@@ -6389,20 +6405,20 @@
       "source": "키움",
       "symbol": "로보티즈",
       "currency": "KRW",
-      "buy_qty": 2.0,
-      "buy_amt": 579000.0,
-      "avg_buy": 289500.0,
+      "buy_qty": 3.0,
+      "buy_amt": 862500.0,
+      "avg_buy": 287500.0,
       "sell_qty": 0.0,
       "sell_amt": 0.0,
       "avg_sell": 0.0,
       "fee_tax": 0.0,
       "realized_pl": 0.0,
       "realized_rt": 0.0,
-      "holding_qty": 2,
-      "unrealized_pl": 678,
-      "unrealized_rt": 0.12,
+      "holding_qty": 3,
+      "unrealized_pl": -468,
+      "unrealized_rt": -0.05,
       "last_date": "2026-11-25",
-      "trade_count": 2
+      "trade_count": 3
     },
     {
       "source": "키움",
@@ -6418,8 +6434,8 @@
       "realized_pl": 0.0,
       "realized_rt": 0.0,
       "holding_qty": 152,
-      "unrealized_pl": -126817,
-      "unrealized_rt": -7.82,
+      "unrealized_pl": -132885,
+      "unrealized_rt": -8.19,
       "last_date": "2026-11-25",
       "trade_count": 5
     },
