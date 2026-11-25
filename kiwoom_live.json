@@ -4,16 +4,16 @@
     "kiwoom":  {
                    "tot_prft_rt":  -4.51,
                    "ord_alow_krw":  0,
-                   "total_est_krw":  6570087,
+                   "total_est_krw":  6570127,
                    "stocks":  [
                                   {
-                                      "pl":  10522,
+                                      "pl":  7528,
                                       "name":  "에스피지",
                                       "qty":  10,
                                       "avg":  89640,
-                                      "evlt":  909000,
-                                      "cur":  90900,
-                                      "rt":  1.17
+                                      "evlt":  906000,
+                                      "cur":  90600,
+                                      "rt":  0.84
                                   },
                                   {
                                       "pl":  -8304,
@@ -25,21 +25,21 @@
                                       "rt":  -1.43
                                   },
                                   {
-                                      "pl":  -141987,
+                                      "pl":  -138953,
                                       "name":  "금양그린파워",
                                       "qty":  152,
                                       "avg":  10671,
-                                      "evlt":  1483520,
-                                      "cur":  9760,
-                                      "rt":  -8.75
+                                      "evlt":  1486560,
+                                      "cur":  9780,
+                                      "rt":  -8.57
                                   }
                               ],
                    "d2_deposit_krw":  3611926,
                    "tot_pur_krw":  3097480,
-                   "tot_evlt_krw":  2964520,
+                   "tot_evlt_krw":  2964560,
                    "account":  "5280-4774",
                    "deposit_krw":  1192722,
-                   "tot_pl_krw":  -139769
+                   "tot_pl_krw":  -139729
                },
     "trades":  [
                    {
