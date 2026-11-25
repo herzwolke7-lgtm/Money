@@ -2,18 +2,44 @@
     "kw_total_realized_pl":  -154163,
     "updated_at":  "2026-11-25 09:00",
     "kiwoom":  {
-                   "tot_prft_rt":  0,
+                   "tot_prft_rt":  0.7,
                    "ord_alow_krw":  0,
-                   "total_est_krw":  6662091,
+                   "total_est_krw":  6678576,
                    "stocks":  [
-
+                                  {
+                                      "pl":  13516,
+                                      "name":  "에스피지",
+                                      "qty":  10,
+                                      "avg":  89640,
+                                      "evlt":  912000,
+                                      "cur":  91200,
+                                      "rt":  1.51
+                                  },
+                                  {
+                                      "pl":  -7880,
+                                      "name":  "금양그린파워",
+                                      "qty":  56,
+                                      "avg":  10836,
+                                      "evlt":  600320,
+                                      "cur":  10720,
+                                      "rt":  -1.3
+                                  },
+                                  {
+                                      "pl":  9851,
+                                      "name":  "현대오토에버",
+                                      "qty":  2,
+                                      "avg":  356750,
+                                      "evlt":  725000,
+                                      "cur":  362500,
+                                      "rt":  1.38
+                                  }
                               ],
-                   "d2_deposit_krw":  6662091,
-                   "tot_pur_krw":  0,
-                   "tot_evlt_krw":  0,
+                   "d2_deposit_krw":  4445051,
+                   "tot_pur_krw":  2216720,
+                   "tot_evlt_krw":  2237320,
                    "account":  "5280-4774",
                    "deposit_krw":  1192722,
-                   "tot_pl_krw":  0
+                   "tot_pl_krw":  15487
                },
     "trades":  [
                    {
@@ -3212,6 +3238,86 @@
                        "source":  "키움",
                        "symbol":  "에스피지",
                        "qty":  2,
+                       "instType":  "주식",
+                       "date":  "2026-11-25",
+                       "pnl":  0
+                   },
+                   {
+                       "tax":  0,
+                       "id":  "kw_today_0044998",
+                       "time":  "09:00:17",
+                       "amount":  355000,
+                       "price":  355000,
+                       "currency":  "KRW",
+                       "side":  "매수",
+                       "fee":  0,
+                       "source":  "키움",
+                       "symbol":  "현대오토에버",
+                       "qty":  1,
+                       "instType":  "주식",
+                       "date":  "2026-11-25",
+                       "pnl":  0
+                   },
+                   {
+                       "tax":  0,
+                       "id":  "kw_today_0045314",
+                       "time":  "09:00:23",
+                       "amount":  358500,
+                       "price":  358500,
+                       "currency":  "KRW",
+                       "side":  "매수",
+                       "fee":  0,
+                       "source":  "키움",
+                       "symbol":  "현대오토에버",
+                       "qty":  1,
+                       "instType":  "주식",
+                       "date":  "2026-11-25",
+                       "pnl":  0
+                   },
+                   {
+                       "tax":  0,
+                       "id":  "kw_today_0045536",
+                       "time":  "09:00:27",
+                       "amount":  406980,
+                       "price":  10710,
+                       "currency":  "KRW",
+                       "side":  "매수",
+                       "fee":  0,
+                       "source":  "키움",
+                       "symbol":  "금양그린파워",
+                       "qty":  38,
+                       "instType":  "주식",
+                       "date":  "2026-11-25",
+                       "pnl":  0
+                   },
+                   {
+                       "tax":  0,
+                       "id":  "kw_today_0045622",
+                       "time":  "09:00:29",
+                       "amount":  411160,
+                       "price":  10820,
+                       "currency":  "KRW",
+                       "side":  "매수",
+                       "fee":  0,
+                       "source":  "키움",
+                       "symbol":  "금양그린파워",
+                       "qty":  38,
+                       "instType":  "주식",
+                       "date":  "2026-11-25",
+                       "pnl":  0
+                   },
+                   {
+                       "tax":  0,
+                       "id":  "kw_today_0045630",
+                       "time":  "09:00:29",
+                       "amount":  195660,
+                       "price":  10870,
+                       "currency":  "KRW",
+                       "side":  "매수",
+                       "fee":  0,
+                       "source":  "키움",
+                       "symbol":  "금양그린파워",
+                       "qty":  18,
                        "instType":  "주식",
                        "date":  "2026-11-25",
                        "pnl":  0
