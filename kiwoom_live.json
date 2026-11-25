@@ -2,9 +2,9 @@
     "kw_total_realized_pl":  -106398,
     "updated_at":  "2026-11-25 12:00",
     "kiwoom":  {
-                   "tot_prft_rt":  -3.6,
+                   "tot_prft_rt":  -3.45,
                    "ord_alow_krw":  0,
-                   "total_est_krw":  6601345,
+                   "total_est_krw":  6602862,
                    "stocks":  [
                                   {
                                       "pl":  11520,
@@ -25,21 +25,21 @@
                                       "rt":  -0.4
                                   },
                                   {
-                                      "pl":  -120749,
+                                      "pl":  -116198,
                                       "name":  "금양그린파워",
                                       "qty":  152,
                                       "avg":  10671,
-                                      "evlt":  1504800,
-                                      "cur":  9900,
-                                      "rt":  -7.44
+                                      "evlt":  1509360,
+                                      "cur":  9930,
+                                      "rt":  -7.16
                                   }
                               ],
                    "d2_deposit_krw":  3611926,
                    "tot_pur_krw":  3097480,
-                   "tot_evlt_krw":  2992800,
+                   "tot_evlt_krw":  2997360,
                    "account":  "5280-4774",
                    "deposit_krw":  1192722,
-                   "tot_pl_krw":  -111545
+                   "tot_pl_krw":  -106994
                },
     "trades":  [
                    {
