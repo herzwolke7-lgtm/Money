@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-11-25 12:02",
+  "updated_at": "2026-11-25 14:01",
   "history": [
     {
       "ts": "2026-11-23T22:39:03+09:00",
@@ -28,59 +28,59 @@
       "okx_pnl_pct": -0.02
     },
     {
-      "ts": "2026-11-25T12:02:13+09:00",
+      "ts": "2026-11-25T14:01:33+09:00",
       "date": "2026-11-25",
-      "label": "11/25 12:02",
-      "total_krw": 7030192,
-      "kiwoom_krw": 6602862,
+      "label": "11/25 14:01",
+      "total_krw": 7029553,
+      "kiwoom_krw": 6602223,
       "okx_krw": 427330,
       "okx_usd": 318.14,
-      "kiwoom_pnl_krw": -106994,
-      "kiwoom_pnl_pct": -3.45,
+      "kiwoom_pnl_krw": -107633,
+      "kiwoom_pnl_pct": -3.47,
       "okx_pnl_usd": -0.05,
       "okx_pnl_pct": -0.02
     }
   ],
   "latest": {
     "kiwoom": {
-      "tot_prft_rt": -3.45,
+      "tot_prft_rt": -3.47,
       "ord_alow_krw": 0,
-      "total_est_krw": 6602862,
+      "total_est_krw": 6602223,
       "stocks": [
         {
-          "pl": 11520,
+          "pl": 18506,
           "name": "에스피지",
           "qty": 10,
           "avg": 89640,
-          "evlt": 910000,
-          "cur": 91000,
-          "rt": 1.29
+          "evlt": 917000,
+          "cur": 91700,
+          "rt": 2.06
         },
         {
-          "pl": -2316,
+          "pl": 678,
           "name": "로보티즈",
           "qty": 2,
           "avg": 289500,
-          "evlt": 578000,
-          "cur": 289000,
-          "rt": -0.4
+          "evlt": 581000,
+          "cur": 290500,
+          "rt": 0.12
         },
         {
-          "pl": -116198,
+          "pl": -126817,
           "name": "금양그린파워",
           "qty": 152,
           "avg": 10671,
-          "evlt": 1509360,
-          "cur": 9930,
-          "rt": -7.16
+          "evlt": 1498720,
+          "cur": 9860,
+          "rt": -7.82
         }
       ],
       "d2_deposit_krw": 3611926,
       "tot_pur_krw": 3097480,
-      "tot_evlt_krw": 2997360,
+      "tot_evlt_krw": 2996720,
       "account": "5280-4774",
       "deposit_krw": 1192722,
-      "tot_pl_krw": -106994
+      "tot_pl_krw": -107633
     },
     "okx": {
       "total_usd": 318.14,
@@ -6380,8 +6380,8 @@
       "realized_pl": 0.0,
       "realized_rt": 0.0,
       "holding_qty": 10,
-      "unrealized_pl": 11520,
-      "unrealized_rt": 1.29,
+      "unrealized_pl": 18506,
+      "unrealized_rt": 2.06,
       "last_date": "2026-11-25",
       "trade_count": 3
     },
@@ -6399,8 +6399,8 @@
       "realized_pl": 0.0,
       "realized_rt": 0.0,
       "holding_qty": 2,
-      "unrealized_pl": -2316,
-      "unrealized_rt": -0.4,
+      "unrealized_pl": 678,
+      "unrealized_rt": 0.12,
       "last_date": "2026-11-25",
       "trade_count": 2
     },
@@ -6418,8 +6418,8 @@
       "realized_pl": 0.0,
       "realized_rt": 0.0,
       "holding_qty": 152,
-      "unrealized_pl": -116198,
-      "unrealized_rt": -7.16,
+      "unrealized_pl": -126817,
+      "unrealized_rt": -7.82,
       "last_date": "2026-11-25",
       "trade_count": 5
     },
