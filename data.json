@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-11-25 09:05",
+  "updated_at": "2026-11-25 10:01",
   "history": [
     {
       "ts": "2026-11-23T22:39:03+09:00",
@@ -28,68 +28,59 @@
       "okx_pnl_pct": -0.02
     },
     {
-      "ts": "2026-11-25T09:05:48+09:00",
+      "ts": "2026-11-25T10:01:24+09:00",
       "date": "2026-11-25",
-      "label": "11/25 09:05",
-      "total_krw": 7118657,
-      "kiwoom_krw": 6692110,
+      "label": "11/25 10:01",
+      "total_krw": 7049376,
+      "kiwoom_krw": 6622829,
       "okx_krw": 426547,
       "okx_usd": 318.16,
-      "kiwoom_pnl_krw": 29080,
-      "kiwoom_pnl_pct": 1,
+      "kiwoom_pnl_krw": -87027,
+      "kiwoom_pnl_pct": -3.1,
       "okx_pnl_usd": -0.05,
       "okx_pnl_pct": -0.02
     }
   ],
   "latest": {
     "kiwoom": {
-      "tot_prft_rt": 1,
+      "tot_prft_rt": -3.1,
       "ord_alow_krw": 0,
-      "total_est_krw": 6692110,
+      "total_est_krw": 6622829,
       "stocks": [
         {
-          "pl": 29484,
+          "pl": 3536,
           "name": "에스피지",
           "qty": 10,
           "avg": 89640,
-          "evlt": 928000,
-          "cur": 92800,
-          "rt": 3.29
+          "evlt": 902000,
+          "cur": 90200,
+          "rt": 0.39
         },
         {
-          "pl": 1833,
+          "pl": -1660,
           "name": "로보티즈",
           "qty": 1,
           "avg": 291000,
-          "evlt": 293500,
-          "cur": 293500,
-          "rt": 0.63
+          "evlt": 290000,
+          "cur": 290000,
+          "rt": -0.57
         },
         {
-          "pl": 1884,
+          "pl": -88903,
           "name": "금양그린파워",
-          "qty": 94,
-          "avg": 10785,
-          "evlt": 1018020,
-          "cur": 10830,
-          "rt": 0.19
-        },
-        {
-          "pl": -4121,
-          "name": "현대오토에버",
-          "qty": 2,
-          "avg": 356750,
-          "evlt": 711000,
-          "cur": 355500,
-          "rt": -0.58
+          "qty": 152,
+          "avg": 10671,
+          "evlt": 1536720,
+          "cur": 10110,
+          "rt": -5.48
         }
       ],
-      "d2_deposit_krw": 3746971,
-      "tot_pur_krw": 2914700,
-      "tot_evlt_krw": 2950520,
+      "d2_deposit_krw": 3899966,
+      "tot_pur_krw": 2809480,
+      "tot_evlt_krw": 2728720,
       "account": "5280-4774",
       "deposit_krw": 1192722,
-      "tot_pl_krw": 29080
+      "tot_pl_krw": -87027
     },
     "okx": {
       "total_usd": 318.16,
@@ -131,6 +122,22 @@
     }
   },
   "trades": [
+    {
+      "tax": 0,
+      "id": "kw_today_0078728",
+      "time": "09:11:53",
+      "amount": 763000,
+      "price": 381500,
+      "currency": "KRW",
+      "side": "매도",
+      "fee": 0,
+      "source": "키움",
+      "symbol": "현대오토에버",
+      "qty": 2,
+      "instType": "주식",
+      "date": "2026-11-25",
+      "pnl": 49500.0
+    },
     {
       "tax": 0,
       "id": "kw_today_0045630",
@@ -175,6 +182,38 @@
       "source": "키움",
       "symbol": "금양그린파워",
       "qty": 38,
+      "instType": "주식",
+      "date": "2026-11-25",
+      "pnl": 0
+    },
+    {
+      "tax": 0,
+      "id": "kw_today_0045530",
+      "time": "09:00:27",
+      "amount": 411060,
+      "price": 10540,
+      "currency": "KRW",
+      "side": "매수",
+      "fee": 0,
+      "source": "키움",
+      "symbol": "금양그린파워",
+      "qty": 39,
+      "instType": "주식",
+      "date": "2026-11-25",
+      "pnl": 0
+    },
+    {
+      "tax": 0,
+      "id": "kw_today_0045526",
+      "time": "09:00:27",
+      "amount": 197220,
+      "price": 10380,
+      "currency": "KRW",
+      "side": "매수",
+      "fee": 0,
+      "source": "키움",
+      "symbol": "금양그린파워",
+      "qty": 19,
       "instType": "주식",
       "date": "2026-11-25",
       "pnl": 0
@@ -6309,7 +6348,7 @@
     }
   ],
   "daily_pnl": [],
-  "kw_total_realized_pl": -154163,
+  "kw_total_realized_pl": -106398,
   "symbol_summaries": [
     {
       "source": "키움",
@@ -6325,29 +6364,10 @@
       "realized_pl": 0.0,
       "realized_rt": 0.0,
       "holding_qty": 10,
-      "unrealized_pl": 29484,
-      "unrealized_rt": 3.29,
+      "unrealized_pl": 3536,
+      "unrealized_rt": 0.39,
       "last_date": "2026-11-25",
       "trade_count": 3
-    },
-    {
-      "source": "키움",
-      "symbol": "현대오토에버",
-      "currency": "KRW",
-      "buy_qty": 2.0,
-      "buy_amt": 713500.0,
-      "avg_buy": 356750.0,
-      "sell_qty": 0.0,
-      "sell_amt": 0.0,
-      "avg_sell": 0.0,
-      "fee_tax": 0.0,
-      "realized_pl": 0.0,
-      "realized_rt": 0.0,
-      "holding_qty": 2,
-      "unrealized_pl": -4121,
-      "unrealized_rt": -0.58,
-      "last_date": "2026-11-25",
-      "trade_count": 2
     },
     {
       "source": "키움",
@@ -6363,8 +6383,8 @@
       "realized_pl": 0.0,
       "realized_rt": 0.0,
       "holding_qty": 1,
-      "unrealized_pl": 1833,
-      "unrealized_rt": 0.63,
+      "unrealized_pl": -1660,
+      "unrealized_rt": -0.57,
       "last_date": "2026-11-25",
       "trade_count": 1
     },
@@ -6372,20 +6392,20 @@
       "source": "키움",
       "symbol": "금양그린파워",
       "currency": "KRW",
-      "buy_qty": 94.0,
-      "buy_amt": 1013800.0,
-      "avg_buy": 10785.0,
+      "buy_qty": 152.0,
+      "buy_amt": 1622080.0,
+      "avg_buy": 10672.0,
       "sell_qty": 0.0,
       "sell_amt": 0.0,
       "avg_sell": 0.0,
       "fee_tax": 0.0,
       "realized_pl": 0.0,
       "realized_rt": 0.0,
-      "holding_qty": 94,
-      "unrealized_pl": 1884,
-      "unrealized_rt": 0.19,
+      "holding_qty": 152,
+      "unrealized_pl": -88903,
+      "unrealized_rt": -5.48,
       "last_date": "2026-11-25",
-      "trade_count": 3
+      "trade_count": 5
     },
     {
       "source": "키움",
@@ -6462,6 +6482,25 @@
       "unrealized_rt": 0.0,
       "last_date": "2026-11-25",
       "trade_count": 5
+    },
+    {
+      "source": "키움",
+      "symbol": "현대오토에버",
+      "currency": "KRW",
+      "buy_qty": 2.0,
+      "buy_amt": 713500.0,
+      "avg_buy": 356750.0,
+      "sell_qty": 2.0,
+      "sell_amt": 763000.0,
+      "avg_sell": 381500.0,
+      "fee_tax": 0.0,
+      "realized_pl": 49500.0,
+      "realized_rt": 6.94,
+      "holding_qty": 0,
+      "unrealized_pl": 0,
+      "unrealized_rt": 0.0,
+      "last_date": "2026-11-25",
+      "trade_count": 3
     },
     {
       "source": "OKX",
