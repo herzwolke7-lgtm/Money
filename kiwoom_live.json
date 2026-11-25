@@ -1,45 +1,54 @@
 {
     "kw_total_realized_pl":  -154163,
-    "updated_at":  "2026-11-25 09:00",
+    "updated_at":  "2026-11-25 09:05",
     "kiwoom":  {
-                   "tot_prft_rt":  0.7,
+                   "tot_prft_rt":  1,
                    "ord_alow_krw":  0,
-                   "total_est_krw":  6678576,
+                   "total_est_krw":  6692110,
                    "stocks":  [
                                   {
-                                      "pl":  13516,
+                                      "pl":  29484,
                                       "name":  "에스피지",
                                       "qty":  10,
                                       "avg":  89640,
-                                      "evlt":  912000,
-                                      "cur":  91200,
-                                      "rt":  1.51
+                                      "evlt":  928000,
+                                      "cur":  92800,
+                                      "rt":  3.29
                                   },
                                   {
-                                      "pl":  -7880,
+                                      "pl":  1833,
+                                      "name":  "로보티즈",
+                                      "qty":  1,
+                                      "avg":  291000,
+                                      "evlt":  293500,
+                                      "cur":  293500,
+                                      "rt":  0.63
+                                  },
+                                  {
+                                      "pl":  1884,
                                       "name":  "금양그린파워",
-                                      "qty":  56,
-                                      "avg":  10836,
-                                      "evlt":  600320,
-                                      "cur":  10720,
-                                      "rt":  -1.3
+                                      "qty":  94,
+                                      "avg":  10785,
+                                      "evlt":  1018020,
+                                      "cur":  10830,
+                                      "rt":  0.19
                                   },
                                   {
-                                      "pl":  9851,
+                                      "pl":  -4121,
                                       "name":  "현대오토에버",
                                       "qty":  2,
                                       "avg":  356750,
-                                      "evlt":  725000,
-                                      "cur":  362500,
-                                      "rt":  1.38
+                                      "evlt":  711000,
+                                      "cur":  355500,
+                                      "rt":  -0.58
                                   }
                               ],
-                   "d2_deposit_krw":  4445051,
-                   "tot_pur_krw":  2216720,
-                   "tot_evlt_krw":  2237320,
+                   "d2_deposit_krw":  3746971,
+                   "tot_pur_krw":  2914700,
+                   "tot_evlt_krw":  2950520,
                    "account":  "5280-4774",
                    "deposit_krw":  1192722,
-                   "tot_pl_krw":  15487
+                   "tot_pl_krw":  29080
                },
     "trades":  [
                    {
@@ -3253,6 +3262,22 @@
                        "fee":  0,
                        "source":  "키움",
                        "symbol":  "현대오토에버",
+                       "qty":  1,
+                       "instType":  "주식",
+                       "date":  "2026-11-25",
+                       "pnl":  0
+                   },
+                   {
+                       "tax":  0,
+                       "id":  "kw_today_0045090",
+                       "time":  "09:00:18",
+                       "amount":  291000,
+                       "price":  291000,
+                       "currency":  "KRW",
+                       "side":  "매수",
+                       "fee":  0,
+                       "source":  "키움",
+                       "symbol":  "로보티즈",
                        "qty":  1,
                        "instType":  "주식",
                        "date":  "2026-11-25",
