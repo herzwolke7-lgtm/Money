@@ -1,36 +1,36 @@
 {
     "kw_total_realized_pl":  -154539,
-    "updated_at":  "2026-11-26 09:04",
+    "updated_at":  "2026-11-26 09:05",
     "kiwoom":  {
-                   "tot_prft_rt":  1.46,
+                   "tot_prft_rt":  1.05,
                    "ord_alow_krw":  0,
-                   "total_est_krw":  6681585,
+                   "total_est_krw":  6673102,
                    "stocks":  [
                                   {
-                                      "pl":  13092,
+                                      "pl":  3112,
                                       "name":  "안랩",
                                       "qty":  5,
                                       "avg":  155820,
-                                      "evlt":  794000,
-                                      "cur":  158800,
-                                      "rt":  1.68
+                                      "evlt":  784000,
+                                      "cur":  156800,
+                                      "rt":  0.4
                                   },
                                   {
-                                      "pl":  4772,
+                                      "pl":  9762,
                                       "name":  "에스피지",
                                       "qty":  5,
                                       "avg":  89640,
-                                      "evlt":  454000,
-                                      "cur":  90800,
-                                      "rt":  1.06
+                                      "evlt":  459000,
+                                      "cur":  91800,
+                                      "rt":  2.18
                                   }
                               ],
                    "d2_deposit_krw":  5434255,
                    "tot_pur_krw":  1227300,
-                   "tot_evlt_krw":  1248000,
+                   "tot_evlt_krw":  1243000,
                    "account":  "5280-4774",
                    "deposit_krw":  6662091,
-                   "tot_pl_krw":  17864
+                   "tot_pl_krw":  12874
                },
     "trades":  [
                    {
