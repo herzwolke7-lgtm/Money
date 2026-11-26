@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-11-26 14:04",
+  "updated_at": "2026-11-26 16:03",
   "history": [
     {
       "ts": "2026-11-23T22:39:03+09:00",
@@ -41,41 +41,31 @@
       "okx_pnl_pct": -0.02
     },
     {
-      "ts": "2026-11-26T14:04:19+09:00",
+      "ts": "2026-11-26T16:03:29+09:00",
       "date": "2026-11-26",
-      "label": "11/26 14:04",
-      "total_krw": 7151914,
-      "kiwoom_krw": 6724480,
+      "label": "11/26 16:03",
+      "total_krw": 7149718,
+      "kiwoom_krw": 6722284,
       "okx_krw": 427434,
       "okx_usd": 318.18,
-      "kiwoom_pnl_krw": 1718,
-      "kiwoom_pnl_pct": 0.96,
+      "kiwoom_pnl_krw": 0,
+      "kiwoom_pnl_pct": 0,
       "okx_pnl_usd": -0.05,
       "okx_pnl_pct": -0.02
     }
   ],
   "latest": {
     "kiwoom": {
-      "tot_prft_rt": 0.96,
+      "tot_prft_rt": 0,
       "ord_alow_krw": 0,
-      "total_est_krw": 6724480,
-      "stocks": [
-        {
-          "pl": 1718,
-          "name": "에스피지",
-          "qty": 2,
-          "avg": 89640,
-          "evlt": 181400,
-          "cur": 90700,
-          "rt": 0.96
-        }
-      ],
-      "d2_deposit_krw": 6543462,
-      "tot_pur_krw": 179280,
-      "tot_evlt_krw": 181400,
+      "total_est_krw": 6722284,
+      "stocks": [],
+      "d2_deposit_krw": 6722284,
+      "tot_pur_krw": 0,
+      "tot_evlt_krw": 0,
       "account": "5280-4774",
       "deposit_krw": 6662091,
-      "tot_pl_krw": 1718
+      "tot_pl_krw": 0
     },
     "okx": {
       "total_usd": 318.18,
@@ -117,6 +107,22 @@
     }
   },
   "trades": [
+    {
+      "tax": 0,
+      "id": "kw_today_0331767",
+      "time": "15:22:13",
+      "amount": 179200,
+      "price": 89600,
+      "currency": "KRW",
+      "side": "매도",
+      "fee": 0,
+      "source": "키움",
+      "symbol": "에스피지",
+      "qty": 2,
+      "instType": "주식",
+      "date": "2026-11-26",
+      "pnl": 0
+    },
     {
       "tax": 0,
       "id": "kw_today_0106287",
@@ -6503,27 +6509,8 @@
     }
   ],
   "daily_pnl": [],
-  "kw_total_realized_pl": -93512,
+  "kw_total_realized_pl": -94000,
   "symbol_summaries": [
-    {
-      "source": "키움",
-      "symbol": "에스피지",
-      "currency": "KRW",
-      "buy_qty": 0.0,
-      "buy_amt": 0.0,
-      "avg_buy": 0.0,
-      "sell_qty": 8.0,
-      "sell_amt": 737100.0,
-      "avg_sell": 92138.0,
-      "fee_tax": 0.0,
-      "realized_pl": 0.0,
-      "realized_rt": 0.0,
-      "holding_qty": 2,
-      "unrealized_pl": 1718,
-      "unrealized_rt": 0.96,
-      "last_date": "2026-11-26",
-      "trade_count": 2
-    },
     {
       "source": "키움",
       "symbol": "파수AI",
@@ -6618,6 +6605,25 @@
       "unrealized_rt": 0.0,
       "last_date": "2026-11-26",
       "trade_count": 4
+    },
+    {
+      "source": "키움",
+      "symbol": "에스피지",
+      "currency": "KRW",
+      "buy_qty": 0.0,
+      "buy_amt": 0.0,
+      "avg_buy": 0.0,
+      "sell_qty": 10.0,
+      "sell_amt": 916300.0,
+      "avg_sell": 91630.0,
+      "fee_tax": 0.0,
+      "realized_pl": 0.0,
+      "realized_rt": 0.0,
+      "holding_qty": 0,
+      "unrealized_pl": 0,
+      "unrealized_rt": 0.0,
+      "last_date": "2026-11-26",
+      "trade_count": 3
     },
     {
       "source": "키움",
