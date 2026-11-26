@@ -1,27 +1,27 @@
 {
     "kw_total_realized_pl":  -93512,
-    "updated_at":  "2026-11-26 13:10",
+    "updated_at":  "2026-11-26 13:14",
     "kiwoom":  {
-                   "tot_prft_rt":  2.18,
+                   "tot_prft_rt":  1.96,
                    "ord_alow_krw":  0,
-                   "total_est_krw":  6726476,
+                   "total_est_krw":  6726276,
                    "stocks":  [
                                   {
-                                      "pl":  3913,
+                                      "pl":  3514,
                                       "name":  "에스피지",
                                       "qty":  2,
                                       "avg":  89640,
-                                      "evlt":  183600,
-                                      "cur":  91800,
-                                      "rt":  2.18
+                                      "evlt":  183200,
+                                      "cur":  91600,
+                                      "rt":  1.96
                                   }
                               ],
                    "d2_deposit_krw":  6543462,
                    "tot_pur_krw":  179280,
-                   "tot_evlt_krw":  183600,
+                   "tot_evlt_krw":  183200,
                    "account":  "5280-4774",
                    "deposit_krw":  6662091,
-                   "tot_pl_krw":  3913
+                   "tot_pl_krw":  3514
                },
     "trades":  [
                    {
