@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-11-26 10:04",
+  "updated_at": "2026-11-26 10:06",
   "history": [
     {
       "ts": "2026-11-23T22:39:03+09:00",
@@ -41,50 +41,41 @@
       "okx_pnl_pct": -0.02
     },
     {
-      "ts": "2026-11-26T10:04:21+09:00",
+      "ts": "2026-11-26T10:06:50+09:00",
       "date": "2026-11-26",
-      "label": "11/26 10:04",
-      "total_krw": 7100823,
-      "kiwoom_krw": 6673102,
+      "label": "11/26 10:06",
+      "total_krw": 7151602,
+      "kiwoom_krw": 6723881,
       "okx_krw": 427721,
       "okx_usd": 318.16,
-      "kiwoom_pnl_krw": 12874,
-      "kiwoom_pnl_pct": 1.05,
+      "kiwoom_pnl_krw": 1318,
+      "kiwoom_pnl_pct": 0.74,
       "okx_pnl_usd": -0.05,
       "okx_pnl_pct": -0.02
     }
   ],
   "latest": {
     "kiwoom": {
-      "tot_prft_rt": 1.05,
+      "tot_prft_rt": 0.74,
       "ord_alow_krw": 0,
-      "total_est_krw": 6673102,
+      "total_est_krw": 6723881,
       "stocks": [
         {
-          "pl": 3112,
-          "name": "안랩",
-          "qty": 5,
-          "avg": 155820,
-          "evlt": 784000,
-          "cur": 156800,
-          "rt": 0.4
-        },
-        {
-          "pl": 9762,
+          "pl": 1318,
           "name": "에스피지",
-          "qty": 5,
+          "qty": 2,
           "avg": 89640,
-          "evlt": 459000,
-          "cur": 91800,
-          "rt": 2.18
+          "evlt": 181000,
+          "cur": 90500,
+          "rt": 0.74
         }
       ],
-      "d2_deposit_krw": 5434255,
-      "tot_pur_krw": 1227300,
-      "tot_evlt_krw": 1243000,
+      "d2_deposit_krw": 6543462,
+      "tot_pur_krw": 179280,
+      "tot_evlt_krw": 181000,
       "account": "5280-4774",
       "deposit_krw": 6662091,
-      "tot_pl_krw": 12874
+      "tot_pl_krw": 1318
     },
     "okx": {
       "total_usd": 318.16,
@@ -126,6 +117,22 @@
     }
   },
   "trades": [
+    {
+      "tax": 0,
+      "id": "kw_today_0106287",
+      "time": "09:26:07",
+      "amount": 833500,
+      "price": 166700,
+      "currency": "KRW",
+      "side": "매도",
+      "fee": 0,
+      "source": "키움",
+      "symbol": "안랩",
+      "qty": 5,
+      "instType": "주식",
+      "date": "2026-11-26",
+      "pnl": 54400.0
+    },
     {
       "tax": 0,
       "id": "kw_today_0052848",
@@ -202,6 +209,22 @@
       "source": "키움",
       "symbol": "로보티즈",
       "qty": 2,
+      "instType": "주식",
+      "date": "2026-11-26",
+      "pnl": 0
+    },
+    {
+      "tax": 0,
+      "id": "kw_today_0052642",
+      "time": "09:02:13",
+      "amount": 278100,
+      "price": 92700,
+      "currency": "KRW",
+      "side": "매도",
+      "fee": 0,
+      "source": "키움",
+      "symbol": "에스피지",
+      "qty": 3,
       "instType": "주식",
       "date": "2026-11-26",
       "pnl": 0
@@ -6480,27 +6503,8 @@
     }
   ],
   "daily_pnl": [],
-  "kw_total_realized_pl": -154539,
+  "kw_total_realized_pl": -93512,
   "symbol_summaries": [
-    {
-      "source": "키움",
-      "symbol": "안랩",
-      "currency": "KRW",
-      "buy_qty": 5.0,
-      "buy_amt": 779100.0,
-      "avg_buy": 155820.0,
-      "sell_qty": 0.0,
-      "sell_amt": 0.0,
-      "avg_sell": 0.0,
-      "fee_tax": 0.0,
-      "realized_pl": 0.0,
-      "realized_rt": 0.0,
-      "holding_qty": 5,
-      "unrealized_pl": 3112,
-      "unrealized_rt": 0.4,
-      "last_date": "2026-11-26",
-      "trade_count": 3
-    },
     {
       "source": "키움",
       "symbol": "에스피지",
@@ -6508,17 +6512,17 @@
       "buy_qty": 0.0,
       "buy_amt": 0.0,
       "avg_buy": 0.0,
-      "sell_qty": 5.0,
-      "sell_amt": 459000.0,
-      "avg_sell": 91800.0,
+      "sell_qty": 8.0,
+      "sell_amt": 737100.0,
+      "avg_sell": 92138.0,
       "fee_tax": 0.0,
       "realized_pl": 0.0,
       "realized_rt": 0.0,
-      "holding_qty": 5,
-      "unrealized_pl": 9762,
-      "unrealized_rt": 2.18,
+      "holding_qty": 2,
+      "unrealized_pl": 1318,
+      "unrealized_rt": 0.74,
       "last_date": "2026-11-26",
-      "trade_count": 1
+      "trade_count": 2
     },
     {
       "source": "키움",
@@ -6595,6 +6599,25 @@
       "unrealized_rt": 0.0,
       "last_date": "2026-11-26",
       "trade_count": 8
+    },
+    {
+      "source": "키움",
+      "symbol": "안랩",
+      "currency": "KRW",
+      "buy_qty": 5.0,
+      "buy_amt": 779100.0,
+      "avg_buy": 155820.0,
+      "sell_qty": 5.0,
+      "sell_amt": 833500.0,
+      "avg_sell": 166700.0,
+      "fee_tax": 0.0,
+      "realized_pl": 54400.0,
+      "realized_rt": 6.98,
+      "holding_qty": 0,
+      "unrealized_pl": 0,
+      "unrealized_rt": 0.0,
+      "last_date": "2026-11-26",
+      "trade_count": 4
     },
     {
       "source": "키움",
