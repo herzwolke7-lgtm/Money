@@ -1,6 +1,6 @@
 {
     "kw_total_realized_pl":  -106398,
-    "updated_at":  "2026-11-26 08:59",
+    "updated_at":  "2026-11-26 09:00",
     "kiwoom":  {
                    "tot_prft_rt":  -4.07,
                    "ord_alow_krw":  0,
@@ -3366,6 +3366,38 @@
                        "source":  "키움",
                        "symbol":  "마녀공장",
                        "qty":  24,
+                       "instType":  "주식",
+                       "date":  "2026-11-26",
+                       "pnl":  0
+                   },
+                   {
+                       "tax":  0,
+                       "id":  "kw_today_0046125",
+                       "time":  "09:00:11",
+                       "amount":  309400,
+                       "price":  154700,
+                       "currency":  "KRW",
+                       "side":  "매수",
+                       "fee":  0,
+                       "source":  "키움",
+                       "symbol":  "안랩",
+                       "qty":  2,
+                       "instType":  "주식",
+                       "date":  "2026-11-26",
+                       "pnl":  0
+                   },
+                   {
+                       "tax":  0,
+                       "id":  "kw_today_0046145",
+                       "time":  "09:00:12",
+                       "amount":  312600,
+                       "price":  156300,
+                       "currency":  "KRW",
+                       "side":  "매수",
+                       "fee":  0,
+                       "source":  "키움",
+                       "symbol":  "안랩",
+                       "qty":  2,
                        "instType":  "주식",
                        "date":  "2026-11-26",
                        "pnl":  0
