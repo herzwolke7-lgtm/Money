@@ -101,6 +101,35 @@
           "url": "https://staynplan.com/보청기-지원금/",
           "result": "URL이 Google에 등록되어 있음"
         }
+      ],
+      "top_keywords": [
+        {
+          "kw": "모두의그린카드",
+          "clicks": 18,
+          "impressions": 198,
+          "ctr": 9.1
+        },
+        {
+          "kw": "공공조달관리사 연봉/채용",
+          "clicks": 11,
+          "impressions": 141,
+          "ctr": 7.8
+        },
+        {
+          "kw": "남대문 꽃시장 영업시간/토·일",
+          "clicks": 9,
+          "impressions": 252,
+          "ctr": 3.6
+        },
+        {
+          "kw": "침대 난간 설치",
+          "clicks": 1,
+          "impressions": 13,
+          "ctr": 7.7
+        }
+      ],
+      "newly_requested_20261125": [
+        "https://staynplan.com/국민연금일시금수령/"
       ]
     },
     "naver": {
@@ -214,6 +243,142 @@
         "방충망-교체 09:52:43",
         "종량제-봉투-규격 09:52:51",
         "계단-미끄럼방지 09:52:58"
+      ],
+      "clicks_mom": "+6,625.0%",
+      "impressions_mom": "+4,471.2%",
+      "ctr_mom": "-0.1%p",
+      "ssl_ok": true,
+      "sitemap_ok": true,
+      "top_pages": [
+        {
+          "title": "요양보호사 월급",
+          "clicks": 90,
+          "impressions": 7817,
+          "ctr": 1.2
+        },
+        {
+          "title": "문턱 제거 기준",
+          "clicks": 39,
+          "impressions": 1689,
+          "ctr": 2.3
+        },
+        {
+          "title": "퇴직연금 중도인출",
+          "clicks": 35,
+          "impressions": 1496,
+          "ctr": 2.3
+        },
+        {
+          "title": "건설근로자공제회 퇴직공제금",
+          "clicks": 34,
+          "impressions": 2540,
+          "ctr": 1.3
+        },
+        {
+          "title": "현관 센서등",
+          "clicks": 28,
+          "impressions": 2742,
+          "ctr": 1.0
+        },
+        {
+          "title": "요양보호사 자격증",
+          "clicks": 28,
+          "impressions": 2402,
+          "ctr": 1.2
+        },
+        {
+          "title": "요양보호사 CBT 모의고사",
+          "clicks": 21,
+          "impressions": 1795,
+          "ctr": 1.2
+        },
+        {
+          "title": "건강보험득실확인서",
+          "clicks": 21,
+          "impressions": 968,
+          "ctr": 2.2
+        },
+        {
+          "title": "문턱 경사로 설치기준",
+          "clicks": 19,
+          "impressions": 1616,
+          "ctr": 1.2
+        },
+        {
+          "title": "결로 단열재 이보드",
+          "clicks": 19,
+          "impressions": 1025,
+          "ctr": 1.9
+        }
+      ],
+      "top_keywords": [
+        {
+          "kw": "요양기관정보마당",
+          "clicks": 2,
+          "impressions": 15352,
+          "ctr": 0.0
+        },
+        {
+          "kw": "방문요양보호사 월급",
+          "clicks": 2,
+          "impressions": 331,
+          "ctr": 0.6
+        },
+        {
+          "kw": "화장실 단차 없애는법",
+          "clicks": 5,
+          "impressions": 32,
+          "ctr": 15.6
+        },
+        {
+          "kw": "퇴직연금 조기수령 조건",
+          "clicks": 3,
+          "impressions": 10,
+          "ctr": 30.0
+        },
+        {
+          "kw": "커피보드 세척방법",
+          "clicks": 3,
+          "impressions": 5,
+          "ctr": 60.0
+        }
+      ],
+      "ctr_opportunities": [
+        {
+          "kw": "요양기관정보마당",
+          "impressions": 15352,
+          "clicks": 2,
+          "ctr": 0.0,
+          "tip": "15,352노출 2클릭. 1위가 공단 공식+AI 개요라 제목으로 회수 불가 → '기관번호 없이 찾기' 롱테일·내부 유입용"
+        },
+        {
+          "kw": "요양보호사 월급",
+          "impressions": 7817,
+          "clicks": 90,
+          "ctr": 1.2,
+          "tip": "제목 교체로 CTR 1.1→1.2%. 메타에 실수령 1,947,287원 + 요율표 첫 표 → CTR 3% 목표"
+        },
+        {
+          "kw": "방문요양보호사 월급",
+          "impressions": 331,
+          "clicks": 2,
+          "ctr": 0.6,
+          "tip": "고시 수가 60분 25,320원/90분 34,120원 표를 첫 표로"
+        },
+        {
+          "kw": "뚫어뻥 없이 변기 뚫는 법",
+          "impressions": 2934,
+          "clicks": 19,
+          "ctr": 0.6,
+          "tip": "표 3개·제목 반영 완료. 첫 문단 출처 3개만 보강 → 3일 뒤 CTR 재확인"
+        }
+      ],
+      "requested_20261124_status": "11/24 요청 6편(계산기) — 48시간 경과, 수집 전환 0건",
+      "requested_20261125": [
+        "국민연금일시금수령",
+        "휠체어-택시",
+        "노인일자리신청",
+        "전세보증보험(11/25 09:47~09:48 접수, 11/26 미수집)"
       ]
     },
     "daum": {
@@ -241,6 +406,21 @@
       },
       "requests_20261126": [
         "보청기-지원금 · 청년버팀목대출 · 방충망-교체 · 종량제-봉투-규격 · 계단-미끄럼방지 (문서등록 5건, '수집요청이 완료되었습니다' 확인, 호출 제한 없음)"
+      ],
+      "today_crawl": 0,
+      "today_index": 0,
+      "today_impressions": 24,
+      "daily_crawl_10d": 60,
+      "weekly_crawl_10w": 193,
+      "daily_index_10d": 21,
+      "weekly_index_10w": 11,
+      "daily_impressions_10d": 41,
+      "weekly_impressions_10w": 304,
+      "note": "PIN 재인증 완료(09:50). 오늘 수집·색인 0은 오전 조회 시점. 일평균 노출 40→41, 주평균 노출 300→304로 완만한 상승",
+      "requested_20261125": [
+        "https://staynplan.com/국민연금일시금수령/",
+        "https://staynplan.com/휠체어-택시/",
+        "https://staynplan.com/노인일자리신청/"
       ]
     }
   },
@@ -2872,37 +3052,37 @@
     "naver_share": "87.3% (372/426)",
     "top_pages": [
       {
-        "page": "퇴직연금 수령 방법 6가지",
+        "title": "퇴직연금 수령 방법 6가지, 아니면 못 꺼냅니다",
         "views": 26,
         "change": "+136.4%"
       },
       {
-        "page": "홈",
+        "title": "스테이앤플랜 홈",
         "views": 17,
         "change": "-22.7%"
       },
       {
-        "page": "건강보험득실확인서",
+        "title": "퇴사 후 14일, 건강보험득실확인서를 봐야 합니다",
         "views": 14,
         "change": "+100.0%"
       },
       {
-        "page": "건설근로자공제회",
+        "title": "건설근로자공제회 퇴직공제금",
         "views": 10,
         "change": "+11.1%"
       },
       {
-        "page": "요양보호사 월급",
+        "title": "요양보호사 월급 2026년, 209시간 215만6,880원",
         "views": 9,
         "change": "+50.0%"
       },
       {
-        "page": "문턱 제거 기준",
+        "title": "문턱 제거 기준",
         "views": 9,
         "change": "+35.7%"
       },
       {
-        "page": "요양보호사 CBT 모의고사",
+        "title": "요양보호사 CBT 모의고사",
         "views": 8,
         "change": "+20.0%"
       }
@@ -2938,7 +3118,34 @@
       "sessions": "+18 (408→426)",
       "organic": "+17 (380→397)",
       "pageviews": "조회수 273 (일요일~오늘 창, -17.8%)"
-    }
+    },
+    "top_cities": [
+      {
+        "city": "서울",
+        "users": 130
+      },
+      {
+        "city": "부산",
+        "users": 40
+      },
+      {
+        "city": "인천",
+        "users": 22
+      },
+      {
+        "city": "대구",
+        "users": 13
+      },
+      {
+        "city": "대전",
+        "users": 9
+      },
+      {
+        "city": "수원",
+        "users": 8
+      }
+    ],
+    "unused_2026": {}
   },
   "adsense_readiness": [
     {
