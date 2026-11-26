@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-11-26 10:06",
+  "updated_at": "2026-11-26 12:03",
   "history": [
     {
       "ts": "2026-11-23T22:39:03+09:00",
@@ -41,41 +41,41 @@
       "okx_pnl_pct": -0.02
     },
     {
-      "ts": "2026-11-26T10:06:50+09:00",
+      "ts": "2026-11-26T12:03:25+09:00",
       "date": "2026-11-26",
-      "label": "11/26 10:06",
-      "total_krw": 7151602,
-      "kiwoom_krw": 6723881,
+      "label": "11/26 12:03",
+      "total_krw": 7152600,
+      "kiwoom_krw": 6724879,
       "okx_krw": 427721,
       "okx_usd": 318.16,
-      "kiwoom_pnl_krw": 1318,
-      "kiwoom_pnl_pct": 0.74,
+      "kiwoom_pnl_krw": 2117,
+      "kiwoom_pnl_pct": 1.18,
       "okx_pnl_usd": -0.05,
       "okx_pnl_pct": -0.02
     }
   ],
   "latest": {
     "kiwoom": {
-      "tot_prft_rt": 0.74,
+      "tot_prft_rt": 1.18,
       "ord_alow_krw": 0,
-      "total_est_krw": 6723881,
+      "total_est_krw": 6724879,
       "stocks": [
         {
-          "pl": 1318,
+          "pl": 2117,
           "name": "에스피지",
           "qty": 2,
           "avg": 89640,
-          "evlt": 181000,
-          "cur": 90500,
-          "rt": 0.74
+          "evlt": 181800,
+          "cur": 90900,
+          "rt": 1.18
         }
       ],
       "d2_deposit_krw": 6543462,
       "tot_pur_krw": 179280,
-      "tot_evlt_krw": 181000,
+      "tot_evlt_krw": 181800,
       "account": "5280-4774",
       "deposit_krw": 6662091,
-      "tot_pl_krw": 1318
+      "tot_pl_krw": 2117
     },
     "okx": {
       "total_usd": 318.16,
@@ -6519,8 +6519,8 @@
       "realized_pl": 0.0,
       "realized_rt": 0.0,
       "holding_qty": 2,
-      "unrealized_pl": 1318,
-      "unrealized_rt": 0.74,
+      "unrealized_pl": 2117,
+      "unrealized_rt": 1.18,
       "last_date": "2026-11-26",
       "trade_count": 2
     },
