@@ -1,6 +1,6 @@
 {
-    "kw_total_realized_pl":  -93512,
-    "updated_at":  "2026-11-26 15:29",
+    "kw_total_realized_pl":  -94000,
+    "updated_at":  "2026-11-26 15:30",
     "kiwoom":  {
                    "tot_prft_rt":  -0.38,
                    "ord_alow_krw":  0,
@@ -3524,6 +3524,22 @@
                        "source":  "키움",
                        "symbol":  "안랩",
                        "qty":  5,
+                       "instType":  "주식",
+                       "date":  "2026-11-26",
+                       "pnl":  0
+                   },
+                   {
+                       "tax":  0,
+                       "id":  "kw_today_0331767",
+                       "time":  "15:22:13",
+                       "amount":  179200,
+                       "price":  89600,
+                       "currency":  "KRW",
+                       "side":  "매도",
+                       "fee":  0,
+                       "source":  "키움",
+                       "symbol":  "에스피지",
+                       "qty":  2,
                        "instType":  "주식",
                        "date":  "2026-11-26",
                        "pnl":  0
