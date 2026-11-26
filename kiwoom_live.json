@@ -1,18 +1,18 @@
 {
     "kw_total_realized_pl":  -94000,
-    "updated_at":  "2026-11-26 17:00",
+    "updated_at":  "2026-11-26 17:04",
     "kiwoom":  {
                    "tot_prft_rt":  0,
                    "ord_alow_krw":  0,
-                   "total_est_krw":  6749984,
+                   "total_est_krw":  6724684,
                    "stocks":  [
 
                               ],
-                   "d2_deposit_krw":  6749984,
+                   "d2_deposit_krw":  6724684,
                    "tot_pur_krw":  0,
                    "tot_evlt_krw":  0,
                    "account":  "5280-4774",
-                   "deposit_krw":  6689791,
+                   "deposit_krw":  6664491,
                    "tot_pl_krw":  0
                },
     "trades":  [
