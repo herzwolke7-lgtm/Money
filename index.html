@@ -1807,7 +1807,7 @@
         }
         let assetHtml = `<span class="pnl-comp-v flat">-<span class="pnl-comp-sub">11/23부터 누적</span></span>`;
         if (snapMatch) {
-          const prevVal = getVal(snapMatch);
+          const prevVal = currentAcct === "okx" ? (snapMatch.okx_usd ?? 0) : getVal(snapMatch);
           const diff = curAsset - prevVal;
           const aCls = diff > 0 ? "up" : (diff < 0 ? "down" : "flat");
           const dText = currentAcct === "okx" ? fmtUsd(diff) : fmtKrw(diff);
@@ -1872,7 +1872,7 @@
           pill.className = "delta-tag " + (pnl > 0 ? "up" : pnl < 0 ? "down" : "flat");
           pill.textContent = `오늘 평가손익 ${fmtKrw(pnl)} (${fmtPct(pct)})`;
         }
-        renderRiskGrid(computeMetrics(currentAcct, scoped.length ? scoped : fullSeries));
+        renderRiskGrid(computeMetrics(currentAcct, fullSeries));
         renderRealizedChart(scoped, `오늘 (${latestDateStr}) 실현손익`, latestDateStr, latestDateStr);
       } else {
         const periodSum = scoped.length ? scoped[scoped.length - 1].cum : 0;
@@ -1880,7 +1880,7 @@
         pill.textContent = currentAcct === "okx"
           ? `${label} 실현손익 ${fmtUsd(periodSum)}`
           : `${label} 실현손익 ${fmtKrw(periodSum)}`;
-        renderRiskGrid(computeMetrics(currentAcct, scoped));
+        renderRiskGrid(computeMetrics(currentAcct, scoped.length >= 2 ? scoped : fullSeries));
         const rangeStart = period === "all" && fullSeries.length ? fullSeries[0].date : targetCutoff;
         renderRealizedChart(scoped, `${label} 실현손익 추이`, rangeStart, latestDateStr);
       }
@@ -2044,18 +2044,24 @@
       const last = points[points.length - 1];
       document.getElementById("hoverDate").textContent = last.date;
       document.getElementById("hoverVal").textContent = getVal(last).toLocaleString() + "원";
-      document.getElementById("axisStart").textContent = points[0].date.slice(5);
-      document.getElementById("axisMid").textContent = points[Math.floor(points.length / 2)].date.slice(5);
-      document.getElementById("axisEnd").textContent = last.date.slice(5);
+      const minT = new Date(points[0].date + "T00:00:00").getTime();
+      const maxT = Math.max(minT + 86400000, new Date(last.date + "T00:00:00").getTime());
+      const tSpan = maxT - minT;
+      document.getElementById("axisStart").textContent = points[0].date.slice(2).replace(/-/g, ".");
+      document.getElementById("axisMid").textContent = localYmdStr((minT + maxT) / 2).slice(2).replace(/-/g, ".");
+      document.getElementById("axisEnd").textContent = last.date.slice(2).replace(/-/g, ".");
       document.getElementById("chartNote").textContent = `${label} · ${points[0].date} → ${last.date} (${points.length}건)`;
       const vals = points.map(getVal);
       const min = Math.min(...vals), max = Math.max(...vals);
       const span = (max - min) || 1;
-      const coords = points.map((p, i) => ({
-        x: padX + (i / (points.length - 1)) * (w - padX * 2),
-        y: h - padBot - ((getVal(p) - min) / span) * (h - padTop - padBot),
-        point: p
-      }));
+      const coords = points.map(p => {
+        const t = new Date(p.date + "T00:00:00").getTime();
+        return {
+          x: padX + Math.max(0, Math.min(1, (t - minT) / tSpan)) * (w - padX * 2),
+          y: h - padBot - ((getVal(p) - min) / span) * (h - padTop - padBot),
+          point: p
+        };
+      });
       const linePts = coords.map(c => `${c.x.toFixed(1)},${c.y.toFixed(1)}`).join(" ");
       const poly = document.createElementNS("http://www.w3.org/2000/svg", "polyline");
       poly.setAttribute("fill", "none"); poly.setAttribute("stroke", "#141413");
