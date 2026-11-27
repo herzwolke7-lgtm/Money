@@ -1835,36 +1835,16 @@
       const labels = { today: "오늘", "1w": "1주", "1m": "1달", "2m": "2달", "3m": "3달", "6m": "6달", "1y": "1년", all: "전체" };
       const label = labels[period];
       const hist = payload.history || [];
-      const daysMap = { today: 0, "1w": 7, "1m": 30, "2m": 60, "3m": 90, "6m": 180, "1y": 365, all: 99999 };
       const latestDateStr = hist.length ? hist[hist.length - 1].date : localYmdStr(Date.now());
-      const targetCutoff = period === "all"
-        ? "0000-00-00"
-        : localYmdStr(new Date(latestDateStr + "T00:00:00").getTime() - (daysMap[period] || 0) * 86400000);
-      const hasFullHistSpan = hist.length >= 2 && period !== "today" && period !== "all" && hist[0].date <= targetCutoff;
-      const histPts = hasFullHistSpan ? filterHistByPeriod(period) : [];
-
-      if (histPts.length >= 2) {
-        const start = getVal(histPts[0]);
-        const end = getVal(histPts[histPts.length - 1]);
-        const diff = end - start;
-        const pct = start ? (diff / start) * 100 : 0;
-        const pill = document.getElementById("periodPnl");
-        pill.className = "delta-tag " + (diff > 0 ? "up" : diff < 0 ? "down" : "flat");
-        pill.textContent = `${label} ${fmtKrw(diff)} (${fmtPct(pct)})`;
-        renderAssetChart(histPts, label);
-        return;
-      }
-
       const fullSeries = buildRealizedSeries(currentAcct);
-      const scoped = filterSeriesByPeriod(fullSeries, period);
-      const pill = document.getElementById("periodPnl");
       const kw = payload.latest.kiwoom;
       const okx = payload.latest.okx;
-
       if (period === "today") {
+        const snaps = (payload.snapshots || []).filter(s => s.date === latestDateStr);
+        const pill = document.getElementById("periodPnl");
         if (currentAcct === "okx") {
-          pill.className = "delta-tag flat";
-          pill.textContent = `오늘 평가손익 $${okx.pnl_usd.toFixed(2)} (${fmtPct(okx.pnl_pct)})`;
+          pill.className = "delta-tag " + (okx.pnl_usd > 0 ? "up" : okx.pnl_usd < 0 ? "down" : "flat");
+          pill.textContent = `오늘 평가손익 ${fmtUsd(okx.pnl_usd)} (${fmtPct(okx.pnl_pct)})`;
         } else {
           const pnl = kw.tot_pl_krw;
           const base = currentAcct === "kiwoom" ? kw.tot_pur_krw : (payload.history[0].total_krw - pnl);
@@ -1873,32 +1853,46 @@
           pill.textContent = `오늘 평가손익 ${fmtKrw(pnl)} (${fmtPct(pct)})`;
         }
         renderRiskGrid(computeMetrics(currentAcct, fullSeries));
-        const todaySells = (payload.trades || [])
-          .filter(t => t.date === latestDateStr && t.side === "매도" && (currentAcct === "all" || (currentAcct === "kiwoom" ? t.source === "키움" : t.source === "OKX")))
-          .slice()
-          .sort((a, b) => (a.time || "").localeCompare(b.time || ""));
-        const rate = usdKrwRate();
-        let todaySeries = [];
-        if (todaySells.length) {
-          todaySeries.push({ date: latestDateStr, time: "09:00:00", label: "09:00", daily: 0, cum: 0 });
-          let c = 0;
-          todaySells.forEach(t => {
-            const v = currentAcct === "okx" ? (t.pnl || 0) : (t.source === "OKX" ? Math.round((t.pnl || 0) * rate) : Math.round(t.pnl || 0));
-            c += v;
-            const tm = (t.time || "09:00:00").slice(0, 5);
-            todaySeries.push({ date: latestDateStr, time: t.time || "09:00:00", label: tm, symbol: t.symbol, daily: v, cum: c });
-          });
+        if (snaps.length >= 2) {
+          renderAssetChart(snaps, `오늘 (${latestDateStr}) 루틴별 추이`, true);
+        } else {
+          renderAssetChart(hist.slice(-1), `오늘 (${latestDateStr})`, true);
         }
-        renderRealizedChart(todaySeries, `오늘 (${latestDateStr}) 장중 실현손익`);
-      } else {
-        const periodSum = scoped.length ? scoped[scoped.length - 1].cum : 0;
-        pill.className = "delta-tag " + (periodSum > 0 ? "up" : periodSum < 0 ? "down" : "flat");
-        pill.textContent = currentAcct === "okx"
-          ? `${label} 실현손익 ${fmtUsd(periodSum)}`
-          : `${label} 실현손익 ${fmtKrw(periodSum)}`;
-        renderRiskGrid(computeMetrics(currentAcct, scoped.length >= 2 ? scoped : fullSeries));
-        renderRealizedChart(scoped, `${label} 실현손익 추이`);
+        return;
       }
+
+      const daysMap = { today: 0, "1w": 7, "1m": 30, "2m": 60, "3m": 90, "6m": 180, "1y": 365, all: 99999 };
+      const targetCutoff = period === "all"
+        ? "0000-00-00"
+        : localYmdStr(new Date(latestDateStr + "T00:00:00").getTime() - (daysMap[period] || 0) * 86400000);
+      const hasFullHistSpan = hist.length >= 2 && period !== "all" && (hist[0].date <= targetCutoff || period === "1w");
+      const histPts = hasFullHistSpan ? filterHistByPeriod(period) : [];
+
+      if (histPts.length >= 2) {
+        const getAcctVal = p => currentAcct === "okx" ? (p.okx_usd ?? 0) : getVal(p);
+        const start = getAcctVal(histPts[0]);
+        const end = getAcctVal(histPts[histPts.length - 1]);
+        const diff = end - start;
+        const pct = start ? (diff / start) * 100 : 0;
+        const pill = document.getElementById("periodPnl");
+        pill.className = "delta-tag " + (diff > 0 ? "up" : diff < 0 ? "down" : "flat");
+        pill.textContent = currentAcct === "okx"
+          ? `${label} 자산 ${fmtUsd(diff)} (${fmtPct(pct)})`
+          : `${label} 자산 ${fmtKrw(diff)} (${fmtPct(pct)})`;
+        renderRiskGrid(computeMetrics(currentAcct, fullSeries));
+        renderAssetChart(histPts, `${label} 자산 추이`, false);
+        return;
+      }
+
+      const scoped = filterSeriesByPeriod(fullSeries, period);
+      const pill = document.getElementById("periodPnl");
+      const periodSum = scoped.length ? scoped[scoped.length - 1].cum : 0;
+      pill.className = "delta-tag " + (periodSum > 0 ? "up" : periodSum < 0 ? "down" : "flat");
+      pill.textContent = currentAcct === "okx"
+        ? `${label} 실현손익 ${fmtUsd(periodSum)}`
+        : `${label} 실현손익 ${fmtKrw(periodSum)}`;
+      renderRiskGrid(computeMetrics(currentAcct, scoped.length >= 2 ? scoped : fullSeries));
+      renderRealizedChart(scoped, `${label} 실현손익 추이`);
     }
 
     function pickSingleDate(val) {
@@ -2060,36 +2054,106 @@
       svg.onpointerdown = (e) => onP(e.clientX);
     }
 
-    function renderAssetChart(points, label) {
+    function renderAssetChart(points, label, isIntraday) {
       const svg = document.getElementById("chartSvg");
-      const w = 320, h = 120, padX = 10, padTop = 14, padBot = 14;
+      const w = 320, h = 110, padX = 6, padTop = 12, padBot = 12;
       svg.innerHTML = "";
+      if (!points.length) return;
+      const getAcctVal = p => currentAcct === "okx" ? (p.okx_usd ?? 0) : getVal(p);
+      const fmtVal = v => currentAcct === "okx" ? `$${v.toFixed(2)}` : `${Math.round(v).toLocaleString()}원`;
+      const fmtDelta = d => currentAcct === "okx" ? fmtUsd(d) : fmtKrw(d);
+
+      const first = points[0];
       const last = points[points.length - 1];
-      document.getElementById("hoverDate").textContent = last.date;
-      document.getElementById("hoverVal").textContent = getVal(last).toLocaleString() + "원";
-      const minT = new Date(points[0].date + "T00:00:00").getTime();
-      const maxT = Math.max(minT + 86400000, new Date(last.date + "T00:00:00").getTime());
+      const lastVal = getAcctVal(last);
+      const firstVal = getAcctVal(first);
+      const totalDiff = lastVal - firstVal;
+      const strokeCol = totalDiff > 0 ? "#d92d20" : (totalDiff < 0 ? "#1570ef" : "#141413");
+
+      document.getElementById("hoverDate").textContent = label;
+      document.getElementById("hoverVal").textContent = fmtVal(lastVal);
+
+      if (points.length === 1) {
+        document.getElementById("axisStart").textContent = isIntraday ? (last.ts ? last.ts.slice(11, 16) : last.date) : last.date.slice(2).replace(/-/g, ".");
+        document.getElementById("axisMid").textContent = "";
+        document.getElementById("axisEnd").textContent = "";
+        document.getElementById("chartNote").textContent = `${label} · ${fmtVal(lastVal)} (1건)`;
+        const c = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+        c.setAttribute("cx", w / 2); c.setAttribute("cy", h / 2); c.setAttribute("r", 3.5); c.setAttribute("fill", strokeCol);
+        svg.appendChild(c);
+        return;
+      }
+
+      const parseMs = p => isIntraday && p.ts
+        ? new Date(p.ts).getTime()
+        : new Date(p.date + "T00:00:00").getTime();
+
+      const minT = parseMs(first);
+      const maxT = Math.max(minT + (isIntraday ? 60000 : 86400000), parseMs(last));
       const tSpan = maxT - minT;
-      document.getElementById("axisStart").textContent = points[0].date.slice(2).replace(/-/g, ".");
-      document.getElementById("axisMid").textContent = localYmdStr((minT + maxT) / 2).slice(2).replace(/-/g, ".");
-      document.getElementById("axisEnd").textContent = last.date.slice(2).replace(/-/g, ".");
-      document.getElementById("chartNote").textContent = `${label} · ${points[0].date} → ${last.date} (${points.length}건)`;
-      const vals = points.map(getVal);
+
+      if (isIntraday) {
+        const midDt = new Date((minT + maxT) / 2);
+        const midTime = String(midDt.getHours()).padStart(2, "0") + ":" + String(midDt.getMinutes()).padStart(2, "0");
+        document.getElementById("axisStart").textContent = first.ts ? first.ts.slice(11, 16) : first.label;
+        document.getElementById("axisMid").textContent = midTime;
+        document.getElementById("axisEnd").textContent = last.ts ? last.ts.slice(11, 16) : last.label;
+      } else {
+        document.getElementById("axisStart").textContent = first.date.slice(2).replace(/-/g, ".");
+        document.getElementById("axisMid").textContent = localYmdStr((minT + maxT) / 2).slice(2).replace(/-/g, ".");
+        document.getElementById("axisEnd").textContent = last.date.slice(2).replace(/-/g, ".");
+      }
+
+      const vals = points.map(getAcctVal);
       const min = Math.min(...vals), max = Math.max(...vals);
-      const span = (max - min) || 1;
-      const coords = points.map(p => {
-        const t = new Date(p.date + "T00:00:00").getTime();
-        return {
-          x: padX + Math.max(0, Math.min(1, (t - minT) / tSpan)) * (w - padX * 2),
-          y: h - padBot - ((getVal(p) - min) / span) * (h - padTop - padBot),
-          point: p
-        };
-      });
+      const span = (max - min) || (currentAcct === "okx" ? 0.1 : 1000);
+      const coords = points.map(p => ({
+        x: padX + Math.max(0, Math.min(1, (parseMs(p) - minT) / tSpan)) * (w - padX * 2),
+        y: h - padBot - ((getAcctVal(p) - min) / span) * (h - padTop - padBot),
+        point: p,
+        val: getAcctVal(p)
+      }));
+
+      const defs = document.createElementNS("http://www.w3.org/2000/svg", "defs");
+      defs.innerHTML = `<linearGradient id="assetG" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="${strokeCol}" stop-opacity="0.14"/><stop offset="100%" stop-color="${strokeCol}" stop-opacity="0.02"/></linearGradient>`;
+      svg.appendChild(defs);
       const linePts = coords.map(c => `${c.x.toFixed(1)},${c.y.toFixed(1)}`).join(" ");
+      const areaPts = `${coords[0].x.toFixed(1)},${h - padBot} ${linePts} ${coords[coords.length - 1].x.toFixed(1)},${h - padBot}`;
+      const polyArea = document.createElementNS("http://www.w3.org/2000/svg", "polygon");
+      polyArea.setAttribute("fill", "url(#assetG)"); polyArea.setAttribute("points", areaPts);
+      svg.appendChild(polyArea);
       const poly = document.createElementNS("http://www.w3.org/2000/svg", "polyline");
-      poly.setAttribute("fill", "none"); poly.setAttribute("stroke", "#141413");
-      poly.setAttribute("stroke-width", "1.9"); poly.setAttribute("points", linePts);
+      poly.setAttribute("fill", "none"); poly.setAttribute("stroke", strokeCol);
+      poly.setAttribute("stroke-width", "1.8"); poly.setAttribute("stroke-linejoin", "round"); poly.setAttribute("points", linePts);
       svg.appendChild(poly);
+
+      coords.forEach(c => {
+        const pt = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+        pt.setAttribute("r", "2.2"); pt.setAttribute("fill", strokeCol);
+        pt.setAttribute("cx", c.x.toFixed(1)); pt.setAttribute("cy", c.y.toFixed(1));
+        svg.appendChild(pt);
+      });
+
+      const xhair = document.createElementNS("http://www.w3.org/2000/svg", "line");
+      xhair.setAttribute("stroke", "rgba(20,20,19,0.28)"); xhair.setAttribute("stroke-width", "0.8");
+      xhair.style.display = "none";
+      svg.appendChild(xhair);
+
+      document.getElementById("chartNote").textContent = `최고 ${fmtVal(max)} · 최저 ${fmtVal(min)} (${fmtDelta(totalDiff)}) · 터치하여 확인`;
+
+      const onP = (cx) => {
+        const rect = svg.getBoundingClientRect();
+        const sx = ((cx - rect.left) / rect.width) * w;
+        let near = coords[0], best = Math.abs(sx - near.x);
+        for (const c of coords) { const d = Math.abs(sx - c.x); if (d < best) { best = d; near = c; } }
+        xhair.style.display = "block";
+        xhair.setAttribute("x1", near.x); xhair.setAttribute("x2", near.x);
+        xhair.setAttribute("y1", padTop); xhair.setAttribute("y2", h - padBot);
+        document.getElementById("hoverDate").textContent = isIntraday ? (near.point.ts ? near.point.ts.slice(11, 16) : near.point.label) : near.point.date;
+        document.getElementById("hoverVal").textContent = `${fmtVal(near.val)} (${fmtDelta(near.val - firstVal)})`;
+      };
+      svg.onpointermove = (e) => onP(e.clientX);
+      svg.onpointerdown = (e) => onP(e.clientX);
     }
 
     // === LOTTERY & PENSION MODULE ===
