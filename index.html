@@ -1896,7 +1896,7 @@
       pill.textContent = currentAcct === "okx"
         ? `${label} 실현손익 ${fmtUsd(periodSum)}`
         : `${label} 실현손익 ${fmtKrw(periodSum)}`;
-      renderRiskGrid(computeMetrics(currentAcct, scoped.length >= 2 ? scoped : fullSeries));
+      renderRiskGrid(computeMetrics(currentAcct, fullSeries));
       renderRealizedChart(scoped, `${label} 실현손익 추이`);
     }
 
