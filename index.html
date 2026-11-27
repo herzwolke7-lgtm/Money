@@ -1484,11 +1484,14 @@
 
       const okxSyms = summaries.filter(s => s.source === "OKX");
       const okxRealizedUsd = okxSyms.reduce((a, b) => a + (b.realized_pl || 0), 0);
+      const okxSeries = buildRealizedSeries("okx");
+      const okxRealizedUsd = okxSeries.length ? okxSeries[okxSeries.length - 1].cum : summaries.filter(s => s.source === "OKX").reduce((a, b) => a + (b.realized_pl || 0), 0);
       const okxRealizedKrw = Math.round(okxRealizedUsd * rate);
       const okxUnrealizedUsd = payload.latest.okx.pnl_usd || 0;
       const okxUnrealizedKrw = Math.round(okxUnrealizedUsd * rate);
 
-      const kwRealized = payload.kw_total_realized_pl || 0;
+      const kwSeries = buildRealizedSeries("kiwoom");
+      const kwRealized = kwSeries.length ? Math.round(kwSeries[kwSeries.length - 1].cum) : (payload.kw_total_realized_pl || 0);
       const kwUnrealized = payload.latest.kiwoom.tot_pl_krw || 0;
 
       const scopedSyms = summaries.filter(s => jSource === "all" || s.source === jSource);
@@ -2436,15 +2439,19 @@
         el.innerHTML = `<div style="padding:12px 0;color:var(--ink-3);font-size:13px;">위 <strong>5게임 추천</strong> 버튼을 누르면 공식 데이터 패턴으로 번호를 뽑아드려요</div>`;
         return;
       }
-      el.innerHTML = generatedPicks.map((p, i) => `
+      const savedTickets = getTickets();
+      el.innerHTML = generatedPicks.map((p, i) => {
+        const isBought = Boolean(p.purchased) || savedTickets.some(tk => tk.purchased && tk.type === lotType && Number(tk.round) === Number(p.round) && (p.nums ? JSON.stringify(tk.nums) === JSON.stringify(p.nums) : (String(tk.group) === String(p.group) && String(tk.num) === String(p.num))));
+        return `
         <div class="gen-row">
           ${p.nums ? renderLottoBalls(p.nums) : renderPensionBalls(p.group, p.num)}
           <div style="display:flex;align-items:center;gap:6px;">
-            ${p.purchased ? `<span class="badge c-up" style="background:var(--up-bg);">구매완료</span>` : ""}
+            ${isBought ? `<span class="badge c-up" style="background:var(--up-bg);">구매완료</span>` : ""}
             <button class="btn-ghost" onclick="savePick(${i})">구매 저장</button>
           </div>
         </div>
-      `).join("");
+      `;
+      }).join("");
     }
 
     function savePick(idx) {
