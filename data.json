@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-11-27 10:06",
+  "updated_at": "2026-11-27 10:08",
   "history": [
     {
       "ts": "2026-11-23T22:39:03+09:00",
@@ -54,11 +54,11 @@
       "okx_pnl_pct": -0.02
     },
     {
-      "ts": "2026-11-27T10:06:30+09:00",
+      "ts": "2026-11-27T10:08:25+09:00",
       "date": "2026-11-27",
-      "label": "11/27 10:06",
-      "total_krw": 7149781,
-      "kiwoom_krw": 6721684,
+      "label": "11/27 10:08",
+      "total_krw": 7163628,
+      "kiwoom_krw": 6735531,
       "okx_krw": 428097,
       "okx_usd": 318.18,
       "kiwoom_pnl_krw": 0,
@@ -71,9 +71,9 @@
     "kiwoom": {
       "tot_prft_rt": 0,
       "ord_alow_krw": 0,
-      "total_est_krw": 6721684,
+      "total_est_krw": 6735531,
       "stocks": [],
-      "d2_deposit_krw": 6721684,
+      "d2_deposit_krw": 6735531,
       "tot_pur_krw": 0,
       "tot_evlt_krw": 0,
       "account": "5280-4774",
@@ -120,6 +120,38 @@
     }
   },
   "trades": [
+    {
+      "tax": 0,
+      "id": "kw_today_0087407",
+      "time": "09:17:12",
+      "amount": 219555,
+      "price": 4879,
+      "currency": "KRW",
+      "side": "매도",
+      "fee": 0,
+      "source": "키움",
+      "symbol": "아리바이오랩",
+      "qty": 45,
+      "instType": "주식",
+      "date": "2026-11-27",
+      "pnl": 18520.0
+    },
+    {
+      "tax": 0,
+      "id": "kw_today_0043279",
+      "time": "09:00:23",
+      "amount": 205200,
+      "price": 4560,
+      "currency": "KRW",
+      "side": "매수",
+      "fee": 0,
+      "source": "키움",
+      "symbol": "아리바이오랩",
+      "qty": 45,
+      "instType": "주식",
+      "date": "2026-11-27",
+      "pnl": 0
+    },
     {
       "tax": 0,
       "id": "kw_20261127_000000014",
@@ -6554,8 +6586,27 @@
     }
   ],
   "daily_pnl": [],
-  "kw_total_realized_pl": -94000,
+  "kw_total_realized_pl": -80153,
   "symbol_summaries": [
+    {
+      "source": "키움",
+      "symbol": "아리바이오랩",
+      "currency": "KRW",
+      "buy_qty": 56.0,
+      "buy_amt": 249550.0,
+      "avg_buy": 4456.0,
+      "sell_qty": 56.0,
+      "sell_amt": 267865.0,
+      "avg_sell": 4783.0,
+      "fee_tax": 95.0,
+      "realized_pl": 17734.0,
+      "realized_rt": 8.32,
+      "holding_qty": 0,
+      "unrealized_pl": 0,
+      "unrealized_rt": 0.0,
+      "last_date": "2026-11-27",
+      "trade_count": 13
+    },
     {
       "source": "키움",
       "symbol": "현대오토에버",
@@ -7163,25 +7214,6 @@
       "unrealized_rt": 0.0,
       "last_date": "2026-08-01",
       "trade_count": 3
-    },
-    {
-      "source": "키움",
-      "symbol": "아리바이오랩",
-      "currency": "KRW",
-      "buy_qty": 11.0,
-      "buy_amt": 44350.0,
-      "avg_buy": 4032.0,
-      "sell_qty": 11.0,
-      "sell_amt": 48310.0,
-      "avg_sell": 4392.0,
-      "fee_tax": 95.0,
-      "realized_pl": -786.0,
-      "realized_rt": -6.53,
-      "holding_qty": 0,
-      "unrealized_pl": 0,
-      "unrealized_rt": 0.0,
-      "last_date": "2026-06-02",
-      "trade_count": 11
     },
     {
       "source": "키움",
