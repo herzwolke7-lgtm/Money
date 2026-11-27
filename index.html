@@ -1873,7 +1873,23 @@
           pill.textContent = `오늘 평가손익 ${fmtKrw(pnl)} (${fmtPct(pct)})`;
         }
         renderRiskGrid(computeMetrics(currentAcct, fullSeries));
-        renderRealizedChart(scoped, `오늘 (${latestDateStr}) 실현손익`, latestDateStr, latestDateStr);
+        const todaySells = (payload.trades || [])
+          .filter(t => t.date === latestDateStr && t.side === "매도" && (currentAcct === "all" || (currentAcct === "kiwoom" ? t.source === "키움" : t.source === "OKX")))
+          .slice()
+          .sort((a, b) => (a.time || "").localeCompare(b.time || ""));
+        const rate = usdKrwRate();
+        let todaySeries = [];
+        if (todaySells.length) {
+          todaySeries.push({ date: latestDateStr, time: "09:00:00", label: "09:00", daily: 0, cum: 0 });
+          let c = 0;
+          todaySells.forEach(t => {
+            const v = currentAcct === "okx" ? (t.pnl || 0) : (t.source === "OKX" ? Math.round((t.pnl || 0) * rate) : Math.round(t.pnl || 0));
+            c += v;
+            const tm = (t.time || "09:00:00").slice(0, 5);
+            todaySeries.push({ date: latestDateStr, time: t.time || "09:00:00", label: tm, symbol: t.symbol, daily: v, cum: c });
+          });
+        }
+        renderRealizedChart(todaySeries, `오늘 (${latestDateStr}) 장중 실현손익`);
       } else {
         const periodSum = scoped.length ? scoped[scoped.length - 1].cum : 0;
         pill.className = "delta-tag " + (periodSum > 0 ? "up" : periodSum < 0 ? "down" : "flat");
@@ -1881,8 +1897,7 @@
           ? `${label} 실현손익 ${fmtUsd(periodSum)}`
           : `${label} 실현손익 ${fmtKrw(periodSum)}`;
         renderRiskGrid(computeMetrics(currentAcct, scoped.length >= 2 ? scoped : fullSeries));
-        const rangeStart = period === "all" && fullSeries.length ? fullSeries[0].date : targetCutoff;
-        renderRealizedChart(scoped, `${label} 실현손익 추이`, rangeStart, latestDateStr);
+        renderRealizedChart(scoped, `${label} 실현손익 추이`);
       }
     }
 
@@ -1924,7 +1939,7 @@
       }
     }
 
-    function renderRealizedChart(series, titleLabel, rangeStartDate, rangeEndDate) {
+    function renderRealizedChart(series, titleLabel) {
       const svg = document.getElementById("chartSvg");
       const w = 320, h = 110, padX = 4, padTop = 10, padBot = 10;
       svg.innerHTML = "";
@@ -1937,19 +1952,19 @@
       if (!series.length) {
         hoverDate.textContent = titleLabel;
         hoverVal.textContent = fmt(0);
-        document.getElementById("axisStart").textContent = fmtAxisDate(rangeStartDate);
+        document.getElementById("axisStart").textContent = "-";
         document.getElementById("axisMid").textContent = "";
-        document.getElementById("axisEnd").textContent = fmtAxisDate(rangeEndDate && rangeEndDate !== rangeStartDate ? rangeEndDate : "");
+        document.getElementById("axisEnd").textContent = "-";
         noteEl.textContent = "선택한 기간에 매도 실현손익 기록이 없습니다";
         return;
       }
 
       if (series.length === 1) {
-        hoverDate.textContent = series[0].date;
+        hoverDate.textContent = series[0].label || series[0].date;
         hoverVal.textContent = fmt(series[0].cum);
-        document.getElementById("axisStart").textContent = fmtAxisDate(rangeStartDate || series[0].date);
+        document.getElementById("axisStart").textContent = series[0].label || fmtAxisDate(series[0].date);
         document.getElementById("axisMid").textContent = "";
-        document.getElementById("axisEnd").textContent = fmtAxisDate(rangeEndDate && rangeEndDate !== (rangeStartDate || series[0].date) ? rangeEndDate : "");
+        document.getElementById("axisEnd").textContent = "";
         noteEl.textContent = `${titleLabel} (1건 · ${fmt(series[0].daily)})`;
         const c = document.createElementNS("http://www.w3.org/2000/svg", "circle");
         c.setAttribute("cx", w / 2); c.setAttribute("cy", h / 2); c.setAttribute("r", 3.5); c.setAttribute("fill", series[0].cum > 0 ? "#d92d20" : (series[0].cum < 0 ? "#1570ef" : "#141413"));
@@ -1957,6 +1972,7 @@
         return;
       }
 
+      const isIntraday = Boolean(series[0].time);
       const vals = series.map(s => s.cum);
       const min = Math.min(...vals, 0), max = Math.max(...vals, 0);
       const span = (max - min) || 1;
@@ -1964,15 +1980,14 @@
       const lastCum = series[series.length - 1].cum;
       const strokeCol = lastCum > 0 ? "#d92d20" : (lastCum < 0 ? "#1570ef" : "#141413");
 
-      const startStr = (rangeStartDate && rangeStartDate !== "0000-00-00") ? rangeStartDate : series[0].date;
-      const endStr = rangeEndDate || series[series.length - 1].date;
-      const minT = new Date(startStr + "T00:00:00").getTime();
-      const maxT = Math.max(minT + 86400000, new Date(endStr + "T00:00:00").getTime());
+      const parsePointMs = s => isIntraday
+        ? new Date(s.date + "T" + s.time).getTime()
+        : new Date(s.date + "T00:00:00").getTime();
+
+      const minT = parsePointMs(series[0]);
+      const maxT = Math.max(minT + (isIntraday ? 60000 : 86400000), parsePointMs(series[series.length - 1]));
       const tSpan = maxT - minT;
-      const toX = dStr => {
-        const t = new Date(dStr + "T00:00:00").getTime();
-        return padX + Math.max(0, Math.min(1, (t - minT) / tSpan)) * (w - padX * 2);
-      };
+      const toX = s => padX + Math.max(0, Math.min(1, (parsePointMs(s) - minT) / tSpan)) * (w - padX * 2);
 
       // 0-baseline dashed reference line
       const zeroY = toY(0);
@@ -1984,7 +1999,7 @@
       svg.appendChild(zeroLine);
 
       const coords = series.map(s => ({
-        x: toX(s.date),
+        x: toX(s),
         y: toY(s.cum),
         item: s
       }));
@@ -2012,14 +2027,22 @@
       dot.setAttribute("cx", coords[coords.length - 1].x); dot.setAttribute("cy", coords[coords.length - 1].y);
       svg.appendChild(dot);
 
-      const midDateStr = localYmdStr((minT + maxT) / 2);
-      document.getElementById("axisStart").textContent = fmtAxisDate(startStr);
-      document.getElementById("axisMid").textContent = fmtAxisDate(midDateStr);
-      document.getElementById("axisEnd").textContent = fmtAxisDate(endStr);
+      if (isIntraday) {
+        const midDt = new Date((minT + maxT) / 2);
+        const midTimeStr = String(midDt.getHours()).padStart(2, "0") + ":" + String(midDt.getMinutes()).padStart(2, "0");
+        document.getElementById("axisStart").textContent = series[0].label;
+        document.getElementById("axisMid").textContent = midTimeStr;
+        document.getElementById("axisEnd").textContent = series[series.length - 1].label;
+      } else {
+        const midDateStr = localYmdStr((minT + maxT) / 2);
+        document.getElementById("axisStart").textContent = fmtAxisDate(series[0].date);
+        document.getElementById("axisMid").textContent = fmtAxisDate(midDateStr);
+        document.getElementById("axisEnd").textContent = fmtAxisDate(series[series.length - 1].date);
+      }
 
       hoverDate.textContent = `${titleLabel}`;
       hoverVal.textContent = fmt(lastCum);
-      noteEl.textContent = `최고 ${fmt(Math.max(...vals))} · 최저 ${fmt(Math.min(...vals))} · 터치하여 날짜별 확인`;
+      noteEl.textContent = `최고 ${fmt(Math.max(...vals))} · 최저 ${fmt(Math.min(...vals))} · 터치하여 ${isIntraday ? "체결별" : "날짜별"} 확인`;
 
       const onP = (cx) => {
         const rect = svg.getBoundingClientRect();
@@ -2030,8 +2053,8 @@
         xhair.setAttribute("x1", near.x); xhair.setAttribute("x2", near.x);
         xhair.setAttribute("y1", padTop); xhair.setAttribute("y2", h - padBot);
         dot.setAttribute("cx", near.x); dot.setAttribute("cy", near.y);
-        hoverDate.textContent = near.item.date;
-        hoverVal.textContent = fmt(near.item.cum) + ` (당일 ${fmt(near.item.daily)})`;
+        hoverDate.textContent = isIntraday ? `${near.item.label}${near.item.symbol ? " · " + near.item.symbol : ""}` : near.item.date;
+        hoverVal.textContent = fmt(near.item.cum) + ` (${isIntraday ? "체결" : "당일"} ${fmt(near.item.daily)})`;
       };
       svg.onpointermove = (e) => onP(e.clientX);
       svg.onpointerdown = (e) => onP(e.clientX);
