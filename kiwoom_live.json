@@ -1,27 +1,27 @@
 {
     "kw_total_realized_pl":  -94000,
-    "updated_at":  "2026-11-27 09:09",
+    "updated_at":  "2026-11-27 09:10",
     "kiwoom":  {
-                   "tot_prft_rt":  0.87,
+                   "tot_prft_rt":  1.74,
                    "ord_alow_krw":  0,
-                   "total_est_krw":  6723909,
+                   "total_est_krw":  6725256,
                    "stocks":  [
                                   {
-                                      "pl":  1776,
+                                      "pl":  3572,
                                       "name":  "아리바이오랩",
                                       "qty":  45,
                                       "avg":  4560,
-                                      "evlt":  207450,
-                                      "cur":  4610,
-                                      "rt":  0.87
+                                      "evlt":  209250,
+                                      "cur":  4650,
+                                      "rt":  1.74
                                   }
                               ],
                    "d2_deposit_krw":  6516454,
                    "tot_pur_krw":  205200,
-                   "tot_evlt_krw":  207450,
+                   "tot_evlt_krw":  209250,
                    "account":  "5280-4774",
                    "deposit_krw":  3327786,
-                   "tot_pl_krw":  1776
+                   "tot_pl_krw":  3572
                },
     "trades":  [
                    {
