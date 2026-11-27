@@ -1,27 +1,19 @@
 {
-    "kw_total_realized_pl":  -94000,
-    "updated_at":  "2026-11-27 09:15",
+    "kw_total_realized_pl":  -80153,
+    "updated_at":  "2026-11-27 09:19",
     "kiwoom":  {
-                   "tot_prft_rt":  4.37,
+                   "tot_prft_rt":  0,
                    "ord_alow_krw":  0,
-                   "total_est_krw":  6731543,
+                   "total_est_krw":  6735531,
                    "stocks":  [
-                                  {
-                                      "pl":  8961,
-                                      "name":  "아리바이오랩",
-                                      "qty":  45,
-                                      "avg":  4560,
-                                      "evlt":  214650,
-                                      "cur":  4770,
-                                      "rt":  4.37
-                                  }
+
                               ],
-                   "d2_deposit_krw":  6516454,
-                   "tot_pur_krw":  205200,
-                   "tot_evlt_krw":  214650,
+                   "d2_deposit_krw":  6735531,
+                   "tot_pur_krw":  0,
+                   "tot_evlt_krw":  0,
                    "account":  "5280-4774",
                    "deposit_krw":  3327786,
-                   "tot_pl_krw":  8961
+                   "tot_pl_krw":  0
                },
     "trades":  [
                    {
@@ -3584,6 +3576,22 @@
                        "price":  4560,
                        "currency":  "KRW",
                        "side":  "매수",
+                       "fee":  0,
+                       "source":  "키움",
+                       "symbol":  "아리바이오랩",
+                       "qty":  45,
+                       "instType":  "주식",
+                       "date":  "2026-11-27",
+                       "pnl":  0
+                   },
+                   {
+                       "tax":  0,
+                       "id":  "kw_today_0087407",
+                       "time":  "09:17:12",
+                       "amount":  219555,
+                       "price":  4879,
+                       "currency":  "KRW",
+                       "side":  "매도",
                        "fee":  0,
                        "source":  "키움",
                        "symbol":  "아리바이오랩",
