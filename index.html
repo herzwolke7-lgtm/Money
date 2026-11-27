@@ -1519,23 +1519,23 @@
           <div class="stat-item"><div class="stat-k">누적 출금</div><div class="stat-v c-down">-$${s.withdraw_usd.toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:2})}</div><div class="stat-s">${s.withdraw_krw.toLocaleString()}원</div></div>
           <div class="stat-item"><div class="stat-k">순입금</div><div class="stat-v ${s.net_usd >= 0 ? 'c-up' : 'c-down'}">${s.net_usd >= 0 ? '+' : '-'}$${Math.abs(s.net_usd).toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:2})}</div><div class="stat-s">${fmtKrw(s.net_krw)}</div></div>
         `;
-        noteEl.textContent = "OKX 완료 건 전체 기준 (각 입출금 당시 1시간봉 시세로 USD·원화 환산)";
+        noteEl.textContent = "2026.11.23 16:24(데이터 시작) 이후 OKX 입출금 누적 기준";
       } else if (key === "kiwoom") {
         subEl.textContent = kwSynced ? `입금 ${s.dep_count}건 · 출금 ${s.wd_count}건` : "PC 동기화 대기";
         gridEl.innerHTML = `
           <div class="stat-item"><div class="stat-k">누적 입금</div><div class="stat-v c-up">${kwSynced ? '+' + s.deposit_krw.toLocaleString() + '원' : '-'}</div><div class="stat-s">${kwSynced ? s.dep_count + '건' : '대기 중'}</div></div>
           <div class="stat-item"><div class="stat-k">누적 출금</div><div class="stat-v c-down">${kwSynced ? '-' + s.withdraw_krw.toLocaleString() + '원' : '-'}</div><div class="stat-s">${kwSynced ? s.wd_count + '건' : '대기 중'}</div></div>
-          <div class="stat-item"><div class="stat-k">순입금</div><div class="stat-v">${kwSynced ? fmtKrw(s.net_krw) : '-'}</div><div class="stat-s">${kwSynced ? '올해 기준' : 'PC 실행 후 반영'}</div></div>
+          <div class="stat-item"><div class="stat-k">순입금</div><div class="stat-v">${kwSynced ? fmtKrw(s.net_krw) : '-'}</div><div class="stat-s">${kwSynced ? '11.23~ 누적' : 'PC 실행 후 반영'}</div></div>
         `;
-        noteEl.textContent = kwSynced ? "올해 1월 1일 ~ 현재 키움 5280-4774 현금 입출금 기준" : "키움 입출금은 자동매매 PC(평일 08:00~17:00) 동기화 후 자동 반영됩니다.";
+        noteEl.textContent = kwSynced ? "2026.11.23 16:24(데이터 시작) 이후 키움 5280-4774 현금 입출금 기준" : "키움 입출금은 자동매매 PC(평일 08:00~17:00) 동기화 후 11.23 이후 건이 자동 반영됩니다.";
       } else {
         subEl.textContent = `입금 ${s.dep_count}건 · 출금 ${s.wd_count}건`;
         gridEl.innerHTML = `
           <div class="stat-item"><div class="stat-k">누적 입금</div><div class="stat-v c-up">+${s.deposit_krw.toLocaleString()}원</div><div class="stat-s">${s.dep_count}건</div></div>
           <div class="stat-item"><div class="stat-k">누적 출금</div><div class="stat-v c-down">-${s.withdraw_krw.toLocaleString()}원</div><div class="stat-s">${s.wd_count}건</div></div>
-          <div class="stat-item"><div class="stat-k">순입금</div><div class="stat-v ${s.net_krw >= 0 ? 'c-up' : 'c-down'}">${fmtKrw(s.net_krw)}</div><div class="stat-s">${kwSynced ? '키움+OKX' : '현재 OKX만 반영'}</div></div>
+          <div class="stat-item"><div class="stat-k">순입금</div><div class="stat-v ${s.net_krw >= 0 ? 'c-up' : 'c-down'}">${fmtKrw(s.net_krw)}</div><div class="stat-s">${kwSynced ? '11.23~ 키움+OKX' : '11.23~ OKX만 반영'}</div></div>
         `;
-        noteEl.textContent = kwSynced ? "키움 올해 + OKX 전체 입출금 합산" : "현재 OKX 42건 반영됨 · 키움은 자동매매 PC 동기화 후 합산됩니다.";
+        noteEl.textContent = kwSynced ? "2026.11.23 16:24(데이터 시작) 이후 키움+OKX 입출금 합산" : `2026.11.23 16:24 이후 OKX ${s.dep_count + s.wd_count}건 반영됨 · 키움은 PC 동기화 후 합산됩니다.`;
       }
 
       const filtered = allList.filter(t => key === "all" || (key === "kiwoom" ? t.source === "키움" : t.source === "OKX"));
@@ -1546,7 +1546,7 @@
         html += `<button class="date-toggle" style="margin-top:8px;" onclick="showAllTransfers=!showAllTransfers;renderTransferPanels()">${showAllTransfers ? '접기 (최근 10건)' : '전체 ' + filtered.length + '건 보기'}</button>`;
       }
       if (!filtered.length) {
-        html = `<div style="padding:16px 0;text-align:center;color:var(--ink-3);font-size:13px;">${key === "kiwoom" && !kwSynced ? "자동매매 PC 동기화 후 키움 입출금 내역이 표시됩니다." : "표시할 입출금 내역이 없습니다."}</div>`;
+        html = `<div style="padding:16px 0;text-align:center;color:var(--ink-3);font-size:13px;">${key === "kiwoom" && !kwSynced ? "자동매매 PC 동기화 후 11.23 이후 키움 입출금 내역이 표시됩니다." : "2026.11.23 데이터 시작 이후 입출금 내역이 없습니다."}</div>`;
       }
       document.getElementById("transferListRows").innerHTML = html;
     }

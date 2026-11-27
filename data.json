@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-11-27 17:16",
+  "updated_at": "2026-11-27 17:37",
   "history": [
     {
       "ts": "2026-11-23T22:39:03+09:00",
@@ -54,13 +54,13 @@
       "okx_pnl_pct": -0.02
     },
     {
-      "ts": "2026-11-27T17:16:13+09:00",
+      "ts": "2026-11-27T17:37:14+09:00",
       "date": "2026-11-27",
-      "label": "11/27 17:16",
-      "total_krw": 7161703,
+      "label": "11/27 17:37",
+      "total_krw": 7160585,
       "kiwoom_krw": 6735531,
-      "okx_krw": 426172,
-      "okx_usd": 318.16,
+      "okx_krw": 425054,
+      "okx_usd": 318.36,
       "kiwoom_pnl_krw": 0,
       "kiwoom_pnl_pct": 0,
       "okx_pnl_usd": -0.05,
@@ -782,6 +782,19 @@
       "kiwoom_pnl_pct": 0,
       "okx_pnl_usd": -0.05,
       "okx_pnl_pct": -0.02
+    },
+    {
+      "ts": "2026-11-27T17:37:14+09:00",
+      "date": "2026-11-27",
+      "label": "11/27 17:37",
+      "total_krw": 7160585,
+      "kiwoom_krw": 6735531,
+      "okx_krw": 425054,
+      "okx_usd": 318.36,
+      "kiwoom_pnl_krw": 0,
+      "kiwoom_pnl_pct": 0,
+      "okx_pnl_usd": -0.05,
+      "okx_pnl_pct": -0.02
     }
   ],
   "latest": {
@@ -798,12 +811,12 @@
       "tot_pl_krw": 0
     },
     "okx": {
-      "total_usd": 318.16,
-      "total_krw": 426172,
-      "trading_usd": 317.65,
-      "trading_krw": 425489,
+      "total_usd": 318.36,
+      "total_krw": 425054,
+      "trading_usd": 317.85,
+      "trading_krw": 424373,
       "funding_usd": 0.51,
-      "funding_krw": 683,
+      "funding_krw": 681,
       "earn_usd": 0.0,
       "pnl_usd": -0.05,
       "pnl_pct": -0.02,
@@ -811,8 +824,8 @@
         {
           "name": "USDT (Trading)",
           "sub": "318.10 USDT · 포지션 없음",
-          "usd": 317.66,
-          "krw": 425502,
+          "usd": 317.67,
+          "krw": 424132,
           "pl_usd": 0.0,
           "rt": 0.0
         },
@@ -820,7 +833,7 @@
           "name": "USDT (Funding)",
           "sub": "0.51 USDT",
           "usd": 0.51,
-          "krw": 685,
+          "krw": 683,
           "pl_usd": 0.0,
           "rt": 0.0
         },
@@ -8838,7 +8851,7 @@
       "qty": 342.089697,
       "px_usd": 0.9304,
       "usd": 318.28,
-      "krw": 426333,
+      "krw": 424947,
       "currency": "USD"
     },
     {
@@ -8852,7 +8865,7 @@
       "qty": 61.211875,
       "px_usd": 1.0584,
       "usd": 64.79,
-      "krw": 86786,
+      "krw": 86503,
       "currency": "USD"
     },
     {
@@ -8866,7 +8879,7 @@
       "qty": 12.268307,
       "px_usd": 0.33151,
       "usd": 4.07,
-      "krw": 5452,
+      "krw": 5434,
       "currency": "USD"
     },
     {
@@ -8880,7 +8893,7 @@
       "qty": 133.745271,
       "px_usd": 2.537,
       "usd": 339.31,
-      "krw": 454502,
+      "krw": 453025,
       "currency": "USD"
     },
     {
@@ -8894,7 +8907,7 @@
       "qty": 16.867848,
       "px_usd": 2.8519,
       "usd": 48.11,
-      "krw": 64443,
+      "krw": 64233,
       "currency": "USD"
     },
     {
@@ -8908,7 +8921,7 @@
       "qty": 74.426424,
       "px_usd": 3.0183,
       "usd": 224.64,
-      "krw": 300903,
+      "krw": 299925,
       "currency": "USD"
     },
     {
@@ -8922,7 +8935,7 @@
       "qty": 40.387891,
       "px_usd": 3.0759,
       "usd": 124.23,
-      "krw": 166405,
+      "krw": 165864,
       "currency": "USD"
     },
     {
@@ -8936,7 +8949,7 @@
       "qty": 520.706035,
       "px_usd": 1.0,
       "usd": 520.71,
-      "krw": 697486,
+      "krw": 695219,
       "currency": "USD"
     },
     {
@@ -8950,7 +8963,7 @@
       "qty": 433.89897,
       "px_usd": 1.0,
       "usd": 433.9,
-      "krw": 581205,
+      "krw": 579316,
       "currency": "USD"
     },
     {
@@ -8964,7 +8977,7 @@
       "qty": 266.540632,
       "px_usd": 1.0,
       "usd": 266.54,
-      "krw": 357028,
+      "krw": 355867,
       "currency": "USD"
     },
     {
@@ -8978,7 +8991,7 @@
       "qty": 507.607907,
       "px_usd": 1.0,
       "usd": 507.61,
-      "krw": 679938,
+      "krw": 677729,
       "currency": "USD"
     },
     {
@@ -8992,7 +9005,7 @@
       "qty": 670.591672,
       "px_usd": 1.0,
       "usd": 670.59,
-      "krw": 898248,
+      "krw": 895329,
       "currency": "USD"
     },
     {
@@ -9006,7 +9019,7 @@
       "qty": 163.300736,
       "px_usd": 1.0,
       "usd": 163.3,
-      "krw": 218739,
+      "krw": 218028,
       "currency": "USD"
     },
     {
@@ -9020,7 +9033,7 @@
       "qty": 242.803487,
       "px_usd": 1.0,
       "usd": 242.8,
-      "krw": 325228,
+      "krw": 324171,
       "currency": "USD"
     },
     {
@@ -9034,7 +9047,7 @@
       "qty": 146.4,
       "px_usd": 1.0,
       "usd": 146.4,
-      "krw": 196101,
+      "krw": 195464,
       "currency": "USD"
     },
     {
@@ -9048,7 +9061,7 @@
       "qty": 831.63307,
       "px_usd": 1.0,
       "usd": 831.63,
-      "krw": 1113960,
+      "krw": 1110339,
       "currency": "USD"
     },
     {
@@ -9062,7 +9075,7 @@
       "qty": 276.470705,
       "px_usd": 1.0,
       "usd": 276.47,
-      "krw": 370329,
+      "krw": 369125,
       "currency": "USD"
     },
     {
@@ -9076,7 +9089,7 @@
       "qty": 44.370712,
       "px_usd": 1.0,
       "usd": 44.37,
-      "krw": 59433,
+      "krw": 59240,
       "currency": "USD"
     },
     {
@@ -9090,7 +9103,7 @@
       "qty": 0.00843842,
       "px_usd": 3877.61,
       "usd": 32.72,
-      "krw": 43828,
+      "krw": 43686,
       "currency": "USD"
     },
     {
@@ -9104,7 +9117,7 @@
       "qty": 463.963611,
       "px_usd": 1.0,
       "usd": 463.96,
-      "krw": 621470,
+      "krw": 619450,
       "currency": "USD"
     },
     {
@@ -9118,7 +9131,7 @@
       "qty": 231.25438,
       "px_usd": 1.0,
       "usd": 231.25,
-      "krw": 309757,
+      "krw": 308750,
       "currency": "USD"
     },
     {
@@ -9132,7 +9145,7 @@
       "qty": 134.84741,
       "px_usd": 1.0,
       "usd": 134.85,
-      "krw": 180630,
+      "krw": 180043,
       "currency": "USD"
     },
     {
@@ -9146,7 +9159,7 @@
       "qty": 35.684248,
       "px_usd": 1.0,
       "usd": 35.68,
-      "krw": 47793,
+      "krw": 47638,
       "currency": "USD"
     },
     {
@@ -9160,7 +9173,7 @@
       "qty": 106.795584,
       "px_usd": 1.0,
       "usd": 106.8,
-      "krw": 143057,
+      "krw": 142593,
       "currency": "USD"
     },
     {
@@ -9174,7 +9187,7 @@
       "qty": 71.956927,
       "px_usd": 1.0,
       "usd": 71.96,
-      "krw": 96390,
+      "krw": 96076,
       "currency": "USD"
     },
     {
@@ -9188,7 +9201,7 @@
       "qty": 35.572954,
       "px_usd": 1.0,
       "usd": 35.57,
-      "krw": 47646,
+      "krw": 47491,
       "currency": "USD"
     },
     {
@@ -9202,7 +9215,7 @@
       "qty": 71.239857,
       "px_usd": 1.0,
       "usd": 71.24,
-      "krw": 95425,
+      "krw": 95115,
       "currency": "USD"
     },
     {
@@ -9216,7 +9229,7 @@
       "qty": 188.507905,
       "px_usd": 0.34581,
       "usd": 65.19,
-      "krw": 87321,
+      "krw": 87038,
       "currency": "USD"
     },
     {
@@ -9230,7 +9243,7 @@
       "qty": 155.730871,
       "px_usd": 2.2133,
       "usd": 344.68,
-      "krw": 461695,
+      "krw": 460195,
       "currency": "USD"
     },
     {
@@ -9244,7 +9257,7 @@
       "qty": 561.84266,
       "px_usd": 3.0373,
       "usd": 1706.48,
-      "krw": 2285812,
+      "krw": 2278383,
       "currency": "USD"
     },
     {
@@ -9258,7 +9271,7 @@
       "qty": 197.5,
       "px_usd": 1.0,
       "usd": 197.5,
-      "krw": 264549,
+      "krw": 263689,
       "currency": "USD"
     },
     {
@@ -9272,7 +9285,7 @@
       "qty": 298.3,
       "px_usd": 1.0,
       "usd": 298.3,
-      "krw": 399570,
+      "krw": 398271,
       "currency": "USD"
     },
     {
@@ -9286,7 +9299,7 @@
       "qty": 398.3,
       "px_usd": 1.0,
       "usd": 398.3,
-      "krw": 533519,
+      "krw": 531785,
       "currency": "USD"
     },
     {
@@ -9300,7 +9313,7 @@
       "qty": 398.0,
       "px_usd": 1.0,
       "usd": 398.0,
-      "krw": 533117,
+      "krw": 531384,
       "currency": "USD"
     },
     {
@@ -9314,7 +9327,7 @@
       "qty": 658.0,
       "px_usd": 1.0,
       "usd": 658.0,
-      "krw": 881384,
+      "krw": 878520,
       "currency": "USD"
     },
     {
@@ -9328,7 +9341,7 @@
       "qty": 498.0,
       "px_usd": 1.0,
       "usd": 498.0,
-      "krw": 667066,
+      "krw": 664898,
       "currency": "USD"
     },
     {
@@ -9342,7 +9355,7 @@
       "qty": 35.0,
       "px_usd": 1.0,
       "usd": 35.0,
-      "krw": 46882,
+      "krw": 46730,
       "currency": "USD"
     },
     {
@@ -9356,7 +9369,7 @@
       "qty": 298.0,
       "px_usd": 1.0,
       "usd": 298.0,
-      "krw": 399168,
+      "krw": 397871,
       "currency": "USD"
     },
     {
@@ -9370,7 +9383,7 @@
       "qty": 198.0,
       "px_usd": 1.0,
       "usd": 198.0,
-      "krw": 265219,
+      "krw": 264357,
       "currency": "USD"
     },
     {
@@ -9384,7 +9397,7 @@
       "qty": 262.5,
       "px_usd": 1.0,
       "usd": 262.5,
-      "krw": 351616,
+      "krw": 350473,
       "currency": "USD"
     },
     {
@@ -9398,7 +9411,7 @@
       "qty": 98.0,
       "px_usd": 1.0,
       "usd": 98.0,
-      "krw": 131270,
+      "krw": 130843,
       "currency": "USD"
     },
     {
@@ -9412,612 +9425,24 @@
       "qty": 148.0,
       "px_usd": 1.0,
       "usd": 148.0,
-      "krw": 198244,
+      "krw": 197600,
       "currency": "USD"
     }
   ],
   "kw_transfers": null,
-  "transfers": [
-    {
-      "id": "okx_dep_447423378",
-      "source": "OKX",
-      "symbol": "XRP-USDT",
-      "ccy": "XRP",
-      "date": "2026-11-22",
-      "time": "08:56:59",
-      "kind": "입금",
-      "qty": 342.089697,
-      "px_usd": 0.9304,
-      "usd": 318.28,
-      "krw": 426333,
-      "currency": "USD"
-    },
-    {
-      "id": "okx_wd_425126594",
-      "source": "OKX",
-      "symbol": "TRX-USDT",
-      "ccy": "TRX",
-      "date": "2026-08-25",
-      "time": "08:45:08",
-      "kind": "출금",
-      "qty": 188.507905,
-      "px_usd": 0.34581,
-      "usd": 65.19,
-      "krw": 87321,
-      "currency": "USD"
-    },
-    {
-      "id": "okx_dep_419198583",
-      "source": "OKX",
-      "symbol": "XRP-USDT",
-      "ccy": "XRP",
-      "date": "2026-07-28",
-      "time": "11:33:52",
-      "kind": "입금",
-      "qty": 61.211875,
-      "px_usd": 1.0584,
-      "usd": 64.79,
-      "krw": 86786,
-      "currency": "USD"
-    },
-    {
-      "id": "okx_dep_418997660",
-      "source": "OKX",
-      "symbol": "TRX-USDT",
-      "ccy": "TRX",
-      "date": "2026-07-27",
-      "time": "15:19:08",
-      "kind": "입금",
-      "qty": 12.268307,
-      "px_usd": 0.33151,
-      "usd": 4.07,
-      "krw": 5452,
-      "currency": "USD"
-    },
-    {
-      "id": "okx_wd_354204915",
-      "source": "OKX",
-      "symbol": "XRP-USDT",
-      "ccy": "XRP",
-      "date": "2025-11-07",
-      "time": "07:12:12",
-      "kind": "출금",
-      "qty": 155.730871,
-      "px_usd": 2.2133,
-      "usd": 344.68,
-      "krw": 461695,
-      "currency": "USD"
-    },
-    {
-      "id": "okx_dep_353294989",
-      "source": "OKX",
-      "symbol": "XRP-USDT",
-      "ccy": "XRP",
-      "date": "2025-11-02",
-      "time": "20:47:03",
-      "kind": "입금",
-      "qty": 133.745271,
-      "px_usd": 2.537,
-      "usd": 339.31,
-      "krw": 454502,
-      "currency": "USD"
-    },
-    {
-      "id": "okx_wd_338422413",
-      "source": "OKX",
-      "symbol": "XRP-USDT",
-      "ccy": "XRP",
-      "date": "2025-09-12",
-      "time": "11:17:13",
-      "kind": "출금",
-      "qty": 561.84266,
-      "px_usd": 3.0373,
-      "usd": 1706.48,
-      "krw": 2285812,
-      "currency": "USD"
-    },
-    {
-      "id": "okx_dep_334414867",
-      "source": "OKX",
-      "symbol": "XRP-USDT",
-      "ccy": "XRP",
-      "date": "2025-08-31",
-      "time": "11:32:39",
-      "kind": "입금",
-      "qty": 16.867848,
-      "px_usd": 2.8519,
-      "usd": 48.11,
-      "krw": 64443,
-      "currency": "USD"
-    },
-    {
-      "id": "okx_dep_332447083",
-      "source": "OKX",
-      "symbol": "XRP-USDT",
-      "ccy": "XRP",
-      "date": "2025-08-24",
-      "time": "01:05:16",
-      "kind": "입금",
-      "qty": 74.426424,
-      "px_usd": 3.0183,
-      "usd": 224.64,
-      "krw": 300903,
-      "currency": "USD"
-    },
-    {
-      "id": "okx_dep_324292824",
-      "source": "OKX",
-      "symbol": "XRP-USDT",
-      "ccy": "XRP",
-      "date": "2025-07-25",
-      "time": "10:21:56",
-      "kind": "입금",
-      "qty": 40.387891,
-      "px_usd": 3.0759,
-      "usd": 124.23,
-      "krw": 166405,
-      "currency": "USD"
-    },
-    {
-      "id": "okx_wd_305220942",
-      "source": "OKX",
-      "symbol": "USDT",
-      "ccy": "USDT",
-      "date": "2025-05-17",
-      "time": "15:51:01",
-      "kind": "출금",
-      "qty": 197.5,
-      "px_usd": 1.0,
-      "usd": 197.5,
-      "krw": 264549,
-      "currency": "USD"
-    },
-    {
-      "id": "okx_wd_296604946",
-      "source": "OKX",
-      "symbol": "USDT",
-      "ccy": "USDT",
-      "date": "2025-04-19",
-      "time": "19:20:29",
-      "kind": "출금",
-      "qty": 298.3,
-      "px_usd": 1.0,
-      "usd": 298.3,
-      "krw": 399570,
-      "currency": "USD"
-    },
-    {
-      "id": "okx_wd_291633643",
-      "source": "OKX",
-      "symbol": "USDT",
-      "ccy": "USDT",
-      "date": "2025-04-02",
-      "time": "09:31:12",
-      "kind": "출금",
-      "qty": 398.3,
-      "px_usd": 1.0,
-      "usd": 398.3,
-      "krw": 533519,
-      "currency": "USD"
-    },
-    {
-      "id": "okx_wd_291119009",
-      "source": "OKX",
-      "symbol": "USDT",
-      "ccy": "USDT",
-      "date": "2025-03-31",
-      "time": "17:51:53",
-      "kind": "출금",
-      "qty": 398.0,
-      "px_usd": 1.0,
-      "usd": 398.0,
-      "krw": 533117,
-      "currency": "USD"
-    },
-    {
-      "id": "okx_dep_273927330",
-      "source": "OKX",
-      "symbol": "USDT",
-      "ccy": "USDT",
-      "date": "2025-02-02",
-      "time": "01:30:20",
-      "kind": "입금",
-      "qty": 520.706035,
-      "px_usd": 1.0,
-      "usd": 520.71,
-      "krw": 697486,
-      "currency": "USD"
-    },
-    {
-      "id": "okx_wd_273482707",
-      "source": "OKX",
-      "symbol": "USDT",
-      "ccy": "USDT",
-      "date": "2025-02-01",
-      "time": "23:46:28",
-      "kind": "출금",
-      "qty": 658.0,
-      "px_usd": 1.0,
-      "usd": 658.0,
-      "krw": 881384,
-      "currency": "USD"
-    },
-    {
-      "id": "okx_wd_272813301",
-      "source": "OKX",
-      "symbol": "USDT",
-      "ccy": "USDT",
-      "date": "2025-01-29",
-      "time": "23:31:39",
-      "kind": "출금",
-      "qty": 498.0,
-      "px_usd": 1.0,
-      "usd": 498.0,
-      "krw": 667066,
-      "currency": "USD"
-    },
-    {
-      "id": "okx_dep_271469766",
-      "source": "OKX",
-      "symbol": "USDT",
-      "ccy": "USDT",
-      "date": "2025-01-23",
-      "time": "09:25:32",
-      "kind": "입금",
-      "qty": 433.89897,
-      "px_usd": 1.0,
-      "usd": 433.9,
-      "krw": 581205,
-      "currency": "USD"
-    },
-    {
-      "id": "okx_dep_271434500",
-      "source": "OKX",
-      "symbol": "USDT",
-      "ccy": "USDT",
-      "date": "2025-01-23",
-      "time": "04:09:27",
-      "kind": "입금",
-      "qty": 266.540632,
-      "px_usd": 1.0,
-      "usd": 266.54,
-      "krw": 357028,
-      "currency": "USD"
-    },
-    {
-      "id": "okx_wd_270173062",
-      "source": "OKX",
-      "symbol": "USDT",
-      "ccy": "USDT",
-      "date": "2025-01-21",
-      "time": "15:05:19",
-      "kind": "출금",
-      "qty": 35.0,
-      "px_usd": 1.0,
-      "usd": 35.0,
-      "krw": 46882,
-      "currency": "USD"
-    },
-    {
-      "id": "okx_dep_268804616",
-      "source": "OKX",
-      "symbol": "USDT",
-      "ccy": "USDT",
-      "date": "2025-01-16",
-      "time": "02:52:38",
-      "kind": "입금",
-      "qty": 507.607907,
-      "px_usd": 1.0,
-      "usd": 507.61,
-      "krw": 679938,
-      "currency": "USD"
-    },
-    {
-      "id": "okx_dep_268602957",
-      "source": "OKX",
-      "symbol": "USDT",
-      "ccy": "USDT",
-      "date": "2025-01-15",
-      "time": "11:46:53",
-      "kind": "입금",
-      "qty": 670.591672,
-      "px_usd": 1.0,
-      "usd": 670.59,
-      "krw": 898248,
-      "currency": "USD"
-    },
-    {
-      "id": "okx_dep_268288947",
-      "source": "OKX",
-      "symbol": "USDT",
-      "ccy": "USDT",
-      "date": "2025-01-14",
-      "time": "01:40:41",
-      "kind": "입금",
-      "qty": 163.300736,
-      "px_usd": 1.0,
-      "usd": 163.3,
-      "krw": 218739,
-      "currency": "USD"
-    },
-    {
-      "id": "okx_wd_264599583",
-      "source": "OKX",
-      "symbol": "USDT",
-      "ccy": "USDT",
-      "date": "2025-01-06",
-      "time": "12:09:58",
-      "kind": "출금",
-      "qty": 298.0,
-      "px_usd": 1.0,
-      "usd": 298.0,
-      "krw": 399168,
-      "currency": "USD"
-    },
-    {
-      "id": "okx_wd_264463948",
-      "source": "OKX",
-      "symbol": "USDT",
-      "ccy": "USDT",
-      "date": "2025-01-05",
-      "time": "22:33:40",
-      "kind": "출금",
-      "qty": 198.0,
-      "px_usd": 1.0,
-      "usd": 198.0,
-      "krw": 265219,
-      "currency": "USD"
-    },
-    {
-      "id": "okx_wd_264221790",
-      "source": "OKX",
-      "symbol": "USDT",
-      "ccy": "USDT",
-      "date": "2025-01-05",
-      "time": "01:00:17",
-      "kind": "출금",
-      "qty": 262.5,
-      "px_usd": 1.0,
-      "usd": 262.5,
-      "krw": 351616,
-      "currency": "USD"
-    },
-    {
-      "id": "okx_wd_264135713",
-      "source": "OKX",
-      "symbol": "USDT",
-      "ccy": "USDT",
-      "date": "2025-01-04",
-      "time": "20:05:31",
-      "kind": "출금",
-      "qty": 98.0,
-      "px_usd": 1.0,
-      "usd": 98.0,
-      "krw": 131270,
-      "currency": "USD"
-    },
-    {
-      "id": "okx_dep_265364682",
-      "source": "OKX",
-      "symbol": "USDT",
-      "ccy": "USDT",
-      "date": "2025-01-02",
-      "time": "13:00:27",
-      "kind": "입금",
-      "qty": 242.803487,
-      "px_usd": 1.0,
-      "usd": 242.8,
-      "krw": 325228,
-      "currency": "USD"
-    },
-    {
-      "id": "okx_dep_264927499",
-      "source": "OKX",
-      "symbol": "USDT",
-      "ccy": "USDT",
-      "date": "2024-12-31",
-      "time": "14:25:53",
-      "kind": "입금",
-      "qty": 146.4,
-      "px_usd": 1.0,
-      "usd": 146.4,
-      "krw": 196101,
-      "currency": "USD"
-    },
-    {
-      "id": "okx_wd_262420999",
-      "source": "OKX",
-      "symbol": "USDT",
-      "ccy": "USDT",
-      "date": "2024-12-29",
-      "time": "23:28:36",
-      "kind": "출금",
-      "qty": 148.0,
-      "px_usd": 1.0,
-      "usd": 148.0,
-      "krw": 198244,
-      "currency": "USD"
-    },
-    {
-      "id": "okx_dep_263325225",
-      "source": "OKX",
-      "symbol": "USDT",
-      "ccy": "USDT",
-      "date": "2024-12-24",
-      "time": "17:23:35",
-      "kind": "입금",
-      "qty": 831.63307,
-      "px_usd": 1.0,
-      "usd": 831.63,
-      "krw": 1113960,
-      "currency": "USD"
-    },
-    {
-      "id": "okx_dep_262721858",
-      "source": "OKX",
-      "symbol": "USDT",
-      "ccy": "USDT",
-      "date": "2024-12-22",
-      "time": "06:03:38",
-      "kind": "입금",
-      "qty": 276.470705,
-      "px_usd": 1.0,
-      "usd": 276.47,
-      "krw": 370329,
-      "currency": "USD"
-    },
-    {
-      "id": "okx_dep_262718385",
-      "source": "OKX",
-      "symbol": "USDT",
-      "ccy": "USDT",
-      "date": "2024-12-22",
-      "time": "05:20:17",
-      "kind": "입금",
-      "qty": 44.370712,
-      "px_usd": 1.0,
-      "usd": 44.37,
-      "krw": 59433,
-      "currency": "USD"
-    },
-    {
-      "id": "okx_dep_260702767",
-      "source": "OKX",
-      "symbol": "ETH-USDT",
-      "ccy": "ETH",
-      "date": "2024-12-15",
-      "time": "19:57:41",
-      "kind": "입금",
-      "qty": 0.00843842,
-      "px_usd": 3877.61,
-      "usd": 32.72,
-      "krw": 43828,
-      "currency": "USD"
-    },
-    {
-      "id": "okx_dep_259357576",
-      "source": "OKX",
-      "symbol": "USDT",
-      "ccy": "USDT",
-      "date": "2024-12-11",
-      "time": "08:25:26",
-      "kind": "입금",
-      "qty": 463.963611,
-      "px_usd": 1.0,
-      "usd": 463.96,
-      "krw": 621470,
-      "currency": "USD"
-    },
-    {
-      "id": "okx_dep_259062803",
-      "source": "OKX",
-      "symbol": "USDT",
-      "ccy": "USDT",
-      "date": "2024-12-10",
-      "time": "12:23:47",
-      "kind": "입금",
-      "qty": 231.25438,
-      "px_usd": 1.0,
-      "usd": 231.25,
-      "krw": 309757,
-      "currency": "USD"
-    },
-    {
-      "id": "okx_dep_258765502",
-      "source": "OKX",
-      "symbol": "USDT",
-      "ccy": "USDT",
-      "date": "2024-12-09",
-      "time": "15:01:59",
-      "kind": "입금",
-      "qty": 134.84741,
-      "px_usd": 1.0,
-      "usd": 134.85,
-      "krw": 180630,
-      "currency": "USD"
-    },
-    {
-      "id": "okx_dep_258653443",
-      "source": "OKX",
-      "symbol": "USDT",
-      "ccy": "USDT",
-      "date": "2024-12-09",
-      "time": "01:03:50",
-      "kind": "입금",
-      "qty": 35.684248,
-      "px_usd": 1.0,
-      "usd": 35.68,
-      "krw": 47793,
-      "currency": "USD"
-    },
-    {
-      "id": "okx_dep_258545850",
-      "source": "OKX",
-      "symbol": "USDT",
-      "ccy": "USDT",
-      "date": "2024-12-08",
-      "time": "17:26:56",
-      "kind": "입금",
-      "qty": 106.795584,
-      "px_usd": 1.0,
-      "usd": 106.8,
-      "krw": 143057,
-      "currency": "USD"
-    },
-    {
-      "id": "okx_dep_258398393",
-      "source": "OKX",
-      "symbol": "USDT",
-      "ccy": "USDT",
-      "date": "2024-12-08",
-      "time": "00:24:18",
-      "kind": "입금",
-      "qty": 71.956927,
-      "px_usd": 1.0,
-      "usd": 71.96,
-      "krw": 96390,
-      "currency": "USD"
-    },
-    {
-      "id": "okx_dep_257842773",
-      "source": "OKX",
-      "symbol": "USDT",
-      "ccy": "USDT",
-      "date": "2024-12-06",
-      "time": "01:08:05",
-      "kind": "입금",
-      "qty": 35.572954,
-      "px_usd": 1.0,
-      "usd": 35.57,
-      "krw": 47646,
-      "currency": "USD"
-    },
-    {
-      "id": "okx_dep_257819065",
-      "source": "OKX",
-      "symbol": "USDT",
-      "ccy": "USDT",
-      "date": "2024-12-05",
-      "time": "23:50:24",
-      "kind": "입금",
-      "qty": 71.239857,
-      "px_usd": 1.0,
-      "usd": 71.24,
-      "krw": 95425,
-      "currency": "USD"
-    }
-  ],
+  "transfers": [],
   "transfer_summary": {
+    "since": "2026-11-23 16:24",
     "kiwoom_synced": false,
     "all": {
-      "deposit_krw": 8588515,
-      "withdraw_krw": 7506432,
-      "net_krw": 1082083,
-      "deposit_usd": 6411.78,
-      "withdraw_usd": 5603.95,
-      "net_usd": 807.83,
-      "dep_count": 27,
-      "wd_count": 15
+      "deposit_krw": 0,
+      "withdraw_krw": 0,
+      "net_krw": 0,
+      "deposit_usd": 0,
+      "withdraw_usd": 0,
+      "net_usd": 0,
+      "dep_count": 0,
+      "wd_count": 0
     },
     "kiwoom": {
       "deposit_krw": 0,
@@ -10030,14 +9455,14 @@
       "wd_count": 0
     },
     "okx": {
-      "deposit_krw": 8588515,
-      "withdraw_krw": 7506432,
-      "net_krw": 1082083,
-      "deposit_usd": 6411.78,
-      "withdraw_usd": 5603.95,
-      "net_usd": 807.83,
-      "dep_count": 27,
-      "wd_count": 15
+      "deposit_krw": 0,
+      "withdraw_krw": 0,
+      "net_krw": 0,
+      "deposit_usd": 0,
+      "withdraw_usd": 0,
+      "net_usd": 0,
+      "dep_count": 0,
+      "wd_count": 0
     }
   }
 }
