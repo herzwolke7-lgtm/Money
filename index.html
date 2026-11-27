@@ -1898,7 +1898,11 @@
         ? `${label} 실현손익 ${fmtUsd(periodSum)}`
         : `${label} 실현손익 ${fmtKrw(periodSum)}`;
       renderRiskGrid(computeMetrics(currentAcct, fullSeries));
-      renderRealizedChart(scoped, `${label} 실현손익 추이`);
+      const rangeStartMs = period === "all" && fullSeries.length
+        ? new Date(fullSeries[0].date + "T00:00:00").getTime()
+        : new Date(targetCutoff + "T00:00:00").getTime();
+      const rangeEndMs = new Date(latestDateStr + "T00:00:00").getTime();
+      renderRealizedChart(scoped, `${label} 실현손익 추이`, rangeStartMs, rangeEndMs);
     }
 
     function pickSingleDate(val) {
@@ -1966,7 +1970,7 @@
       return `${Math.round(v).toLocaleString()}`;
     }
 
-    function renderRealizedChart(series, titleLabel) {
+    function renderRealizedChart(series, titleLabel, rangeStartMs, rangeEndMs) {
       const svg = document.getElementById("chartSvg");
       const w = 340, h = 150, padL = 6, padR = 46, padTop = 14, padBot = 14;
       svg.innerHTML = "";
@@ -1974,7 +1978,7 @@
       const hoverVal = document.getElementById("hoverVal");
       const noteEl = document.getElementById("chartNote");
       const fmt = v => currentAcct === "okx" ? fmtUsd(v) : fmtKrw(v);
-      const fmtAxisDate = d => d ? d.slice(5).replace("-", ".") : "-";
+      const fmtAxisDate = d => d ? d.slice(2).replace(/-/g, ".") : "-";
 
       if (!series.length) {
         hoverDate.textContent = titleLabel;
@@ -1984,33 +1988,45 @@
         return;
       }
 
-      if (series.length === 1) {
-        hoverDate.textContent = series[0].label || series[0].date;
-        hoverVal.textContent = fmt(series[0].cum);
-        setAxisLabels([series[0].label || fmtAxisDate(series[0].date), "", ""]);
-        noteEl.textContent = `${titleLabel} (1건 · ${fmt(series[0].daily)})`;
+      const isIntraday = Boolean(series[0].time);
+      let plotSeries = series;
+      if (!isIntraday && rangeStartMs != null) {
+        const startStr = localYmdStr(rangeStartMs);
+        if (series[0].date > startStr) {
+          plotSeries = [{ date: startStr, daily: 0, cum: 0 }, ...series];
+        }
+        const endStr = rangeEndMs != null ? localYmdStr(rangeEndMs) : null;
+        if (endStr && plotSeries[plotSeries.length - 1].date < endStr) {
+          plotSeries = [...plotSeries, { date: endStr, daily: 0, cum: plotSeries[plotSeries.length - 1].cum }];
+        }
+      }
+
+      if (plotSeries.length === 1) {
+        hoverDate.textContent = plotSeries[0].label || plotSeries[0].date;
+        hoverVal.textContent = fmt(plotSeries[0].cum);
+        setAxisLabels([plotSeries[0].label || fmtAxisDate(plotSeries[0].date), "", ""]);
+        noteEl.textContent = `${titleLabel} (1건 · ${fmt(plotSeries[0].daily)})`;
         const c = document.createElementNS("http://www.w3.org/2000/svg", "circle");
-        c.setAttribute("cx", (w - padR) / 2); c.setAttribute("cy", h / 2); c.setAttribute("r", 4); c.setAttribute("fill", series[0].cum > 0 ? "#d92d20" : (series[0].cum < 0 ? "#1570ef" : "#141413"));
+        c.setAttribute("cx", (w - padR) / 2); c.setAttribute("cy", h / 2); c.setAttribute("r", 4); c.setAttribute("fill", plotSeries[0].cum > 0 ? "#d92d20" : (plotSeries[0].cum < 0 ? "#1570ef" : "#141413"));
         svg.appendChild(c);
         return;
       }
 
-      const isIntraday = Boolean(series[0].time);
-      const vals = series.map(s => s.cum);
+      const vals = plotSeries.map(s => s.cum);
       const rawMin = Math.min(...vals, 0), rawMax = Math.max(...vals, 0);
       const rawSpan = (rawMax - rawMin) || 1;
       const min = rawMin - rawSpan * 0.1, max = rawMax + rawSpan * 0.1;
       const span = max - min;
       const toY = v => h - padBot - ((v - min) / span) * (h - padTop - padBot);
-      const lastCum = series[series.length - 1].cum;
+      const lastCum = plotSeries[plotSeries.length - 1].cum;
       const strokeCol = lastCum > 0 ? "#d92d20" : (lastCum < 0 ? "#1570ef" : "#141413");
 
       const parsePointMs = s => isIntraday
         ? new Date(s.date + "T" + s.time).getTime()
         : new Date(s.date + "T00:00:00").getTime();
 
-      const minT = parsePointMs(series[0]);
-      const maxT = Math.max(minT + (isIntraday ? 60000 : 86400000), parsePointMs(series[series.length - 1]));
+      const minT = rangeStartMs != null ? rangeStartMs : parsePointMs(plotSeries[0]);
+      const maxT = Math.max(minT + (isIntraday ? 60000 : 86400000), rangeEndMs != null ? rangeEndMs : parsePointMs(plotSeries[plotSeries.length - 1]));
       const tSpan = maxT - minT;
       const toX = s => padL + Math.max(0, Math.min(1, (parsePointMs(s) - minT) / tSpan)) * (w - padL - padR);
 
@@ -2038,7 +2054,7 @@
       zeroLine.setAttribute("stroke-dasharray", "3 3");
       svg.appendChild(zeroLine);
 
-      const coords = series.map(s => ({ x: toX(s), y: toY(s.cum), item: s }));
+      const coords = plotSeries.map(s => ({ x: toX(s), y: toY(s.cum), item: s }));
       const linePts = coords.map(c => `${c.x.toFixed(1)},${c.y.toFixed(1)}`).join(" ");
       const areaPts = `${coords[0].x.toFixed(1)},${zeroY.toFixed(1)} ${linePts} ${coords[coords.length - 1].x.toFixed(1)},${zeroY.toFixed(1)}`;
       const defs = document.createElementNS("http://www.w3.org/2000/svg", "defs");
@@ -2066,10 +2082,10 @@
       if (isIntraday) {
         const midDt = new Date((minT + maxT) / 2);
         const midTimeStr = String(midDt.getHours()).padStart(2, "0") + ":" + String(midDt.getMinutes()).padStart(2, "0");
-        setAxisLabels([series[0].label, midTimeStr, series[series.length - 1].label]);
+        setAxisLabels([plotSeries[0].label, midTimeStr, plotSeries[plotSeries.length - 1].label]);
       } else {
         const midDateStr = localYmdStr((minT + maxT) / 2);
-        setAxisLabels([fmtAxisDate(series[0].date), fmtAxisDate(midDateStr), fmtAxisDate(series[series.length - 1].date)]);
+        setAxisLabels([fmtAxisDate(localYmdStr(minT)), fmtAxisDate(midDateStr), fmtAxisDate(localYmdStr(maxT))]);
       }
 
       hoverDate.textContent = `${titleLabel}`;
