@@ -1,6 +1,6 @@
 {
     "kw_total_realized_pl":  -80153,
-    "updated_at":  "2026-11-27 17:04",
+    "updated_at":  "2026-11-28 08:01",
     "kiwoom":  {
                    "tot_prft_rt":  0,
                    "ord_alow_krw":  0,
@@ -3564,38 +3564,6 @@
                        "source":  "키움",
                        "symbol":  "현대오토에버",
                        "qty":  1,
-                       "instType":  "주식",
-                       "date":  "2026-11-27",
-                       "pnl":  0
-                   },
-                   {
-                       "tax":  0,
-                       "id":  "kw_today_0043279",
-                       "time":  "09:00:23",
-                       "amount":  205200,
-                       "price":  4560,
-                       "currency":  "KRW",
-                       "side":  "매수",
-                       "fee":  0,
-                       "source":  "키움",
-                       "symbol":  "아리바이오랩",
-                       "qty":  45,
-                       "instType":  "주식",
-                       "date":  "2026-11-27",
-                       "pnl":  0
-                   },
-                   {
-                       "tax":  0,
-                       "id":  "kw_today_0087407",
-                       "time":  "09:17:12",
-                       "amount":  219555,
-                       "price":  4879,
-                       "currency":  "KRW",
-                       "side":  "매도",
-                       "fee":  0,
-                       "source":  "키움",
-                       "symbol":  "아리바이오랩",
-                       "qty":  45,
                        "instType":  "주식",
                        "date":  "2026-11-27",
                        "pnl":  0
