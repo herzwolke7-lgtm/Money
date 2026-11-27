@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-11-27 12:19",
+  "updated_at": "2026-11-27 14:01",
   "history": [
     {
       "ts": "2026-11-23T22:39:03+09:00",
@@ -54,13 +54,13 @@
       "okx_pnl_pct": -0.02
     },
     {
-      "ts": "2026-11-27T12:19:03+09:00",
+      "ts": "2026-11-27T14:01:08+09:00",
       "date": "2026-11-27",
-      "label": "11/27 12:19",
-      "total_krw": 7162780,
+      "label": "11/27 14:01",
+      "total_krw": 7162372,
       "kiwoom_krw": 6735531,
-      "okx_krw": 427249,
-      "okx_usd": 318.19,
+      "okx_krw": 426841,
+      "okx_usd": 318.17,
       "kiwoom_pnl_krw": 0,
       "kiwoom_pnl_pct": 0,
       "okx_pnl_usd": -0.05,
@@ -717,6 +717,19 @@
       "kiwoom_pnl_pct": 0,
       "okx_pnl_usd": -0.05,
       "okx_pnl_pct": -0.02
+    },
+    {
+      "ts": "2026-11-27T14:01:08+09:00",
+      "date": "2026-11-27",
+      "label": "11/27 14:01",
+      "total_krw": 7162372,
+      "kiwoom_krw": 6735531,
+      "okx_krw": 426841,
+      "okx_usd": 318.17,
+      "kiwoom_pnl_krw": 0,
+      "kiwoom_pnl_pct": 0,
+      "okx_pnl_usd": -0.05,
+      "okx_pnl_pct": -0.02
     }
   ],
   "latest": {
@@ -733,12 +746,12 @@
       "tot_pl_krw": 0
     },
     "okx": {
-      "total_usd": 318.19,
-      "total_krw": 427249,
-      "trading_usd": 317.68,
-      "trading_krw": 426564,
+      "total_usd": 318.17,
+      "total_krw": 426841,
+      "trading_usd": 317.66,
+      "trading_krw": 426157,
       "funding_usd": 0.51,
-      "funding_krw": 685,
+      "funding_krw": 684,
       "earn_usd": 0.0,
       "pnl_usd": -0.05,
       "pnl_pct": -0.02,
@@ -746,8 +759,8 @@
         {
           "name": "USDT (Trading)",
           "sub": "318.10 USDT · 포지션 없음",
-          "usd": 317.69,
-          "krw": 426584,
+          "usd": 317.66,
+          "krw": 426152,
           "pl_usd": 0.0,
           "rt": 0.0
         },
