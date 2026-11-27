@@ -445,6 +445,15 @@
           </div>
           <div id="periodCompRows"></div>
         </section>
+
+        <section class="panel" id="transferSummaryCard">
+          <div class="sec-head">
+            <span class="sec-title">누적 입출금 현황</span>
+            <span class="sec-meta" id="transferSummarySub">-</span>
+          </div>
+          <div class="stat-grid-3" id="transferSummaryGrid" style="margin-top:0;padding-top:0;border-top:none;"></div>
+          <div class="meta-time" id="transferSyncNote" style="margin-top:8px;"></div>
+        </section>
       </div>
 
       <div>
@@ -462,6 +471,14 @@
             <span class="sec-meta" id="okxCardSub">-</span>
           </div>
           <div id="okxRows"></div>
+        </section>
+
+        <section class="panel" id="transferListCard">
+          <div class="sec-head">
+            <span class="sec-title">입출금 내역</span>
+            <span class="sec-meta" id="transferListCount">-</span>
+          </div>
+          <div id="transferListRows"></div>
         </section>
       </div>
     </div>
@@ -482,6 +499,7 @@
       </div>
       <div class="stat-grid" id="journalKpi" style="margin-top:0;padding-top:0;border-top:none;"></div>
       <div class="stat-grid-3" id="journalRiskGrid"></div>
+      <div class="stat-grid-3" id="journalTransferGrid"></div>
       <div class="meta-time" id="journalNote" style="margin-top:10px;"></div>
     </section>
 
@@ -495,6 +513,7 @@
         <button class="pill-btn active" onclick="setJTab('symbols', this)">종목별 손익</button>
         <button class="pill-btn" onclick="setJTab('daily', this)">일별 손익</button>
         <button class="pill-btn" onclick="setJTab('fills', this)">전체 체결</button>
+        <button class="pill-btn" onclick="setJTab('transfers', this)">입출금 내역</button>
       </div>
       <div style="display:flex;gap:6px;margin-top:8px;align-items:center;justify-content:space-between;flex-wrap:wrap;">
         <div class="period-row" id="outcomeRow" style="margin-top:0;">
@@ -526,6 +545,14 @@
         <span class="sec-title">전체 체결 내역</span>
       </div>
       <div id="tradeRows"></div>
+    </section>
+
+    <section class="panel" id="jTransfersPane" style="display:none;">
+      <div class="sec-head">
+        <span class="sec-title">입출금 내역</span>
+        <span class="sec-meta" id="jTransferBadge">-</span>
+      </div>
+      <div id="jTransferRows"></div>
     </section>
   </main>
 
@@ -1443,6 +1470,85 @@
         </div>`).join("");
 
       applyPeriod(currentPeriod);
+      renderTransferPanels();
+    }
+
+    let showAllTransfers = false;
+    function fmtTransferRow(t) {
+      const isDep = t.kind === "입금";
+      const cls = isDep ? "c-up" : "c-down";
+      const sign = isDep ? "+" : "-";
+      const amtStr = t.source === "OKX"
+        ? (t.usd != null ? `${sign}$${Number(t.usd).toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:2})}` : `${sign}${Number(t.qty).toFixed(4)} ${t.ccy || ""}`)
+        : `${sign}${Number(t.krw || 0).toLocaleString()}원`;
+      const subRight = t.source === "OKX" && t.krw != null ? `${sign}${Number(t.krw).toLocaleString()}원` : (t.currency || "KRW");
+      const title = t.source === "OKX"
+        ? `${t.ccy || t.symbol} ${t.kind}`
+        : `${t.name || t.kind}`;
+      const qtyStr = t.source === "OKX" && t.ccy !== "USDT"
+        ? ` · ${Number(t.qty).toFixed(4)} ${t.ccy} (@$${Number(t.px_usd || 0).toFixed(4)})`
+        : (t.source === "OKX" ? ` · ${Number(t.qty).toFixed(2)} USDT` : "");
+      return `
+        <div class="holding-row">
+          <div class="h-left">
+            <div class="h-name">${title} <span class="badge">${t.source}</span></div>
+            <div class="h-sub">${t.date} ${t.time}${qtyStr}</div>
+          </div>
+          <div class="h-right">
+            <div class="h-val ${cls}">${amtStr}</div>
+            <div class="h-pnl c-flat">${subRight}</div>
+          </div>
+        </div>`;
+    }
+
+    function renderTransferPanels() {
+      const ts = payload.transfer_summary || {};
+      const allList = payload.transfers || [];
+      const key = currentAcct === "kiwoom" ? "kiwoom" : (currentAcct === "okx" ? "okx" : "all");
+      const s = ts[key] || { deposit_krw: 0, withdraw_krw: 0, net_krw: 0, deposit_usd: 0, withdraw_usd: 0, net_usd: 0, dep_count: 0, wd_count: 0 };
+      const kwSynced = ts.kiwoom_synced;
+
+      const subEl = document.getElementById("transferSummarySub");
+      const gridEl = document.getElementById("transferSummaryGrid");
+      const noteEl = document.getElementById("transferSyncNote");
+
+      if (key === "okx") {
+        subEl.textContent = `입금 ${s.dep_count}건 · 출금 ${s.wd_count}건`;
+        gridEl.innerHTML = `
+          <div class="stat-item"><div class="stat-k">누적 입금</div><div class="stat-v c-up">+$${s.deposit_usd.toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:2})}</div><div class="stat-s">${s.deposit_krw.toLocaleString()}원</div></div>
+          <div class="stat-item"><div class="stat-k">누적 출금</div><div class="stat-v c-down">-$${s.withdraw_usd.toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:2})}</div><div class="stat-s">${s.withdraw_krw.toLocaleString()}원</div></div>
+          <div class="stat-item"><div class="stat-k">순입금</div><div class="stat-v ${s.net_usd >= 0 ? 'c-up' : 'c-down'}">${s.net_usd >= 0 ? '+' : '-'}$${Math.abs(s.net_usd).toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:2})}</div><div class="stat-s">${fmtKrw(s.net_krw)}</div></div>
+        `;
+        noteEl.textContent = "OKX 완료 건 전체 기준 (각 입출금 당시 1시간봉 시세로 USD·원화 환산)";
+      } else if (key === "kiwoom") {
+        subEl.textContent = kwSynced ? `입금 ${s.dep_count}건 · 출금 ${s.wd_count}건` : "PC 동기화 대기";
+        gridEl.innerHTML = `
+          <div class="stat-item"><div class="stat-k">누적 입금</div><div class="stat-v c-up">${kwSynced ? '+' + s.deposit_krw.toLocaleString() + '원' : '-'}</div><div class="stat-s">${kwSynced ? s.dep_count + '건' : '대기 중'}</div></div>
+          <div class="stat-item"><div class="stat-k">누적 출금</div><div class="stat-v c-down">${kwSynced ? '-' + s.withdraw_krw.toLocaleString() + '원' : '-'}</div><div class="stat-s">${kwSynced ? s.wd_count + '건' : '대기 중'}</div></div>
+          <div class="stat-item"><div class="stat-k">순입금</div><div class="stat-v">${kwSynced ? fmtKrw(s.net_krw) : '-'}</div><div class="stat-s">${kwSynced ? '올해 기준' : 'PC 실행 후 반영'}</div></div>
+        `;
+        noteEl.textContent = kwSynced ? "올해 1월 1일 ~ 현재 키움 5280-4774 현금 입출금 기준" : "키움 입출금은 자동매매 PC(평일 08:00~17:00) 동기화 후 자동 반영됩니다.";
+      } else {
+        subEl.textContent = `입금 ${s.dep_count}건 · 출금 ${s.wd_count}건`;
+        gridEl.innerHTML = `
+          <div class="stat-item"><div class="stat-k">누적 입금</div><div class="stat-v c-up">+${s.deposit_krw.toLocaleString()}원</div><div class="stat-s">${s.dep_count}건</div></div>
+          <div class="stat-item"><div class="stat-k">누적 출금</div><div class="stat-v c-down">-${s.withdraw_krw.toLocaleString()}원</div><div class="stat-s">${s.wd_count}건</div></div>
+          <div class="stat-item"><div class="stat-k">순입금</div><div class="stat-v ${s.net_krw >= 0 ? 'c-up' : 'c-down'}">${fmtKrw(s.net_krw)}</div><div class="stat-s">${kwSynced ? '키움+OKX' : '현재 OKX만 반영'}</div></div>
+        `;
+        noteEl.textContent = kwSynced ? "키움 올해 + OKX 전체 입출금 합산" : "현재 OKX 42건 반영됨 · 키움은 자동매매 PC 동기화 후 합산됩니다.";
+      }
+
+      const filtered = allList.filter(t => key === "all" || (key === "kiwoom" ? t.source === "키움" : t.source === "OKX"));
+      document.getElementById("transferListCount").textContent = filtered.length + "건";
+      const shown = showAllTransfers ? filtered : filtered.slice(0, 10);
+      let html = shown.map(fmtTransferRow).join("");
+      if (filtered.length > 10) {
+        html += `<button class="date-toggle" style="margin-top:8px;" onclick="showAllTransfers=!showAllTransfers;renderTransferPanels()">${showAllTransfers ? '접기 (최근 10건)' : '전체 ' + filtered.length + '건 보기'}</button>`;
+      }
+      if (!filtered.length) {
+        html = `<div style="padding:16px 0;text-align:center;color:var(--ink-3);font-size:13px;">${key === "kiwoom" && !kwSynced ? "자동매매 PC 동기화 후 키움 입출금 내역이 표시됩니다." : "표시할 입출금 내역이 없습니다."}</div>`;
+      }
+      document.getElementById("transferListRows").innerHTML = html;
     }
 
     function setJTab(tab, btn) {
@@ -1452,7 +1558,8 @@
       document.getElementById("jSymbolsPane").style.display = tab === "symbols" ? "grid" : "none";
       document.getElementById("jDailyPane").style.display = tab === "daily" ? "block" : "none";
       document.getElementById("jFillsPane").style.display = tab === "fills" ? "block" : "none";
-      document.getElementById("outcomeRow").style.display = tab === "fills" ? "none" : "flex";
+      document.getElementById("jTransfersPane").style.display = tab === "transfers" ? "block" : "none";
+      document.getElementById("outcomeRow").style.display = (tab === "fills" || tab === "transfers") ? "none" : "flex";
       document.getElementById("holdFilterBtn").style.display = tab === "symbols" ? "inline-block" : "none";
       if (tab === "daily" && jOutcome === "hold") {
         jOutcome = "all";
@@ -1538,6 +1645,17 @@
         <div class="stat-item"><div class="stat-k">CAGR (연환산)</div><div class="stat-v ${m.cagrStr.startsWith('+') ? 'c-up' : m.cagrStr.startsWith('-') ? 'c-down' : ''}">${m.cagrStr}</div><div class="stat-s">${m.cagrSub}</div></div>
         <div class="stat-item"><div class="stat-k">MDD (최대낙폭)</div><div class="stat-v c-down">${m.mddStr}</div><div class="stat-s">${m.mddSub}</div></div>
         <div class="stat-item"><div class="stat-k">손익비 (PF)</div><div class="stat-v">${m.pfStr}</div><div class="stat-s">${m.pfSub}</div></div>
+      `;
+
+      const jts = (payload.transfer_summary || {})[acctKey] || { deposit_krw: 0, withdraw_krw: 0, net_krw: 0, deposit_usd: 0, withdraw_usd: 0, net_usd: 0, dep_count: 0, wd_count: 0 };
+      const jKwSynced = (payload.transfer_summary || {}).kiwoom_synced;
+      const jDepTxt = acctKey === "okx" ? `+$${jts.deposit_usd.toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:2})}` : (acctKey === "kiwoom" && !jKwSynced ? "-" : `+${jts.deposit_krw.toLocaleString()}원`);
+      const jWdTxt = acctKey === "okx" ? `-$${jts.withdraw_usd.toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:2})}` : (acctKey === "kiwoom" && !jKwSynced ? "-" : `-${jts.withdraw_krw.toLocaleString()}원`);
+      const jNetTxt = acctKey === "okx" ? `${jts.net_usd >= 0 ? '+' : '-'}$${Math.abs(jts.net_usd).toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:2})}` : (acctKey === "kiwoom" && !jKwSynced ? "-" : fmtKrw(jts.net_krw));
+      document.getElementById("journalTransferGrid").innerHTML = `
+        <div class="stat-item"><div class="stat-k">누적 입금</div><div class="stat-v c-up">${jDepTxt}</div><div class="stat-s">${jts.dep_count}건</div></div>
+        <div class="stat-item"><div class="stat-k">누적 출금</div><div class="stat-v c-down">${jWdTxt}</div><div class="stat-s">${jts.wd_count}건</div></div>
+        <div class="stat-item"><div class="stat-k">순입금</div><div class="stat-v">${jNetTxt}</div><div class="stat-s">${acctKey === "okx" ? fmtKrw(jts.net_krw) : (jKwSynced ? "실측 합계" : (acctKey === "kiwoom" ? "PC 동기화 대기" : "OKX 반영됨"))}</div></div>
       `;
 
       const q = (document.getElementById("searchInput").value || "").trim().toLowerCase();
@@ -1701,6 +1819,20 @@
               <div class="h-right"><div class="h-val ${cls}">${d.usd !== undefined ? fmtUsd(d.usd) + " (" + fmtKrw(d.pl) + ")" : fmtKrw(d.pl)}</div></div>
             </div>`;
         }).join("") || `<div style="padding:16px 0;text-align:center;color:var(--ink-3);font-size:13px;">해당 조건의 일별 기록이 없습니다</div>`;
+      }
+
+      if (jTab === "transfers") {
+        const allT = payload.transfers || [];
+        const fT = allT.filter(t => {
+          if (jSource !== "all" && t.source !== jSource) return false;
+          if (q) {
+            const hay = `${t.source} ${t.ccy || ""} ${t.symbol || ""} ${t.name || ""} ${t.kind}`.toLowerCase();
+            if (!hay.includes(q)) return false;
+          }
+          return true;
+        });
+        document.getElementById("jTransferBadge").textContent = fT.length + "건";
+        document.getElementById("jTransferRows").innerHTML = fT.map(fmtTransferRow).join("") || `<div style="padding:16px 0;text-align:center;color:var(--ink-3);font-size:13px;">${jSource === "키움" && !jKwSynced ? "자동매매 PC 동기화 후 키움 입출금 내역이 표시됩니다." : "해당 조건의 입출금 내역이 없습니다."}</div>`;
       }
     }
 
