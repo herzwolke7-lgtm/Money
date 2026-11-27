@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-11-27 12:12",
+  "updated_at": "2026-11-27 12:19",
   "history": [
     {
       "ts": "2026-11-23T22:39:03+09:00",
@@ -54,13 +54,13 @@
       "okx_pnl_pct": -0.02
     },
     {
-      "ts": "2026-11-27T12:12:49+09:00",
+      "ts": "2026-11-27T12:19:03+09:00",
       "date": "2026-11-27",
-      "label": "11/27 12:12",
-      "total_krw": 7162802,
+      "label": "11/27 12:19",
+      "total_krw": 7162780,
       "kiwoom_krw": 6735531,
-      "okx_krw": 427271,
-      "okx_usd": 318.21,
+      "okx_krw": 427249,
+      "okx_usd": 318.19,
       "kiwoom_pnl_krw": 0,
       "kiwoom_pnl_pct": 0,
       "okx_pnl_usd": -0.05,
@@ -71,71 +71,15 @@
     {
       "ts": "2026-11-23T16:24:00+09:00",
       "date": "2026-11-23",
-      "okx": {
-        "total_usd": 318.15,
-        "total_krw": 428457,
-        "trading_usd": 317.64,
-        "funding_usd": 0.51,
-        "earn_usd": 0.0,
-        "pnl_usd": 0.0,
-        "pnl_pct": 0.0,
-        "holdings": [
-          {
-            "ccy": "USDT",
-            "qty": 318.61,
-            "usd": 318.14,
-            "pnl_usd": 0.0,
-            "pnl_pct": 0.0
-          }
-        ]
-      },
-      "kiwoom_5280_4774": {
-        "total_est_krw": 6644143,
-        "tot_pur_krw": 5645185,
-        "tot_evlt_krw": 5453125,
-        "tot_pl_krw": -204594,
-        "tot_prft_rt": -3.62,
-        "deposit_krw": 6848737,
-        "d2_deposit_krw": 1202722,
-        "stocks": [
-          {
-            "name": "노랑풍선",
-            "qty": 139,
-            "avg": 4541,
-            "cur": 4715,
-            "evlt": 655385,
-            "pl": 22610,
-            "rt": 3.58
-          },
-          {
-            "name": "파수AI",
-            "qty": 260,
-            "avg": 6468,
-            "cur": 6270,
-            "evlt": 1630200,
-            "pl": -55430,
-            "rt": -3.3
-          },
-          {
-            "name": "글로벌텍스프리",
-            "qty": 276,
-            "avg": 6118,
-            "cur": 5870,
-            "evlt": 1620120,
-            "pl": -72440,
-            "rt": -4.29
-          },
-          {
-            "name": "마녀공장",
-            "qty": 98,
-            "avg": 16767,
-            "cur": 15790,
-            "evlt": 1547420,
-            "pl": -99334,
-            "rt": -6.05
-          }
-        ]
-      }
+      "label": "11/23 16:24",
+      "total_krw": 7072600,
+      "kiwoom_krw": 6644143,
+      "okx_krw": 428457,
+      "okx_usd": 318.15,
+      "kiwoom_pnl_krw": -204594,
+      "kiwoom_pnl_pct": -3.62,
+      "okx_pnl_usd": 0.0,
+      "okx_pnl_pct": 0.0
     },
     {
       "ts": "2026-11-23T17:46:35+09:00",
@@ -760,6 +704,19 @@
       "kiwoom_pnl_pct": 0,
       "okx_pnl_usd": -0.05,
       "okx_pnl_pct": -0.02
+    },
+    {
+      "ts": "2026-11-27T12:19:03+09:00",
+      "date": "2026-11-27",
+      "label": "11/27 12:19",
+      "total_krw": 7162780,
+      "kiwoom_krw": 6735531,
+      "okx_krw": 427249,
+      "okx_usd": 318.19,
+      "kiwoom_pnl_krw": 0,
+      "kiwoom_pnl_pct": 0,
+      "okx_pnl_usd": -0.05,
+      "okx_pnl_pct": -0.02
     }
   ],
   "latest": {
@@ -776,10 +733,10 @@
       "tot_pl_krw": 0
     },
     "okx": {
-      "total_usd": 318.21,
-      "total_krw": 427271,
-      "trading_usd": 317.7,
-      "trading_krw": 426586,
+      "total_usd": 318.19,
+      "total_krw": 427249,
+      "trading_usd": 317.68,
+      "trading_krw": 426564,
       "funding_usd": 0.51,
       "funding_krw": 685,
       "earn_usd": 0.0,
@@ -790,7 +747,7 @@
           "name": "USDT (Trading)",
           "sub": "318.10 USDT · 포지션 없음",
           "usd": 317.69,
-          "krw": 426579,
+          "krw": 426584,
           "pl_usd": 0.0,
           "rt": 0.0
         },
