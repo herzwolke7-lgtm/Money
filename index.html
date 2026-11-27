@@ -1869,9 +1869,14 @@
       const histPts = hasFullHistSpan ? filterHistByPeriod(period) : [];
 
       if (histPts.length >= 2) {
+        const snapPts = period === "1w"
+          ? (payload.snapshots || []).filter(s => s.date >= targetCutoff)
+          : histPts;
+        const chartPts = snapPts.length >= 2 ? snapPts : histPts;
+        const useTs = snapPts.length >= 2;
         const getAcctVal = p => currentAcct === "okx" ? (p.okx_usd ?? 0) : getVal(p);
-        const start = getAcctVal(histPts[0]);
-        const end = getAcctVal(histPts[histPts.length - 1]);
+        const start = getAcctVal(chartPts[0]);
+        const end = getAcctVal(chartPts[chartPts.length - 1]);
         const diff = end - start;
         const pct = start ? (diff / start) * 100 : 0;
         const pill = document.getElementById("periodPnl");
@@ -1880,7 +1885,7 @@
           ? `${label} 자산 ${fmtUsd(diff)} (${fmtPct(pct)})`
           : `${label} 자산 ${fmtKrw(diff)} (${fmtPct(pct)})`;
         renderRiskGrid(computeMetrics(currentAcct, fullSeries));
-        renderAssetChart(histPts, `${label} 자산 추이`, false);
+        renderAssetChart(chartPts, `${label} 자산 추이`, useTs, period !== "today");
         return;
       }
 
@@ -1897,9 +1902,22 @@
 
     function pickSingleDate(val) {
       if (!payload || !val) return;
+      const snaps = (payload.snapshots || []).filter(s => s.date === val);
+      const pill = document.getElementById("periodPnl");
+      if (snaps.length >= 1) {
+        const getAcctVal = p => currentAcct === "okx" ? (p.okx_usd ?? 0) : getVal(p);
+        const diff = getAcctVal(snaps[snaps.length - 1]) - getAcctVal(snaps[0]);
+        const startV = getAcctVal(snaps[0]);
+        const pct = startV ? (diff / startV) * 100 : 0;
+        pill.className = "delta-tag " + (diff > 0 ? "up" : diff < 0 ? "down" : "flat");
+        pill.textContent = currentAcct === "okx"
+          ? `${val} ${fmtUsd(diff)} (${fmtPct(pct)})`
+          : `${val} ${fmtKrw(diff)} (${fmtPct(pct)})`;
+        renderAssetChart(snaps, `${val} 루틴별 추이`, true, false);
+        return;
+      }
       const full = buildRealizedSeries(currentAcct);
       const found = full.filter(s => s.date === val);
-      const pill = document.getElementById("periodPnl");
       if (found.length) {
         const v = found[0].daily;
         pill.className = "delta-tag " + (v > 0 ? "up" : v < 0 ? "down" : "flat");
@@ -1907,8 +1925,8 @@
         renderRealizedChart(found, val);
       } else {
         pill.className = "delta-tag flat";
-        pill.textContent = `${val} 매도 기록 없음`;
-        document.getElementById("chartNote").textContent = `${val}에는 체결된 매도 기록이 없습니다`;
+        pill.textContent = `${val} 기록 없음`;
+        document.getElementById("chartNote").textContent = `${val}에는 스냅샷이나 매도 기록이 없습니다`;
       }
     }
 
@@ -2054,7 +2072,7 @@
       svg.onpointerdown = (e) => onP(e.clientX);
     }
 
-    function renderAssetChart(points, label, isIntraday) {
+    function renderAssetChart(points, label, isIntraday, multiDayAxis) {
       const svg = document.getElementById("chartSvg");
       const w = 320, h = 110, padX = 6, padTop = 12, padBot = 12;
       svg.innerHTML = "";
@@ -2092,7 +2110,7 @@
       const maxT = Math.max(minT + (isIntraday ? 60000 : 86400000), parseMs(last));
       const tSpan = maxT - minT;
 
-      if (isIntraday) {
+      if (isIntraday && !multiDayAxis) {
         const midDt = new Date((minT + maxT) / 2);
         const midTime = String(midDt.getHours()).padStart(2, "0") + ":" + String(midDt.getMinutes()).padStart(2, "0");
         document.getElementById("axisStart").textContent = first.ts ? first.ts.slice(11, 16) : first.label;
@@ -2129,7 +2147,7 @@
 
       coords.forEach(c => {
         const pt = document.createElementNS("http://www.w3.org/2000/svg", "circle");
-        pt.setAttribute("r", "2.2"); pt.setAttribute("fill", strokeCol);
+        pt.setAttribute("r", points.length > 15 ? "1.6" : "2.2"); pt.setAttribute("fill", strokeCol);
         pt.setAttribute("cx", c.x.toFixed(1)); pt.setAttribute("cy", c.y.toFixed(1));
         svg.appendChild(pt);
       });
@@ -2149,7 +2167,9 @@
         xhair.style.display = "block";
         xhair.setAttribute("x1", near.x); xhair.setAttribute("x2", near.x);
         xhair.setAttribute("y1", padTop); xhair.setAttribute("y2", h - padBot);
-        document.getElementById("hoverDate").textContent = isIntraday ? (near.point.ts ? near.point.ts.slice(11, 16) : near.point.label) : near.point.date;
+        document.getElementById("hoverDate").textContent = isIntraday
+          ? (multiDayAxis ? (near.point.ts ? near.point.ts.slice(0, 16).replace("T", " ") : near.point.date) : (near.point.ts ? near.point.ts.slice(11, 16) : near.point.label))
+          : near.point.date;
         document.getElementById("hoverVal").textContent = `${fmtVal(near.val)} (${fmtDelta(near.val - firstVal)})`;
       };
       svg.onpointermove = (e) => onP(e.clientX);
