@@ -412,8 +412,8 @@
               <span class="chart-date" id="hoverDate">-</span>
               <span class="chart-val" id="hoverVal">-</span>
             </div>
-            <svg id="chartSvg" viewBox="0 0 320 110" style="width:100%;height:auto;display:block;touch-action:none;"></svg>
-            <div class="chart-axis">
+            <svg id="chartSvg" viewBox="0 0 340 150" style="width:100%;height:auto;display:block;touch-action:none;"></svg>
+            <div class="chart-axis" id="chartAxis">
               <span id="axisStart">-</span>
               <span id="axisMid">-</span>
               <span id="axisEnd">-</span>
@@ -1952,22 +1952,34 @@
       }
     }
 
+    function setAxisLabels(labels) {
+      const axis = document.getElementById("chartAxis");
+      if (!axis) return;
+      axis.innerHTML = labels.map(l => `<span>${l}</span>`).join("");
+    }
+
+    function fmtYTick(v) {
+      if (currentAcct === "okx") return `$${v.toFixed(1)}`;
+      const abs = Math.abs(v);
+      if (abs >= 1000000) return `${(v / 10000).toFixed(0)}만`;
+      if (abs >= 10000) return `${(v / 10000).toFixed(1)}만`;
+      return `${Math.round(v).toLocaleString()}`;
+    }
+
     function renderRealizedChart(series, titleLabel) {
       const svg = document.getElementById("chartSvg");
-      const w = 320, h = 110, padX = 4, padTop = 10, padBot = 10;
+      const w = 340, h = 150, padL = 6, padR = 46, padTop = 14, padBot = 14;
       svg.innerHTML = "";
       const hoverDate = document.getElementById("hoverDate");
       const hoverVal = document.getElementById("hoverVal");
       const noteEl = document.getElementById("chartNote");
       const fmt = v => currentAcct === "okx" ? fmtUsd(v) : fmtKrw(v);
-      const fmtAxisDate = d => d ? d.slice(2).replace(/-/g, ".") : "-";
+      const fmtAxisDate = d => d ? d.slice(5).replace("-", ".") : "-";
 
       if (!series.length) {
         hoverDate.textContent = titleLabel;
         hoverVal.textContent = fmt(0);
-        document.getElementById("axisStart").textContent = "-";
-        document.getElementById("axisMid").textContent = "";
-        document.getElementById("axisEnd").textContent = "-";
+        setAxisLabels(["-", "", "-"]);
         noteEl.textContent = "선택한 기간에 매도 실현손익 기록이 없습니다";
         return;
       }
@@ -1975,20 +1987,20 @@
       if (series.length === 1) {
         hoverDate.textContent = series[0].label || series[0].date;
         hoverVal.textContent = fmt(series[0].cum);
-        document.getElementById("axisStart").textContent = series[0].label || fmtAxisDate(series[0].date);
-        document.getElementById("axisMid").textContent = "";
-        document.getElementById("axisEnd").textContent = "";
+        setAxisLabels([series[0].label || fmtAxisDate(series[0].date), "", ""]);
         noteEl.textContent = `${titleLabel} (1건 · ${fmt(series[0].daily)})`;
         const c = document.createElementNS("http://www.w3.org/2000/svg", "circle");
-        c.setAttribute("cx", w / 2); c.setAttribute("cy", h / 2); c.setAttribute("r", 3.5); c.setAttribute("fill", series[0].cum > 0 ? "#d92d20" : (series[0].cum < 0 ? "#1570ef" : "#141413"));
+        c.setAttribute("cx", (w - padR) / 2); c.setAttribute("cy", h / 2); c.setAttribute("r", 4); c.setAttribute("fill", series[0].cum > 0 ? "#d92d20" : (series[0].cum < 0 ? "#1570ef" : "#141413"));
         svg.appendChild(c);
         return;
       }
 
       const isIntraday = Boolean(series[0].time);
       const vals = series.map(s => s.cum);
-      const min = Math.min(...vals, 0), max = Math.max(...vals, 0);
-      const span = (max - min) || 1;
+      const rawMin = Math.min(...vals, 0), rawMax = Math.max(...vals, 0);
+      const rawSpan = (rawMax - rawMin) || 1;
+      const min = rawMin - rawSpan * 0.1, max = rawMax + rawSpan * 0.1;
+      const span = max - min;
       const toY = v => h - padBot - ((v - min) / span) * (h - padTop - padBot);
       const lastCum = series[series.length - 1].cum;
       const strokeCol = lastCum > 0 ? "#d92d20" : (lastCum < 0 ? "#1570ef" : "#141413");
@@ -2000,22 +2012,33 @@
       const minT = parsePointMs(series[0]);
       const maxT = Math.max(minT + (isIntraday ? 60000 : 86400000), parsePointMs(series[series.length - 1]));
       const tSpan = maxT - minT;
-      const toX = s => padX + Math.max(0, Math.min(1, (parsePointMs(s) - minT) / tSpan)) * (w - padX * 2);
+      const toX = s => padL + Math.max(0, Math.min(1, (parsePointMs(s) - minT) / tSpan)) * (w - padL - padR);
 
-      // 0-baseline dashed reference line
+      // Y-axis grid lines & labels (max, 0/mid, min)
+      [rawMax, (rawMax + rawMin) / 2, rawMin].forEach(yv => {
+        const yPos = toY(yv);
+        const gl = document.createElementNS("http://www.w3.org/2000/svg", "line");
+        gl.setAttribute("x1", padL); gl.setAttribute("x2", w - padR);
+        gl.setAttribute("y1", yPos.toFixed(1)); gl.setAttribute("y2", yPos.toFixed(1));
+        gl.setAttribute("stroke", "rgba(20,20,19,0.08)"); gl.setAttribute("stroke-width", "0.7");
+        gl.setAttribute("stroke-dasharray", "2 3");
+        svg.appendChild(gl);
+        const txt = document.createElementNS("http://www.w3.org/2000/svg", "text");
+        txt.setAttribute("x", w - padR + 5); txt.setAttribute("y", (yPos + 3).toFixed(1));
+        txt.setAttribute("font-size", "9"); txt.setAttribute("fill", "#8f8f8c");
+        txt.textContent = fmtYTick(yv);
+        svg.appendChild(txt);
+      });
+
       const zeroY = toY(0);
       const zeroLine = document.createElementNS("http://www.w3.org/2000/svg", "line");
-      zeroLine.setAttribute("x1", padX); zeroLine.setAttribute("x2", w - padX);
+      zeroLine.setAttribute("x1", padL); zeroLine.setAttribute("x2", w - padR);
       zeroLine.setAttribute("y1", zeroY.toFixed(1)); zeroLine.setAttribute("y2", zeroY.toFixed(1));
-      zeroLine.setAttribute("stroke", "rgba(20,20,19,0.18)"); zeroLine.setAttribute("stroke-width", "0.8");
+      zeroLine.setAttribute("stroke", "rgba(20,20,19,0.22)"); zeroLine.setAttribute("stroke-width", "0.8");
       zeroLine.setAttribute("stroke-dasharray", "3 3");
       svg.appendChild(zeroLine);
 
-      const coords = series.map(s => ({
-        x: toX(s),
-        y: toY(s.cum),
-        item: s
-      }));
+      const coords = series.map(s => ({ x: toX(s), y: toY(s.cum), item: s }));
       const linePts = coords.map(c => `${c.x.toFixed(1)},${c.y.toFixed(1)}`).join(" ");
       const areaPts = `${coords[0].x.toFixed(1)},${zeroY.toFixed(1)} ${linePts} ${coords[coords.length - 1].x.toFixed(1)},${zeroY.toFixed(1)}`;
       const defs = document.createElementNS("http://www.w3.org/2000/svg", "defs");
@@ -2026,36 +2049,32 @@
       svg.appendChild(polyArea);
       const poly = document.createElementNS("http://www.w3.org/2000/svg", "polyline");
       poly.setAttribute("fill", "none"); poly.setAttribute("stroke", strokeCol);
-      poly.setAttribute("stroke-width", "1.8"); poly.setAttribute("stroke-linejoin", "round"); poly.setAttribute("points", linePts);
+      poly.setAttribute("stroke-width", "1.9"); poly.setAttribute("stroke-linejoin", "round"); poly.setAttribute("points", linePts);
       svg.appendChild(poly);
 
-      // Interactive crosshair + dot
       const xhair = document.createElementNS("http://www.w3.org/2000/svg", "line");
-      xhair.setAttribute("stroke", "rgba(20,20,19,0.28)"); xhair.setAttribute("stroke-width", "0.8");
+      xhair.setAttribute("stroke", "rgba(20,20,19,0.28)"); xhair.setAttribute("stroke-width", "0.9");
       xhair.style.display = "none";
       svg.appendChild(xhair);
 
       const dot = document.createElementNS("http://www.w3.org/2000/svg", "circle");
-      dot.setAttribute("r", "3"); dot.setAttribute("fill", strokeCol);
+      dot.setAttribute("r", "3.8"); dot.setAttribute("fill", strokeCol);
+      dot.setAttribute("stroke", "#fff"); dot.setAttribute("stroke-width", "1.5");
       dot.setAttribute("cx", coords[coords.length - 1].x); dot.setAttribute("cy", coords[coords.length - 1].y);
       svg.appendChild(dot);
 
       if (isIntraday) {
         const midDt = new Date((minT + maxT) / 2);
         const midTimeStr = String(midDt.getHours()).padStart(2, "0") + ":" + String(midDt.getMinutes()).padStart(2, "0");
-        document.getElementById("axisStart").textContent = series[0].label;
-        document.getElementById("axisMid").textContent = midTimeStr;
-        document.getElementById("axisEnd").textContent = series[series.length - 1].label;
+        setAxisLabels([series[0].label, midTimeStr, series[series.length - 1].label]);
       } else {
         const midDateStr = localYmdStr((minT + maxT) / 2);
-        document.getElementById("axisStart").textContent = fmtAxisDate(series[0].date);
-        document.getElementById("axisMid").textContent = fmtAxisDate(midDateStr);
-        document.getElementById("axisEnd").textContent = fmtAxisDate(series[series.length - 1].date);
+        setAxisLabels([fmtAxisDate(series[0].date), fmtAxisDate(midDateStr), fmtAxisDate(series[series.length - 1].date)]);
       }
 
       hoverDate.textContent = `${titleLabel}`;
       hoverVal.textContent = fmt(lastCum);
-      noteEl.textContent = `최고 ${fmt(Math.max(...vals))} · 최저 ${fmt(Math.min(...vals))} · 터치하여 ${isIntraday ? "체결별" : "날짜별"} 확인`;
+      noteEl.textContent = `최고 ${fmt(rawMax)} · 최저 ${fmt(rawMin)} · 드래그하여 확인`;
 
       const onP = (cx) => {
         const rect = svg.getBoundingClientRect();
@@ -2075,15 +2094,23 @@
 
     function renderAssetChart(points, label, isIntraday, multiDayAxis) {
       const svg = document.getElementById("chartSvg");
-      const w = 320, h = 110, padX = 6, padTop = 12, padBot = 12;
+      const w = 340, h = 150, padL = 6, padR = 46, padTop = 14, padBot = 14;
       svg.innerHTML = "";
       if (!points.length) return;
       const getAcctVal = p => currentAcct === "okx" ? (p.okx_usd ?? 0) : getVal(p);
       const fmtVal = v => currentAcct === "okx" ? `$${v.toFixed(2)}` : `${Math.round(v).toLocaleString()}원`;
       const fmtDelta = d => currentAcct === "okx" ? fmtUsd(d) : fmtKrw(d);
 
-      const first = points[0];
-      const last = points[points.length - 1];
+      // Deduplicate rapid test snapshots within 10-minute buckets when multi-day
+      let cleanPts = points;
+      if (isIntraday && points.length > 12) {
+        const buckets = {};
+        points.forEach(p => { buckets[(p.ts || p.date).slice(0, 15)] = p; });
+        cleanPts = Object.values(buckets).sort((a, b) => (a.ts || a.date).localeCompare(b.ts || b.date));
+      }
+
+      const first = cleanPts[0];
+      const last = cleanPts[cleanPts.length - 1];
       const lastVal = getAcctVal(last);
       const firstVal = getAcctVal(first);
       const totalDiff = lastVal - firstVal;
@@ -2092,13 +2119,11 @@
       document.getElementById("hoverDate").textContent = label;
       document.getElementById("hoverVal").textContent = fmtVal(lastVal);
 
-      if (points.length === 1) {
-        document.getElementById("axisStart").textContent = isIntraday ? (last.ts ? last.ts.slice(11, 16) : last.date) : last.date.slice(2).replace(/-/g, ".");
-        document.getElementById("axisMid").textContent = "";
-        document.getElementById("axisEnd").textContent = "";
+      if (cleanPts.length === 1) {
+        setAxisLabels([isIntraday ? (last.ts ? last.ts.slice(11, 16) : last.date) : last.date.slice(5).replace("-", "."), "", ""]);
         document.getElementById("chartNote").textContent = `${label} · ${fmtVal(lastVal)} (1건)`;
         const c = document.createElementNS("http://www.w3.org/2000/svg", "circle");
-        c.setAttribute("cx", w / 2); c.setAttribute("cy", h / 2); c.setAttribute("r", 3.5); c.setAttribute("fill", strokeCol);
+        c.setAttribute("cx", (w - padR) / 2); c.setAttribute("cy", h / 2); c.setAttribute("r", 4); c.setAttribute("fill", strokeCol);
         svg.appendChild(c);
         return;
       }
@@ -2114,20 +2139,52 @@
       if (isIntraday && !multiDayAxis) {
         const midDt = new Date((minT + maxT) / 2);
         const midTime = String(midDt.getHours()).padStart(2, "0") + ":" + String(midDt.getMinutes()).padStart(2, "0");
-        document.getElementById("axisStart").textContent = first.ts ? first.ts.slice(11, 16) : first.label;
-        document.getElementById("axisMid").textContent = midTime;
-        document.getElementById("axisEnd").textContent = last.ts ? last.ts.slice(11, 16) : last.label;
+        setAxisLabels([first.ts ? first.ts.slice(11, 16) : first.label, midTime, last.ts ? last.ts.slice(11, 16) : last.label]);
       } else {
-        document.getElementById("axisStart").textContent = first.date.slice(2).replace(/-/g, ".");
-        document.getElementById("axisMid").textContent = localYmdStr((minT + maxT) / 2).slice(2).replace(/-/g, ".");
-        document.getElementById("axisEnd").textContent = last.date.slice(2).replace(/-/g, ".");
+        const uniqDates = [...new Set(cleanPts.map(p => p.date))];
+        setAxisLabels(uniqDates.length <= 7 ? uniqDates.map(d => d.slice(5).replace("-", ".")) : [first.date.slice(5).replace("-", "."), localYmdStr((minT + maxT) / 2).slice(5).replace("-", "."), last.date.slice(5).replace("-", ".")]);
       }
 
-      const vals = points.map(getAcctVal);
-      const min = Math.min(...vals), max = Math.max(...vals);
-      const span = (max - min) || (currentAcct === "okx" ? 0.1 : 1000);
-      const coords = points.map(p => ({
-        x: padX + Math.max(0, Math.min(1, (parseMs(p) - minT) / tSpan)) * (w - padX * 2),
+      const vals = cleanPts.map(getAcctVal);
+      const rawMin = Math.min(...vals), rawMax = Math.max(...vals);
+      const rawSpan = (rawMax - rawMin) || (currentAcct === "okx" ? 0.1 : 1000);
+      const min = rawMin - rawSpan * 0.14, max = rawMax + rawSpan * 0.14;
+      const span = max - min;
+
+      // Y-axis grid lines & labels
+      [rawMax, (rawMax + rawMin) / 2, rawMin].forEach(yv => {
+        const yPos = h - padBot - ((yv - min) / span) * (h - padTop - padBot);
+        const gl = document.createElementNS("http://www.w3.org/2000/svg", "line");
+        gl.setAttribute("x1", padL); gl.setAttribute("x2", w - padR);
+        gl.setAttribute("y1", yPos.toFixed(1)); gl.setAttribute("y2", yPos.toFixed(1));
+        gl.setAttribute("stroke", "rgba(20,20,19,0.08)"); gl.setAttribute("stroke-width", "0.7");
+        gl.setAttribute("stroke-dasharray", "2 3");
+        svg.appendChild(gl);
+        const txt = document.createElementNS("http://www.w3.org/2000/svg", "text");
+        txt.setAttribute("x", w - padR + 5); txt.setAttribute("y", (yPos + 3).toFixed(1));
+        txt.setAttribute("font-size", "9"); txt.setAttribute("fill", "#8f8f8c");
+        txt.textContent = fmtYTick(yv);
+        svg.appendChild(txt);
+      });
+
+      // Vertical day dividers when multi-day intraday
+      if (multiDayAxis) {
+        const uniqDates = [...new Set(cleanPts.map(p => p.date))].slice(1);
+        uniqDates.forEach(d => {
+          const dayMs = new Date(d + "T00:00:00").getTime();
+          if (dayMs > minT && dayMs < maxT) {
+            const dx = padL + ((dayMs - minT) / tSpan) * (w - padL - padR);
+            const vl = document.createElementNS("http://www.w3.org/2000/svg", "line");
+            vl.setAttribute("x1", dx.toFixed(1)); vl.setAttribute("x2", dx.toFixed(1));
+            vl.setAttribute("y1", padTop); vl.setAttribute("y2", h - padBot);
+            vl.setAttribute("stroke", "rgba(20,20,19,0.08)"); vl.setAttribute("stroke-width", "0.7");
+            svg.appendChild(vl);
+          }
+        });
+      }
+
+      const coords = cleanPts.map(p => ({
+        x: padL + Math.max(0, Math.min(1, (parseMs(p) - minT) / tSpan)) * (w - padL - padR),
         y: h - padBot - ((getAcctVal(p) - min) / span) * (h - padTop - padBot),
         point: p,
         val: getAcctVal(p)
@@ -2143,22 +2200,30 @@
       svg.appendChild(polyArea);
       const poly = document.createElementNS("http://www.w3.org/2000/svg", "polyline");
       poly.setAttribute("fill", "none"); poly.setAttribute("stroke", strokeCol);
-      poly.setAttribute("stroke-width", "1.8"); poly.setAttribute("stroke-linejoin", "round"); poly.setAttribute("points", linePts);
+      poly.setAttribute("stroke-width", "1.9"); poly.setAttribute("stroke-linejoin", "round"); poly.setAttribute("points", linePts);
       svg.appendChild(poly);
 
-      coords.forEach(c => {
-        const pt = document.createElementNS("http://www.w3.org/2000/svg", "circle");
-        pt.setAttribute("r", points.length > 15 ? "1.6" : "2.2"); pt.setAttribute("fill", strokeCol);
-        pt.setAttribute("cx", c.x.toFixed(1)); pt.setAttribute("cy", c.y.toFixed(1));
-        svg.appendChild(pt);
-      });
+      if (cleanPts.length <= 12) {
+        coords.forEach(c => {
+          const pt = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+          pt.setAttribute("r", "2.3"); pt.setAttribute("fill", strokeCol);
+          pt.setAttribute("cx", c.x.toFixed(1)); pt.setAttribute("cy", c.y.toFixed(1));
+          svg.appendChild(pt);
+        });
+      }
 
       const xhair = document.createElementNS("http://www.w3.org/2000/svg", "line");
-      xhair.setAttribute("stroke", "rgba(20,20,19,0.28)"); xhair.setAttribute("stroke-width", "0.8");
+      xhair.setAttribute("stroke", "rgba(20,20,19,0.28)"); xhair.setAttribute("stroke-width", "0.9");
       xhair.style.display = "none";
       svg.appendChild(xhair);
 
-      document.getElementById("chartNote").textContent = `최고 ${fmtVal(max)} · 최저 ${fmtVal(min)} (${fmtDelta(totalDiff)}) · 터치하여 확인`;
+      const activeDot = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+      activeDot.setAttribute("r", "4"); activeDot.setAttribute("fill", strokeCol);
+      activeDot.setAttribute("stroke", "#fff"); activeDot.setAttribute("stroke-width", "1.6");
+      activeDot.setAttribute("cx", coords[coords.length - 1].x); activeDot.setAttribute("cy", coords[coords.length - 1].y);
+      svg.appendChild(activeDot);
+
+      document.getElementById("chartNote").textContent = `최고 ${fmtVal(rawMax)} · 최저 ${fmtVal(rawMin)} (${fmtDelta(totalDiff)}) · 드래그하여 확인`;
 
       const onP = (cx) => {
         const rect = svg.getBoundingClientRect();
@@ -2168,6 +2233,7 @@
         xhair.style.display = "block";
         xhair.setAttribute("x1", near.x); xhair.setAttribute("x2", near.x);
         xhair.setAttribute("y1", padTop); xhair.setAttribute("y2", h - padBot);
+        activeDot.setAttribute("cx", near.x); activeDot.setAttribute("cy", near.y);
         document.getElementById("hoverDate").textContent = isIntraday
           ? (multiDayAxis ? (near.point.ts ? near.point.ts.slice(0, 16).replace("T", " ") : near.point.date) : (near.point.ts ? near.point.ts.slice(11, 16) : near.point.label))
           : near.point.date;
@@ -2444,8 +2510,7 @@
         <div class="gen-row">
           ${p.nums ? renderLottoBalls(p.nums) : renderPensionBalls(p.group, p.num)}
           <div style="display:flex;align-items:center;gap:6px;">
-            ${isBought ? `<span class="badge c-up" style="background:var(--up-bg);">구매완료</span>` : ""}
-            <button class="btn-ghost" onclick="savePick(${i})">구매 저장</button>
+            ${isBought ? `<span class="badge c-up" style="background:var(--up-bg);">구매완료</span>` : `<button class="btn-ghost" onclick="savePick(${i})">구매 저장</button>`}
           </div>
         </div>
       `;
