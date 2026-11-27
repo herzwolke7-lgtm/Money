@@ -1482,8 +1482,6 @@
       const kwDaily = payload.daily_pnl || [];
       const rate = usdKrwRate();
 
-      const okxSyms = summaries.filter(s => s.source === "OKX");
-      const okxRealizedUsd = okxSyms.reduce((a, b) => a + (b.realized_pl || 0), 0);
       const okxSeries = buildRealizedSeries("okx");
       const okxRealizedUsd = okxSeries.length ? okxSeries[okxSeries.length - 1].cum : summaries.filter(s => s.source === "OKX").reduce((a, b) => a + (b.realized_pl || 0), 0);
       const okxRealizedKrw = Math.round(okxRealizedUsd * rate);
