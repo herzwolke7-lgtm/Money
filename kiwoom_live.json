@@ -1,19 +1,27 @@
 {
     "kw_total_realized_pl":  -94000,
-    "updated_at":  "2026-11-27 09:05",
+    "updated_at":  "2026-11-27 09:09",
     "kiwoom":  {
-                   "tot_prft_rt":  0,
+                   "tot_prft_rt":  0.87,
                    "ord_alow_krw":  0,
-                   "total_est_krw":  6721684,
+                   "total_est_krw":  6723909,
                    "stocks":  [
-
+                                  {
+                                      "pl":  1776,
+                                      "name":  "아리바이오랩",
+                                      "qty":  45,
+                                      "avg":  4560,
+                                      "evlt":  207450,
+                                      "cur":  4610,
+                                      "rt":  0.87
+                                  }
                               ],
-                   "d2_deposit_krw":  6721684,
-                   "tot_pur_krw":  0,
-                   "tot_evlt_krw":  0,
+                   "d2_deposit_krw":  6516454,
+                   "tot_pur_krw":  205200,
+                   "tot_evlt_krw":  207450,
                    "account":  "5280-4774",
                    "deposit_krw":  3327786,
-                   "tot_pl_krw":  0
+                   "tot_pl_krw":  1776
                },
     "trades":  [
                    {
@@ -3564,6 +3572,22 @@
                        "source":  "키움",
                        "symbol":  "현대오토에버",
                        "qty":  1,
+                       "instType":  "주식",
+                       "date":  "2026-11-27",
+                       "pnl":  0
+                   },
+                   {
+                       "tax":  0,
+                       "id":  "kw_today_0043279",
+                       "time":  "09:00:23",
+                       "amount":  205200,
+                       "price":  4560,
+                       "currency":  "KRW",
+                       "side":  "매수",
+                       "fee":  0,
+                       "source":  "키움",
+                       "symbol":  "아리바이오랩",
+                       "qty":  45,
                        "instType":  "주식",
                        "date":  "2026-11-27",
                        "pnl":  0
